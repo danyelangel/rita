@@ -161,11 +161,17 @@ button.avatar{padding:0;font-size:16px;cursor:pointer}
 .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}.fs{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12px;font-weight:600;line-height:1.15}.fn{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;font-weight:700}
 .fs:nth-child(3) .fn{background:#fff}
 .hide{display:none}
+.kdgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}.kdh{font-size:11px;color:var(--mute);text-align:center}.kdc{min-height:54px;border:1px solid var(--line);border-radius:6px;background:#fff;padding:2px;font-size:11px;overflow:hidden}.kdc.out{background:transparent;border-color:transparent}.kdc.past{opacity:.45}.kdc .dn{color:var(--mute);font-size:10px}
+.kc{display:block;width:100%;text-align:left;border:0;border-radius:4px;padding:1px 3px;margin-top:2px;font-size:9.5px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:600;cursor:pointer;box-shadow:none}
+.kc.holiday{background:var(--navy);color:#fff}.kc.sale{background:var(--yellow);color:var(--ink)}.kc.launch{background:var(--green);color:#fff}.kc.other{background:var(--line);color:var(--ink)}
+.gad{border:1px solid var(--line);border-radius:12px;background:#fff;padding:12px 14px}.gad .u{font-size:12px;color:#188038}.gad .tl2{color:#1a0dab;font-size:17px;margin:2px 0}.gad .ds{font-size:13px;color:#4d5156}
+.badge{font-size:11px;padding:1px 7px;border-radius:99px;background:var(--line);color:var(--mute);margin-left:6px}
 .hyp{border-color:var(--navy)}.hyp .big{font-size:20px;font-weight:700;color:var(--navy);line-height:1.25;margin:4px 0}
 .rng{display:inline-block;background:var(--yellow);border-radius:8px;padding:2px 8px;font-weight:700}
 .alert{border-color:var(--bad);background:#fdf3f2}.alert .row{margin-top:10px}
 .mail{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 14px;font-size:14px;margin:10px 0}.mail .h{color:var(--mute);font-size:12px;margin-bottom:6px}
 .last{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:12px 0}
+.dis{opacity:.55}
 </style>
 </head>
 <body>
@@ -191,6 +197,7 @@ const ICON = {
 };
 Object.assign(LOCALE, {"Hypothesis": "Hipótesis", "Expected uplift:": "Aumento esperado:", "to": "a", "over the week": "en la semana", "The Tasks below only carry out this bet. Rita reads the result next week against it.": "Las Tareas de abajo solo ejecutan esta apuesta. Rita lee el resultado la próxima semana contra ella.", "A Mother's Day email plus Meta ads will bring gift buyers you had no campaign for last year.": "Un correo del Día de la Madre más anuncios en Meta traerán compradores de regalo para quienes no tuviste campaña el año pasado.", "Winning back customers who stopped buying will lift sales while the Mother's Day ads keep running.": "Recuperar a los clientes que dejaron de comprar subirá las ventas mientras siguen los anuncios del Día de la Madre.", "Plan for May 8 to May 14": "Plan del 8 al 14 de mayo", "What ran (not sales results)": "Lo que se ejecutó (no son resultados de ventas)", "Spent $1.1M COP of the $1.4M COP cap": "Gastó $1,1 M COP del tope de $1,4 M COP", "1 email sent to 3,420 people": "1 correo enviado a 3.420 personas", "Last week": "La semana pasada", "Final": "Final", "Uplift": "Aumento", "Sales $14.4M COP vs $12.1M COP.": "Ventas $14,4 M COP vs $12,1 M COP.", "This was your first Plan, so it is compared with your baseline from the Diagnosis (median of your last 3 months), not with a previous Plan.": "Fue tu primer Plan, así que se compara con tu línea base del Diagnóstico (mediana de tus últimos 3 meses), no con un Plan anterior.", "Outside your usual swing (±$1.6M COP): a clear increase. Inside what the Hypothesis expected (+$1.5M to +$3.0M COP).": "Fuera de tu variación habitual (±$1,6 M COP): un aumento claro. Dentro de lo que esperaba la Hipótesis (+$1,5 M a +$3,0 M COP).", "Mother's Day week was in this period, a likely driver.": "La semana del Día de la Madre cae en este periodo: probable causa.", "Result": "Resultado", "Day 3 of 7": "Día 3 de 7", "Refreshed daily. Freezes when your next Weekly plan arrives; orders after that count in the next period.": "Se actualiza a diario. Se congela cuando llega tu próximo Plan semanal; los pedidos posteriores cuentan en el siguiente periodo.", "Uplift so far": "Aumento hasta ahora", "Compared with last week's Plan period.": "Comparado con el periodo del Plan de la semana pasada.", "Compared with your baseline from the Diagnosis (median of your last 3 months), because this is your first Plan.": "Comparado con tu línea base del Diagnóstico (mediana de tus últimos 3 meses), porque es tu primer Plan.", "Inside your usual swing (±$1.6M COP): no clear change yet.": "Dentro de tu variación habitual (±$1,6 M COP): aún no hay un cambio claro.", "Outside your usual swing.": "Fuera de tu variación habitual.", "The Hypothesis expects": "La Hipótesis espera", "by the end of the week.": "al terminar la semana.", "Mother's Day is in this period: a likely driver, not separated out.": "El Día de la Madre cae en este periodo: probable causa, no se separa.", "Only your Shopify sales count as a result. Ad platform numbers are never used as sales.": "Solo cuentan como resultado las ventas de tu Shopify. Las cifras de las plataformas de anuncios nunca se usan como ventas.", "Rita is paused.": "Rita está en pausa.", "Only safety alerts reach you, by email. Things already scheduled at Klaviyo or Meta keep running there.": "Solo te llegan alertas de seguridad, por correo. Lo que ya está programado en Klaviyo o Meta sigue corriendo allá.", "Resume Rita": "Reanudar a Rita", "Pausing…": "Pausando…", "Rita is checking Meta.": "Rita está verificando en Meta.", "Paused and verified": "Pausado y verificado", "read back from Meta Ads": "leído de vuelta desde Meta Ads", "Your tap on Stop is recorded as your Approval.": "Tu toque en Detener queda registrado como tu Aprobación.", "Ask to resume": "Pedir reanudar", "resuming needs a normal Approval": "reanudar necesita una Aprobación normal", "Resuming added as an Action in your next Plan. It needs your Approval.": "Reanudar queda como una Acción en tu próximo Plan. Necesita tu Aprobación.", "Stop this ad": "Detener este anuncio", "One tap. It shows as paused once Rita has verified it.": "Un toque. Aparece como pausado cuando Rita lo verifique.", "Revoked": "Revocado", "rolled back in": "revertido en", "and verified. It will not send.": "y verificado. No se enviará.", "Scheduled in": "Programado en", "for": "para", "sends it; Rita runs nothing later.": "lo envía; Rita no ejecuta nada después.", "Edit": "Editar", "Revoke": "Revocar", "until": "hasta que", "starts it": "lo inicie", "Scheduled and verified": "Programado y verificado", "Rolled back in Klaviyo. Approve the changed version.": "Revertido en Klaviyo. Aprueba la versión cambiada.", "Alert · Meta Ads": "Alerta · Meta Ads", "Alert · Sales": "Alerta · Ventas", "Needs you": "Te necesita", "Your Mother's Day ad has spent $1.5M COP, past the $1.4M COP cap you approved.": "Tu anuncio del Día de la Madre ha gastado $1,5 M COP, por encima del tope de $1,4 M COP que aprobaste.", "Rita's proposal: stop the ad. Your tap is the Approval.": "Propuesta de Rita: detener el anuncio. Tu toque es la Aprobación.", "Stop the ad": "Detener el anuncio", "Wait 24 h": "Esperar 24 h", "Wait 48 h": "Esperar 48 h", "Sales so far this week are $3.1M COP, far below your usual range for this day ($5.4M to $8.6M COP).": "Las ventas de esta semana van en $3,1 M COP, muy por debajo de tu rango habitual para este día ($5,4 M a $8,6 M COP).", "Rita's proposal: undo the budget change you approved on May 1 (Retargeting daily budget back to $40.000). Your tap is the Approval.": "Propuesta de Rita: deshacer el cambio de presupuesto que aprobaste el 1 de mayo (presupuesto diario de Retargeting de vuelta a $40.000). Tu toque es la Aprobación.", "Restore $40.000": "Restaurar $40.000", "Email sent to": "Correo enviado a", "while Rita is paused": "mientras Rita está en pausa", "Safety alert: your Meta ad passed its approved cap": "Alerta de seguridad: tu anuncio de Meta superó el tope aprobado", "Your Mother's Day ad has spent $1.5M COP, past the $1.4M COP cap you approved. Rita is paused, so nothing was changed.": "Tu anuncio del Día de la Madre ha gastado $1,5 M COP, por encima del tope de $1,4 M COP que aprobaste. Rita está en pausa, así que no se cambió nada.", "Open Rita to stop it": "Abre Rita para detenerlo", "During a Pause only safety alerts are sent: spend over the cap, a disapproved ad, a payment problem or a broken connection. Sales alerts are off.": "Durante una Pausa solo se envían alertas de seguridad: gasto sobre el tope, anuncio rechazado, problema de pago o conexión rota. Las alertas de ventas están apagadas.", "Stopping the ad: pausing… Your tap was recorded as your Approval. You will see \"Paused and verified\" once Meta confirms.": "Deteniendo el anuncio: pausando… Tu toque quedó registrado como tu Aprobación. Verás \"Pausado y verificado\" cuando Meta lo confirme.", "Paused and verified ✓. Read back from Meta Ads. Resuming it needs a normal Approval.": "Pausado y verificado ✓. Leído de vuelta desde Meta Ads. Reanudarlo necesita una Aprobación normal.", "Restoring the budget: writing and reading back…": "Restaurando el presupuesto: escribiendo y leyendo de vuelta…", "Restored and verified ✓. Retargeting daily budget is $40.000 again, as before your change.": "Restaurado y verificado ✓. El presupuesto diario de Retargeting vuelve a ser $40.000, como antes de tu cambio."});
 Object.assign(LOCALE, {"Start date":"Fecha de inicio","End date (optional)":"Fecha final (opcional)"});
+Object.assign(LOCALE, {"Tuesday": "martes", "Monday": "lunes", "Wednesday": "miércoles", "Thursday": "jueves", "Friday": "viernes", "Saturday": "sábado", "Sunday": "domingo", "Activity": "Actividad", "Everything Rita read, drafted, proposed and executed.": "Todo lo que Rita leyó, redactó, propuso y ejecutó.", "Proposed": "Propuso", "Read": "Leyó", "Drafted": "Redactó", "Executed": "Ejecutó", "from": "desde", "Just now": "Hace un momento", "Today 7:00": "Hoy 7:00", "Today 6:58": "Hoy 6:58", "Today 6:57": "Hoy 6:57", "Today 6:56": "Hoy 6:56", "Orders, last 12 months": "Pedidos, últimos 12 meses", "Ad performance": "Rendimiento de anuncios", "Email \"Día de la Madre\"": "Correo \"Día de la Madre\"", "Key dates, next 4 weeks": "Fechas clave, próximas 4 semanas", "$1.7M COP": "$1,7 millones COP", "$1.7M COP ad budget": "$1,7 millones COP de presupuesto en anuncios", "Coming up: Father's Day, Jun 21. Too early to prepare; Rita proposes work 28 days before.": "Próximamente: Día del Padre, 21 de jun. Es muy pronto para prepararlo; Rita propone trabajo 28 días antes.", "Ad": "Anuncio", "Search text ad: 5 headlines, 2 descriptions. The URL comes from Shopify.": "Anuncio de texto en Búsqueda: 5 títulos y 2 descripciones. La URL sale de Shopify.", "Launch search ad": "Lanzar anuncio de Búsqueda", "Final URL": "URL final", "$300.000 COP": "$300.000 COP", "$300.000 COP cap": "Tope de $300.000 COP", "Needs": "Necesita", "Settings": "Ajustes", "Weekly plan": "Plan semanal", "Rita sends it at 7:00 a.m. (Bogotá time) on this day. A change applies from the next cycle.": "Rita lo envía a las 7:00 a. m. (hora de Bogotá) ese día. El cambio aplica desde el próximo ciclo.", "Day of the week": "Día de la semana", "Not paired. Your Plans reach you by email; the web chat still works.": "Sin emparejar. Tus Planes te llegan por correo; el chat web sigue funcionando.", "Unpaired. Your Plans reach you by email; the web chat still works.": "Desemparejado. Tus Planes te llegan por correo; el chat web sigue funcionando.", "Unpair this number": "Desemparejar este número", "paired": "emparejado", "Your business": "Tu negocio", "Does not repeat": "No se repite", "Repeats every year": "Se repite cada año", "Repeats every": "Se repite cada", "days": "días", "weeks": "semanas", "months": "meses", "Every n days": "Cada n días", "Every n weeks": "Cada n semanas", "Every n months": "Cada n meses", "Sale": "Venta", "Holiday": "Festivo", "Launch": "Lanzamiento", "Other": "Otro", "Rita suggests": "Rita sugiere", "Only you add Key dates. Accepting a suggestion needs no Approval.": "Solo tú agregas Fechas clave. Aceptar una sugerencia no necesita Aprobación.", "Sold 1.9x more around this date last year.": "Vendiste 1,9 veces más alrededor de esta fecha el año pasado.", "Your sales were 2.3x higher on these days last year (found in your Shopify history).": "Tus ventas fueron 2,3 veces más altas en estos días el año pasado (encontrado en tu historial de Shopify).", "Sales and holidays Rita plans around. Each kind has a fixed lead time (holiday 28 days, sale 21, launch 28, other 14).": "Ventas y festivos alrededor de los que Rita planea. Cada tipo tiene un plazo fijo (festivo 28 días, venta 21, lanzamiento 28, otro 14).", "Month": "Mes", "List": "Lista", "Name": "Nombre", "Kind": "Tipo", "Edit Key date": "Editar Fecha clave", "Repeat": "Repetición", "Notes": "Notas", "Edits change future occurrences only; past ones stay as they were.": "Los cambios afectan solo las próximas repeticiones; las pasadas quedan como estaban.", "Delete this Key date?": "¿Eliminar esta Fecha clave?", "Delete": "Eliminar", "Just stop repeating from now": "Solo dejar de repetir desde ahora", "Cancel": "Cancelar", "Add": "Agregar", "Not now": "Ahora no", "Person": "Persona", "First person plural (we)": "Primera persona del plural (nosotros)", "Humour": "Humor", "Empty. Rita never guesses this: write it yourself.": "Vacío. Rita nunca adivina esto: escríbelo tú.", "Sentence style": "Estilo de las frases", "Short, warm sentences": "Frases cortas y cálidas", "You": "Tú", "Topics to avoid": "Temas a evitar", "Claims rules": "Reglas de afirmaciones", "Allowed claim": "Afirmación permitida", "Evidence (link or note)": "Evidencia (enlace o nota)", "Calls to action": "Llamados a la acción", "Legal text: email footer": "Texto legal: pie del correo", "Legal text: ad line": "Texto legal: línea del anuncio", "Inserted verbatim by code; the model never rewrites it.": "Lo inserta el código tal cual; el modelo nunca lo reescribe.", "Examples": "Ejemplos", "Like this": "Así", "Not like this": "Así no", "Paste a text sample": "Pega un texto de ejemplo", "Ad, like this": "Anuncio, así", "Email, like this": "Correo, así", "Email": "Correo", "Palette": "Paleta", "Logo": "Logo", "Replace": "Reemplazar", "Used in the email template header.": "Se usa en el encabezado de la plantilla de correo.", "Every field shows where it came from. Edits apply to the next thing Rita writes.": "Cada campo muestra de dónde viene. Los cambios aplican a lo próximo que escriba Rita.", "Voice": "Voz", "Words and rules": "Palabras y reglas", "Messages": "Mensajes", "Look": "Imagen", "Brand guidelines": "Guía de marca", "Key dates": "Fechas clave", "Start date": "Fecha de inicio", "End date (optional)": "Fecha final (opcional)", "We email you 3 days before and send a receipt after each charge.": "Te escribimos 3 días antes y enviamos un recibo después de cada cobro.", "Refunds are handled by our team within the refund window; write to us from the chat.": "Los reembolsos los gestiona nuestro equipo dentro del plazo; escríbenos desde el chat.", "Auto-approved (keep as is)": "Aprobado automáticamente (se mantiene todo)", "Task": "Tarea", "Alert · Connection": "Alerta · Conexión", "Your Meta Ads connection expired. Rita can't read or change your ads until you reconnect.": "Tu conexión con Meta Ads venció. Rita no puede leer ni cambiar tus anuncios hasta que la reconectes.", "Rita's proposal: reconnect Meta Ads.": "Propuesta de Rita: reconectar Meta Ads.", "Reconnect Meta Ads": "Reconectar Meta Ads", "Reconnected and verified ✓. Rita can read and change your Meta Ads again.": "Reconectado y verificado ✓. Rita puede leer y cambiar tus anuncios de Meta otra vez.", "Welcome back.": "Bienvenido de nuevo.", "Rita paused after 5 reminders went unanswered.": "Rita se pausó porque 5 recordatorios quedaron sin respuesta.", "Generate a new Plan": "Generar un Plan nuevo", "Use the old Plan from May 1": "Usar el Plan anterior desde el 1 de mayo", "No change needed this week.": "Esta semana no hace falta cambiar nada.", "No range: nothing is being changed.": "Sin rango: no se está cambiando nada.", "Keep things as they are": "Mantener todo como está", "Your sales are inside your usual swing and nothing needs fixing this week.": "Tus ventas están dentro de tu variación habitual y nada necesita arreglo esta semana.", "Shopify orders, Meta and Google spend, Klaviyo flows, connections": "Pedidos de Shopify, gasto de Meta y Google, flujos de Klaviyo, conexiones", "Checked": "Revisado", "This Plan approves itself in 24 hours if you do nothing. It changes nothing outside Rita.": "Este Plan se aprueba solo en 24 horas si no haces nada. No cambia nada fuera de Rita.", "No change was proposed, so there is no range to compare with.": "No se propuso ningún cambio, así que no hay rango con el cual comparar.", "Your last payment failed.": "Tu último pago falló.", "Rita keeps working. We retry your card in 1, 3 and 5 days.": "Rita sigue trabajando. Reintentamos tu tarjeta en 1, 3 y 5 días.", "Update your card": "Actualiza tu tarjeta", "Your subscription lapsed.": "Tu suscripción venció.", "Everything is read-only for 30 days. Campaigns already live were left untouched.": "Todo queda en solo lectura por 30 días. Las campañas que ya estaban activas no se tocaron.", "Subscribe to continue": "Suscríbete para continuar", "Taking longer than usual": "Está tardando más de lo normal", "Rita keeps retrying for up to an hour. You can leave: we will tell you when it is ready.": "Rita sigue intentando hasta por una hora. Puedes irte: te avisamos cuando esté listo.", "Try again now": "Intentar ahora", "Change the weekday in Settings.": "Cambia el día en Ajustes.", "Next Weekly plan": "Próximo Plan semanal", "Charge failed on Oct 14. Next retry in 1 day. Changing the card retries immediately.": "El cobro falló el 14 de oct. Próximo reintento en 1 día. Cambiar la tarjeta reintenta de inmediato.", "Failed": "Falló", "Why are you leaving?": "¿Por qué te vas?", "Optional, and it helps us.": "Opcional, y nos ayuda.", "Too expensive": "Muy caro", "Not enough results": "Pocos resultados", "I do not need it now": "Ya no lo necesito", "Other / prefer not to say": "Otro / prefiero no decirlo", "Tell us more (optional)": "Cuéntanos más (opcional)", "Keep my subscription": "Mantener mi suscripción", "Cancel subscription": "Cancelar suscripción", "Canceled. You keep access until Nov 14; no partial refund. Then the project lapses.": "Cancelada. Mantienes el acceso hasta el 14 de nov; sin reembolso parcial. Luego el proyecto vence.", "Lapsed. Subscribing again charges today and your billing day becomes today.": "Vencida. Volver a suscribirte cobra hoy y tu día de cobro pasa a ser hoy.", "Card updated. We retried the charge right away: paid.": "Tarjeta actualizada. Reintentamos el cobro de inmediato: pagado.", "We will use the new card from the next charge.": "Usaremos la tarjeta nueva desde el próximo cobro.", "Charged today. Your billing day is now today, and everything is restored.": "Cobrado hoy. Tu día de cobro ahora es hoy y todo quedó restaurado.", "Paid": "Pagado", "Why? (optional, feeds the next Plan)": "¿Por qué? (opcional, alimenta el próximo Plan)", "Wrong audience": "Público equivocado", "Needs you": "Te necesita", "Mismatch": "No coincide", "A price changed since you approved: Manta Sol is now $150.000, it was $145.000. Nothing was sent.": "Un precio cambió desde que aprobaste: la Manta Sol ahora cuesta $150.000, antes $145.000. No se envió nada.", "Re-approve the updated version": "Aprobar de nuevo la versión actualizada", "Read back from Meta Ads: daily budget $55.000. You approved $60.000.": "Leído de vuelta desde Meta Ads: presupuesto diario $55.000. Tú aprobaste $60.000.", "Ask Rita to fix it": "Pedirle a Rita que lo corrija", "after one automatic retry: Google Ads rejected the request because the account has no payment method. Add one in Google Ads, then try again.": "tras un reintento automático: Google Ads rechazó la solicitud porque la cuenta no tiene método de pago. Agrega uno en Google Ads y vuelve a intentar.", "Try again": "Intentar de nuevo", "Brand guidelines changed since this was written.": "La guía de marca cambió desde que se escribió esto.", "Rewrite with the new guidelines": "Reescribir con la nueva guía", "Result final": "Resultado final", "1 Action not decided": "1 Acción sin decidir", "Done": "Hecho", "Nudge": "Recordatorio", "Your Plan is still waiting. Plans like this usually add between $1.5M and $3.0M COP in a week (an estimate). I will pause until you come back.": "Tu Plan sigue esperando. Planes como este suelen sumar entre $1,5 M y $3,0 M COP en una semana (es un estimado). Me pauso hasta que vuelvas.", "No changes proposed": "Sin cambios propuestos", "Biggest finding in your Diagnosis": "Lo más importante de tu Diagnóstico", "Two Meta campaigns spent $3.2M COP last month without any sale linked to them.": "Dos campañas de Meta gastaron $3,2 M COP el mes pasado sin ninguna venta ligada.", "Ranked for your store. Mother's Day: you sold 2.3x more around it last year.": "Ordenadas para tu tienda. Día de la Madre: vendiste 2,3 veces más alrededor de esa fecha el año pasado."});
 Object.assign(ICON, {
   cal: IC('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
   cal2: IC('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/>'),
@@ -234,8 +241,20 @@ const FINDINGS = [
 const FFAM = n => { const g = (FALLBACKS.find(x => x[0] === n) || [0, 'Sans-serif'])[1]; return `'${n}',${g === 'Serif' ? 'serif' : g === 'Monospace' ? 'monospace' : 'sans-serif'}`; };
 const FALLBACKS = [['Georgia', 'Serif'], ['Times New Roman', 'Serif'], ['Arial', 'Sans-serif'], ['Verdana', 'Sans-serif'], ['Trebuchet MS', 'Sans-serif'], ['Tahoma', 'Sans-serif'], ['Courier New', 'Monospace']];
 const TONES = ['Warm', 'Direct', 'Playful', 'Premium', 'Technical', 'Cheeky', 'Calm'];
-const SUGG_DATES = [['Mother\'s Day', 'May 11'], ['Christmas', 'Dec 25'], ['Black Friday', 'Nov 28'], ['Amor y Amistad', 'Sep 20'], ['Father\'s Day', 'Jun 15'], ['Día sin IVA', 'Jun 19']];
+const SUGG_DATES = [['Mother\'s Day', 'May 11'], ['Christmas', 'Dec 25'], ['Black Friday', 'Nov 27'], ['Amor y Amistad', 'Sep 19'], ['Father\'s Day', 'Jun 21'], ['Día sin IVA', 'Jun 19']];
 
+const TODAY = '2026-05-03';
+const KD0 = [
+  { n: 'Venta de aniversario', s: '2026-03-08', e: '2026-03-10', k: 'sale', r: 'none', rn: 1, notes: '' },
+  { n: 'Día de la Madre', s: '2026-05-11', e: '', k: 'holiday', r: 'yearly', rn: 1, notes: '' },
+  { n: 'Día sin IVA', s: '2026-06-19', e: '', k: 'sale', r: 'yearly', rn: 1, notes: '' },
+  { n: 'Black Friday', s: '2026-11-27', e: '2026-11-30', k: 'sale', r: 'yearly', rn: 1, notes: 'Fin de semana largo' },
+  { n: 'Navidad', s: '2026-12-25', e: '', k: 'holiday', r: 'yearly', rn: 1, notes: '' },
+];
+const KSUG = [
+  { n: 'Día del Padre', s: '2026-06-21', e: '', k: 'holiday', r: 'yearly', rn: 1, notes: '', why: 'Sold 1.9x more around this date last year.' },
+  { n: 'Pico de septiembre', s: '2026-09-12', e: '2026-09-14', k: 'sale', r: 'none', rn: 1, notes: '', why: 'Your sales were 2.3x higher on these days last year (found in your Shopify history).' },
+];
 // ---------- state (memory only) ----------
 const fresh = () => ({
   step: 1, user: { email: '', mode: 'start' }, site: '', siteErr: '',
@@ -246,7 +265,7 @@ const fresh = () => ({
   em: { st: 'idle', readonly: false }, ad: { meta: 'idle', google: 'idle', metaRO: false, page: false, acct: false },
   dx: { run: 0, done: false, goal: null }, sub: false, checkout: false, locked: false,
   phone: '+57 ', ch: 'later', hi: 'idle', hiLate: false, chatOpen: false, chat: [],
-  week: 'first', alert: null, alertRes: '', paused: false, app: { tab: 'home' }, plans: { stop: {}, rb: {}, build: 0, ready: false, detail: false, task: {}, act: {}, edit: {}, variant: {} },
+  weekday: 'Tuesday', bill: 'ok', genFail: false, unpaired: false, brandChanged: false, kd: { view: 'month', m: 4, sel: null, del: false }, kdl: JSON.parse(JSON.stringify(KD0)), kdSug: [0, 1], bgOpen: { Voice: true }, week: 'first', alert: null, alertRes: '', paused: false, app: { tab: 'home' }, plans: { stop: {}, rb: {}, rejWhy: {}, bgRw: {}, build: 0, ready: false, detail: false, task: {}, act: {}, edit: {}, variant: {} },
 });
 let S = fresh();
 const STEPS = ['Sign-up', 'Website', 'CRM & Conversions', 'Company profile', 'Email Marketing', 'Performance Marketing', 'Diagnosis', 'Paywall', 'Channel', 'Say Hi', 'App'];
@@ -352,7 +371,7 @@ V[4] = () => {
   // dates
   const d = S.dateDraft;
   return shell(`<h1>${t('Key dates')}</h1><p class="mute">${t('Sales and holidays Rita should plan around. Optional; add more later in the calendar.')}</p>
-    <label>${t('Popular for stores like yours')}</label>${SUGG_DATES.map(x => `<span class="chip ${S.dates.some(y => y.name === x[0]) ? 'on' : ''}" data-act="sdate" data-n="${x[0]}" data-d="${x[1]}">${t(x[0])} · ${t(x[1])}</span>`).join('')}
+    <label>${t('Popular for stores like yours')}</label><p class="src" style="margin:0 0 6px">${t('Ranked for your store. Mother\'s Day: you sold 2.3x more around it last year.')}</p>${SUGG_DATES.map(x => `<span class="chip ${S.dates.some(y => y.name === x[0]) ? 'on' : ''}" data-act="sdate" data-n="${x[0]}" data-d="${x[1]}">${t(x[0])} · ${t(x[1])}</span>`).join('')}
     <div class="card"><label style="margin-top:0">${t('Add your own')}</label><input data-bind="dateDraft.name" value="${esc(d.name)}" placeholder="${t('Name, e.g. Anniversary sale')}">
     <div class="row" style="margin-top:8px;align-items:flex-end"><div style="flex:1"><label style="margin-top:0">${t('Start date')}</label><input data-bind="dateDraft.date" type="date" value="${esc(d.date)}"></div><div style="flex:1"><label style="margin-top:0">${t('End date (optional)')}</label><input data-bind="dateDraft.end" type="date" min="${esc(d.date)}" value="${esc(d.end)}"></div></div>
     <label class="row" style="margin:8px 0 0"><input type="checkbox" style="width:auto" data-bind="dateDraft.yearly" ${d.yearly ? 'checked' : ''}> ${t('Every year')}</label>
@@ -430,6 +449,7 @@ V[8] = () => {
   return shell(`<h1 style="text-wrap:balance">${gap ? t('Let\'s close the gap to your Goal') + `<span class="gapfig">${mshort(gap)} <small>${t('a month')}</small></span>` : t('Let\'s keep growing your sales')}</h1>
     <div class="card"><div class="stats">${stat(mshort(BASELINE), t('You sell today'))}${stat(mshort(g), t('Your Goal'), 'hl')}</div>
       <div class="bar" style="height:10px;margin:12px 0 6px"><i style="width:${pct}%"></i></div><p class="mute" style="margin:0">${t('You are at')} ${pct}% ${t('of your Goal.')}</p></div>
+    <div class="note bad"><b>${t('Biggest finding in your Diagnosis')}:</b> ${t('Two Meta campaigns spent $3.2M COP last month without any sale linked to them.')}</div>
     <h2 style="margin-top:26px">${t('What you get')}</h2>
     <div class="bento">
       <div class="tl navy wide"><b class="tt">${t('Every week, a plan for your Goal')}</b><p>${t('Rita understands your store, proposes what to do and why, and you decide. She does it and reports against your Goal.')}</p>
@@ -462,11 +482,12 @@ V[10] = () => {
 };
 
 const TASKS = [
-  { id: 't1', title: 'Mother\'s Day push', why: 'Key date in 24 days; last year it drove 18% of May sales and you had no campaign.', effect: '+$6M to +$11M COP', assume: 'assuming last year\'s email open rate and 1.8x ROAS on Meta', dropped: 'Considered and dropped: a Google Shopping test, too little data.', cost: '$1.4M COP ad budget',
+  { id: 't1', title: 'Mother\'s Day push', why: 'Key date in 24 days; last year it drove 18% of May sales and you had no campaign.', dropped: 'Considered and dropped: a Google Shopping test, too little data.', cost: '$1.7M COP ad budget',
     acts: [
       { id: 'a1', sched: 'May 6, 8:00 a.m.', conn: 'Klaviyo', kind: 'Create email draft + schedule', rows: [['Campaign', 'Día de la Madre'], ['Audience', 'Buyers in the last 12 months (3,420)'], ['Send', 'May 6, 8:00 a.m.']], cost: '$0', cre: 'Asunto: Un tejido hecho a mano para mamá\nVista previa: Envío gratis desde $200.000.\nCuerpo: Cada pieza se teje a mano en Colombia. Escoge la suya antes del 8 de mayo para recibirla a tiempo.\nBotón: Ver regalos' },
       { id: 'a2', conn: 'Meta Ads', kind: 'Launch ad', rows: [['Campaign', 'Día de la Madre 2026'], ['Daily budget', '$100.000'], ['Spending cap', '$1.4M COP'], ['Runs', 'May 1 to May 11']], cost: '$1.4M COP cap', variants: ['Para mamá, algo hecho a mano. Mantas y cojines tejidos en Colombia.', 'Regálale calor de hogar. Piezas únicas, envío a todo el país.', 'Mamá merece lo auténtico. Descubre nuestras mantas tejidas.'], cre: '' },
-      { id: 'a3', conn: 'Meta Ads', kind: 'Change budget', rows: [['Retargeting daily budget', '$40.000', '$60.000']], cost: '-$20.000 / day', cre: '' },
+      { id: 'a5', conn: 'Google Ads', kind: 'Launch search ad', rows: [['Campaign', 'Día de la Madre (Búsqueda)'], ['Daily budget', '$30.000'], ['Spending cap', '$300.000 COP'], ['Final URL', 'casatejida.co/colecciones/dia-de-la-madre'], ['Runs', 'May 1 to May 11']], cost: '$300.000 COP cap', cre: '' },
+      { id: 'a3', needs: 'a2', conn: 'Meta Ads', kind: 'Change budget', rows: [['Retargeting daily budget', '$40.000', '$60.000']], cost: '-$20.000 / day', cre: '' },
     ] },
   { id: 't2', title: 'Win back customers who stopped buying', why: 'Your welcome flow is paused and 1,180 customers have not bought in 6+ months.', dropped: '', cost: '$0',
     acts: [
@@ -510,22 +531,25 @@ const CRE = {
   a4: { type: 'email', subject: 'Te extrañamos en Casa Tejida', preheader: 'Mira lo nuevo desde tu última visita.', headline: 'Han llegado piezas nuevas', paras: ['Desde tu última visita llegaron piezas nuevas. Pásate a verlas.'], claim: -1, button: 'Ver novedades', signoff: 'Casa Tejida', note: 'Correo 1 de 3 del flujo', hero: 3, products: [3, 4, 5], ptitle: 'Lo nuevo',
     alts: { subject: ['Te guardamos un lugar en Casa Tejida', 'Volvimos con piezas nuevas'], headline: ['Mira qué llegó', 'Novedades para tu hogar'] } },
 };
+CRE.a5 = { type: 'google', h: ['Mantas tejidas a mano', 'Regalos para mamá', 'Hecho en Colombia', 'Envío a todo el país', 'Compra hoy en Casa Tejida'], d: ['Mantas y cojines tejidos a mano en Colombia. Envío a todo el país.', 'Regala algo único este Día de la Madre. Descubre la colección.'], url: 'casatejida.co/colecciones/dia-de-la-madre', alts: {} };
 const LIM = { subject: 60, preheader: 90, headline: 60, para: 300, button: 25, primary: 125, mhead: 40, desc: 30, cta: 25 };
 const FIELD = { subject: 'Subject', preheader: 'Preheader', headline: 'Headline', button: 'Button', signoff: 'Sign-off', primary: 'Primary text', mhead: 'Headline', desc: 'Description', cta: 'Button' };
 const getCre = id => { const P = S.plans; P.cre = P.cre || {}; if (!P.cre[id] && CRE[id]) P.cre[id] = JSON.parse(JSON.stringify(CRE[id])); return P.cre[id]; };
 function creFields(c, vi) {
+  if (c.type === 'google') return [...c.h.map((x, i) => ['h' + i, 'ghead', x, 30]), ...c.d.map((x, i) => ['d' + i, 'gdesc', x, 90])];
   if (c.type === 'email') return [['subject', 'subject', c.subject, LIM.subject], ['preheader', 'preheader', c.preheader, LIM.preheader], ['headline', 'headline', c.headline, LIM.headline], ...c.paras.map((x, i) => ['para' + i, 'para', x, LIM.para]), ['button', 'button', c.button, LIM.button], ['signoff', 'signoff', c.signoff, 80]];
   const v = c.v[vi]; return [['primary', 'primary', v.primary, LIM.primary], ['headline', 'mhead', v.headline, LIM.mhead], ['description', 'desc', v.description, LIM.desc], ['cta', 'cta', v.cta, LIM.cta]];
 }
 function creChecks(id) {
   const c = getCre(id); if (!c) return null;
-  const all = c.type === 'email' ? creFields(c) : c.v.flatMap((_, i) => creFields(c, i));
+  const all = c.type !== 'meta' ? creFields(c) : c.v.flatMap((_, i) => creFields(c, i));
   const over = all.filter(f => f[2].length > f[3]).length;
   const text = all.map(f => f[2]).join(' ').toLowerCase();
   const never = S.brand.never.filter(w => w && text.includes(w.toLowerCase()));
   const claimOpen = c.type === 'email' && c.claim >= 0 && !(S.plans.claim || {})[id];
   return { over, never, claimOpen, hard: over > 0 || never.length > 0 };
 }
+Object.assign(FIELD, { ghead: 'Headline', gdesc: 'Description' });
 const hardFail = id => { const k = creChecks(id); return !!(k && k.hard); };
 function prodEditor(id, c) {
   const rest = CATALOG.map((p, i) => [p, i]).filter(([, i]) => !c.products.includes(i));
@@ -536,7 +560,7 @@ function creativeHTML(a, st) {
   const P = S.plans, locked = st !== 'open', editing = !!(P.creEdit || {})[a.id] && !locked, vi = P.variant[a.id] || 0, chk = creChecks(a.id);
   const claimDone = (P.claim || {})[a.id];
   const fields = creFields(c, vi);
-  const setPath = f => c.type === 'email' ? `plans.cre.${a.id}.${f[0].startsWith('para') ? 'paras.' + f[0].slice(4) : f[0]}` : `plans.cre.${a.id}.v.${vi}.${f[0]}`;
+  const setPath = f => c.type === 'google' ? `plans.cre.${a.id}.${f[0][0] === 'h' ? 'h' : 'd'}.${f[0].slice(1)}` : c.type === 'email' ? `plans.cre.${a.id}.${f[0].startsWith('para') ? 'paras.' + f[0].slice(4) : f[0]}` : `plans.cre.${a.id}.v.${vi}.${f[0]}`;
   const fieldHTML = f => `<div class="cf"><div class="row sp"><span class="src">${t(FIELD[f[1]] || 'Paragraph')}</span><span class="src" style="${f[2].length > f[3] ? 'color:var(--bad);font-weight:700' : ''}">${f[2].length}/${f[3]}${(c.alts && c.alts[f[1]] || c.alts && c.alts[f[0]]) ? ` <button class="link" data-act="cre-regen" data-id="${a.id}" data-f="${f[1] === 'mhead' ? 'headline' : f[0]}" aria-label="${t('Rewrite this field')}" style="text-decoration:none">↻</button>` : ''}</span></div>
     ${f[3] > 90 ? `<textarea data-bind="${setPath(f)}" style="min-height:64px">${esc(f[2])}</textarea>` : `<input data-bind="${setPath(f)}" value="${esc(f[2])}">`}</div>`;
   const stars = txt => esc(txt);
@@ -550,13 +574,14 @@ function creativeHTML(a, st) {
         ${c.products.length ? `<div style="padding:16px 14px 6px"><div class="ptt" style="color:${pal[0]}">${stars(c.ptitle)}</div><div class="pgrid">${c.products.map(i => card(CATALOG[i])).join('')}</div><div class="src" style="text-align:center;margin-top:6px">🔒 ${t('Name, price and photo come from your Shopify catalog.')}</div></div>` : ''}
         <div style="padding:14px 18px 16px;text-align:center;border-top:1px solid var(--line);margin-top:12px"><div style="font-size:14px">${stars(c.signoff)}</div><div class="src" style="margin-top:8px">Casa Tejida · Bogotá, Colombia<br><u>${t('Unsubscribe')}</u></div></div></div></div>${c.note ? `<div class="src">${t(c.note)}</div>` : ''}`;
   }
+  else if (c.type === 'google') { preview = `<div class="gad"><div class="u"><b>${t('Ad')}</b> · ${esc(c.url)}</div><div class="tl2">${c.h.map(esc).join(' | ')}</div><div class="ds">${c.d.map(esc).join(' ')}</div></div><div class="src">${t('Search text ad: 5 headlines, 2 descriptions. The URL comes from Shopify.')}</div>`; }
   else { const v = c.v[vi]; preview = `<div class="row wrapf" style="margin-bottom:8px">${c.v.map((_, i) => `<span class="chip ${vi === i ? 'on' : ''}" data-act="variant" data-id="${a.id}" data-i="${i}">${t('Variant')} ${i + 1}</span>`).join('')}</div><div class="mad"><div class="row" style="gap:8px;padding:10px 12px"><span class="avatar" style="width:28px;height:28px;font-size:13px">C</span><div><b style="font-size:14px">Casa Tejida</b><div class="src">${t('Sponsored')}</div></div></div><div style="padding:0 12px 10px;font-size:14px">${stars(v.primary)}</div><div class="mimg">${art(CATALOG[vi === 1 ? 1 : 0].kind, CATALOG[vi === 1 ? 1 : 0].c)}<span class="shp">Shopify</span></div><div class="row sp" style="padding:10px 12px;background:var(--bg)"><div style="min-width:0"><b style="font-size:14px">${stars(v.headline)}</b><div class="src">${stars(v.description)}</div></div><span class="mbtn" style="background:var(--card);color:var(--ink);border:1px solid var(--line);padding:6px 12px;font-size:13px">${stars(v.cta)}</span></div></div>`; }
   const checks = chk ? `<div class="chk"><span>${t('Checked')}:</span> <span class="${chk.over ? 'bad' : 'ok'}">${chk.over ? '✗' : '✓'} ${t('Character limits')}</span> <span class="${chk.never.length ? 'bad' : 'ok'}">${chk.never.length ? '✗' : '✓'} ${t('Never-say words')}${chk.never.length ? ': ' + chk.never.map(esc).join(', ') : ''}</span> <span class="${chk.claimOpen ? 'warnc' : 'ok'}">${chk.claimOpen ? '⚠' : '✓'} ${t('Claims')}</span></div>` : '';
   const claimBar = chk && chk.claimOpen ? `<div class="note"><b>${t('Unverified claim')}:</b> «${esc(c.paras[c.claim])}» ${t('This claim doesn\'t match anything in your Company profile or Brand guidelines.')}<div class="row" style="margin-top:8px"><button class="sm" data-act="claim" data-id="${a.id}" data-v="removed">${t('Remove it')}</button><button class="sm" data-act="claim" data-id="${a.id}" data-v="confirmed">${t('It\'s true, keep it')}</button></div></div>` : '';
-  const rw = (P.rewrite || {})[a.id];
+  const rw = (P.rewrite || {})[a.id], bgN = S.brandChanged && !locked && !(P.bgRw || {})[a.id] && c.type !== 'google' ? `<div class="note">${t('Brand guidelines changed since this was written.')} <button class="link" data-act="bg-rewrite" data-id="${a.id}">${t('Rewrite with the new guidelines')}</button></div>` : '';
   return `<div class="cre"><div class="row sp"><b>${t('Creative')}</b>${locked ? '' : `<button class="link" data-act="cre-edit" data-id="${a.id}">${editing ? t('Done editing') : t('Edit')}</button>`}</div>
     ${editing ? `<div>${fields.map(fieldHTML).join('')}${c.type === 'email' ? prodEditor(a.id, c) : ''}</div>` : preview}
-    ${checks}${claimBar}${chk && chk.hard ? `<div class="note bad">${t('Fix the failed checks to approve this Creative.')}</div>` : ''}
+    ${bgN}${checks}${claimBar}${chk && chk.hard ? `<div class="note bad">${t('Fix the failed checks to approve this Creative.')}</div>` : ''}
     ${!locked ? `<div style="margin-top:8px">${rw === undefined ? `<button class="sm" data-act="cre-rw" data-id="${a.id}">${t('Ask Rita to rewrite it')}</button>` : `<div class="row"><input data-bind="plans.rewrite.${a.id}" value="${esc(rw)}" placeholder="${t('e.g. more playful, shorter')}"><button class="pri sm" data-act="cre-rw-go" data-id="${a.id}">${t('Rewrite')}</button></div>`}</div>` : ''}</div>`;
 }
 const taskDone = task => task.acts.every(a => S.plans.act[a.id]);
@@ -565,6 +590,7 @@ const taskCollapsed = task => taskDone(task) && !(S.plans.taskOpen || {})[task.i
 // ---------- Hypothesis, Result, alerts (ticket: Weekly report against the Goal and mid-week alerts) ----------
 const HYP = {
   first: { text: 'A Mother\'s Day email plus Meta ads will bring gift buyers you had no campaign for last year.', lo: 1.5e6, hi: 3e6, assume: 'assuming last year\'s email open rate and 1.8x ROAS on Meta', title: 'Plan for May 1 to May 7' },
+  keep: { text: 'No change needed this week.', lo: null, hi: null, assume: '', title: 'Plan for May 8 to May 14' },
   second: { text: 'Winning back customers who stopped buying will lift sales while the Mother\'s Day ads keep running.', lo: 1e6, hi: 2.5e6, assume: 'assuming a 2% reactivation rate', title: 'Plan for May 8 to May 14' },
 };
 const planTitle = () => HYP[S.week].title;
@@ -581,22 +607,25 @@ function lastWeekCard() {
     <p class="mute">${t('Mother\'s Day week was in this period, a likely driver.')}</p>${ranOnly()}</div>`;
 }
 function resultBlock() {
-  const second = S.week === 'second', h = HYP[S.week];
+  const second = S.week !== 'first', h = HYP[S.week];
   const up = second ? 0.4e6 : 0.6e6, inBand = Math.abs(up) < BAND;
   return `<div class="card" style="border-style:dashed;background:var(--bg)"><div class="row sp"><b>${t('Result')}</b><span class="tag warn">${t('Day 3 of 7')}</span></div>
     <p class="mute" style="margin-top:4px">${t('Refreshed daily. Freezes when your next Weekly plan arrives; orders after that count in the next period.')}</p>
     <p style="margin:8px 0 2px;font-size:20px;font-weight:700;color:var(--navy)">${t('Uplift so far')} ${m(up)}</p>
     <p class="mute">${second ? t('Compared with last week\'s Plan period.') : t('Compared with your baseline from the Diagnosis (median of your last 3 months), because this is your first Plan.')}</p>
-    <p>${inBand ? t('Inside your usual swing (±$1.6M COP): no clear change yet.') : t('Outside your usual swing.')} ${t('The Hypothesis expects')} <span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('by the end of the week.')}</p>
+    <p>${inBand ? t('Inside your usual swing (±$1.6M COP): no clear change yet.') : t('Outside your usual swing.')} ${t('The Hypothesis expects')} ${h.lo == null ? t('No change was proposed, so there is no range to compare with.') : `<span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('by the end of the week.')}`}</p>
     <p class="mute">${t('Mother\'s Day is in this period: a likely driver, not separated out.')}</p>${ranOnly()}
     <p class="mute" style="margin-top:8px">${t('Only your Shopify sales count as a result. Ad platform numbers are never used as sales.')}</p></div>`;
 }
 function hypCard() {
   const h = HYP[S.week];
   return `<div class="card hyp"><div class="mute">${t('Hypothesis')}</div><div class="big">${t(h.text)}</div>
-    <p>${t('Expected uplift:')} <span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('over the week')}, ${t(h.assume)}.</p>
-    <p class="mute">${t('The Tasks below only carry out this bet. Rita reads the result next week against it.')}</p>
+    ${h.lo == null ? `<p class="mute">${t('No range: nothing is being changed.')}</p>` : `<p>${t('Expected uplift:')} <span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('over the week')}, ${t(h.assume)}.</p><p class="mute">${t('The Tasks below only carry out this bet. Rita reads the result next week against it.')}</p>`}
+    <p class="mute">${t('Coming up: Father\'s Day, Jun 21. Too early to prepare; Rita proposes work 28 days before.')}</p>
     <div class="mute" style="margin-top:8px">${t('Pace vs Goal')}</div><p style="margin-top:2px"><b>${t('At this pace you end May near')} ${cop(BASELINE)}</b>, ${t('about')} ${Math.round((1 - BASELINE / +S.goal) * 100)}% ${t('under your Goal.')}</p></div>`;
+}
+function pauseReturn() {
+  return `<div class="note"><b>${t('Welcome back.')}</b> ${t('Rita paused after 5 reminders went unanswered.')}<div class="row"><button class="pri sm" data-act="pause-new">${t('Generate a new Plan')}</button><button class="sm" data-act="unpause">${t('Use the old Plan from May 1')}</button></div></div>`;
 }
 function pausedBanner() {
   return S.paused ? `<div class="note"><b>${t('Rita is paused.')}</b> ${t('Only safety alerts reach you, by email. Things already scheduled at Klaviyo or Meta keep running there.')} <button class="link" data-act="unpause">${t('Resume Rita')}</button></div>` : '';
@@ -618,6 +647,7 @@ function alertCards() {
   if (S.alert === 'spend') return `<div class="card alert"><div class="row sp"><b>${t('Alert · Meta Ads')}</b><span class="tag bad">${t('Needs you')}</span></div>
     <p>${t('Your Mother\'s Day ad has spent $1.5M COP, past the $1.4M COP cap you approved.')}</p><p class="mute">${t('Rita\'s proposal: stop the ad. Your tap is the Approval.')}</p>
     <div class="row"><button class="pri sm" data-act="al-stop">${t('Stop the ad')}</button><button class="sm" data-act="al-wait" data-h="24">${t('Wait 24 h')}</button></div></div>`;
+  if (S.alert === 'conn') return `<div class="card alert"><div class="row sp"><b>${t('Alert · Connection')}</b><span class="tag bad">${t('Needs you')}</span></div><p>${t('Your Meta Ads connection expired. Rita can\'t read or change your ads until you reconnect.')}</p><p class="mute">${t('Rita\'s proposal: reconnect Meta Ads.')}</p><div class="row"><button class="pri sm" data-act="al-reconnect">${t('Reconnect Meta Ads')}</button><button class="sm" data-act="al-wait" data-h="24">${t('Wait 24 h')}</button></div></div>`;
   if (S.alert === 'pace') return `<div class="card alert"><div class="row sp"><b>${t('Alert · Sales')}</b><span class="tag bad">${t('Needs you')}</span></div>
     <p>${t('Sales so far this week are $3.1M COP, far below your usual range for this day ($5.4M to $8.6M COP).')}</p><p class="mute">${t('Rita\'s proposal: undo the budget change you approved on May 1 (Retargeting daily budget back to $40.000). Your tap is the Approval.')}</p>
     <div class="row"><button class="pri sm" data-act="al-restore">${t('Restore $40.000')}</button><button class="sm" data-act="al-wait" data-h="48">${t('Wait 48 h')}</button></div></div>`;
@@ -625,6 +655,130 @@ function alertCards() {
 }
 function safetyEmail() {
   return S.paused && S.alert === 'spend' ? `<div class="mail"><div class="h">${t('Email sent to')} daniel@casatejida.co · ${t('while Rita is paused')}</div><b>${t('Safety alert: your Meta ad passed its approved cap')}</b><p>${t('Your Mother\'s Day ad has spent $1.5M COP, past the $1.4M COP cap you approved. Rita is paused, so nothing was changed.')}</p><p><u>${t('Open Rita to stop it')}</u></p><p class="mute">${t('During a Pause only safety alerts are sent: spend over the cap, a disapproved ad, a payment problem or a broken connection. Sales alerts are off.')}</p></div>` : '';
+}
+
+// ---------- parity additions: Settings, Key dates page, Brand guidelines page, Activity, Billing ----------
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const pad = n => String(n).padStart(2, '0');
+const fdate = iso => { if (!iso) return ''; const [y, mo, d] = iso.split('-').map(Number); return new Date(y, mo - 1, d).toLocaleDateString(LANG === 'en' ? 'en' : 'es-CO', { day: 'numeric', month: 'short' }); };
+const KINDS = ['holiday', 'sale', 'launch', 'other'];
+const KLABEL = { holiday: 'Holiday', sale: 'Sale', launch: 'Launch', other: 'Other' };
+const REPEATS = ['none', 'yearly', 'days', 'weeks', 'months'];
+function repSentence(x) { const n = x.rn || 1; return { none: t('Does not repeat'), yearly: t('Repeats every year'), days: `${t('Repeats every')} ${n} ${t('days')}`, weeks: `${t('Repeats every')} ${n} ${t('weeks')}`, months: `${t('Repeats every')} ${n} ${t('months')}` }[x.r || 'none']; }
+function settingsPage() {
+  const wa = S.ch === 'wa' && !S.unpaired;
+  return appShell(`${backHome()}<h1>${t('Settings')}</h1>
+    <div class="card"><b>${t('Weekly plan')}</b><p class="mute">${t('Rita sends it at 7:00 a.m. (Bogotá time) on this day. A change applies from the next cycle.')}</p>
+      <label>${t('Day of the week')}</label><select data-bind="weekday">${WEEKDAYS.map(d => `<option value="${d}" ${S.weekday === d ? 'selected' : ''}>${t(d)}</option>`).join('')}</select></div>
+    <div class="card"><b>WhatsApp</b>${wa ? `<p class="mute">${esc(S.phone)} · ${t('paired')}</p><button class="sm danger" data-act="unpair">${t('Unpair this number')}</button>` : `<p class="mute">${S.unpaired ? t('Unpaired. Your Plans reach you by email; the web chat still works.') : t('Not paired. Your Plans reach you by email; the web chat still works.')}</p>`}</div>
+    <div class="card"><b>${t('Your business')}</b><div class="row" style="margin-top:8px"><button class="sm" data-act="goto" data-k="keydates">${ICON.cal} ${t('Key dates')}</button><button class="sm" data-act="goto" data-k="brand">${ICON.pen} ${t('Brand guidelines')}</button></div></div>`);
+}
+function kdEvents(iso) { return S.kdl.map((x, i) => [x, i]).filter(([x]) => x.s <= iso && iso <= (x.e || x.s)); }
+function keyDatesPage() {
+  const K = S.kd, v = K.view;
+  if (!S.kdInit) { S.kdInit = true; S.dates.filter(x => /^\d{4}-/.test(x.date)).forEach(x => S.kdl.push({ n: x.name, s: x.date, e: x.end || '', k: 'other', r: x.yearly ? 'yearly' : 'none', rn: 1, notes: '' })); }
+  const y = 2026, first = (new Date(y, K.m, 1).getDay() + 6) % 7, dim = new Date(y, K.m + 1, 0).getDate();
+  const mname = new Date(y, K.m, 1).toLocaleDateString(LANG === 'en' ? 'en' : 'es-CO', { month: 'long', year: 'numeric' });
+  const dn = LANG === 'en' ? ['M', 'T', 'W', 'T', 'F', 'S', 'S'] : ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+  let cells = ''; for (let i = 0; i < first; i++) cells += '<div class="kdc out"></div>';
+  for (let d = 1; d <= dim; d++) { const iso = `${y}-${pad(K.m + 1)}-${pad(d)}`; cells += `<div class="kdc ${iso < TODAY ? 'past' : ''}"><div class="dn">${d}</div>${kdEvents(iso).map(([x, i]) => `<button class="kc ${x.k}" data-act="kd-sel" data-i="${i}">${iso === x.s ? esc(x.n) : '↳'}</button>`).join('')}</div>`; }
+  const grid = `<div class="row sp" style="margin:8px 0"><button class="sm" data-act="kd-m" data-d="-1" aria-label="prev">‹</button><b>${mname.charAt(0).toUpperCase() + mname.slice(1)}</b><button class="sm" data-act="kd-m" data-d="1" aria-label="next">›</button></div><div class="kdgrid">${dn.map(x => `<div class="kdh">${x}</div>`).join('')}${cells}</div>`;
+  const sorted = S.kdl.map((x, i) => [x, i]).sort((a, b) => a[0].s.localeCompare(b[0].s));
+  const list = sorted.map(([x, i]) => `<button class="card row sp ${(x.e || x.s) < TODAY ? 'dis' : ''}" data-act="kd-sel" data-i="${i}" style="width:100%;text-align:left;border-radius:14px;margin:6px 0"><span><b>${esc(x.n)}</b><div class="src">${fdate(x.s)}${x.e ? ' → ' + fdate(x.e) : ''} · ${repSentence(x)}</div></span><span class="tag">${t(KLABEL[x.k])}</span></button>`).join('');
+  const x = K.sel != null ? S.kdl[K.sel] : null;
+  const panel = x ? `<div class="card" style="border-color:var(--navy)"><div class="row sp"><b>${t('Edit Key date')}</b><button class="link" data-act="kd-close">✕</button></div>
+    <label>${t('Name')}</label><input data-bind="kdl.${K.sel}.n" value="${esc(x.n)}">
+    <label>${t('Kind')}</label><select data-bind="kdl.${K.sel}.k">${KINDS.map(k => `<option value="${k}" ${x.k === k ? 'selected' : ''}>${t(KLABEL[k])}</option>`).join('')}</select>
+    <div class="row" style="margin-top:4px"><div style="flex:1"><label>${t('Start date')}</label><input type="date" data-bind="kdl.${K.sel}.s" value="${esc(x.s)}"></div><div style="flex:1"><label>${t('End date (optional)')}</label><input type="date" data-bind="kdl.${K.sel}.e" value="${esc(x.e)}"></div></div>
+    <label>${t('Repeat')}</label><div class="row"><select data-bind="kdl.${K.sel}.r">${REPEATS.map(r => `<option value="${r}" ${x.r === r ? 'selected' : ''}>${{ none: t('Does not repeat'), yearly: t('Every year'), days: t('Every n days'), weeks: t('Every n weeks'), months: t('Every n months') }[r]}</option>`).join('')}</select>${['days', 'weeks', 'months'].includes(x.r) ? `<input type="number" min="1" style="width:80px" data-bind="kdl.${K.sel}.rn" value="${x.rn || 1}">` : ''}</div>
+    <p class="mute">${repSentence(x)}${x.r !== 'none' ? '. ' + t('Edits change future occurrences only; past ones stay as they were.') : ''}</p>
+    <label>${t('Notes')}</label><input data-bind="kdl.${K.sel}.notes" value="${esc(x.notes)}">
+    ${K.del ? `<div class="note bad">${t('Delete this Key date?')}<div class="row"><button class="sm danger" data-act="kd-del" data-v="all">${t('Delete')}</button><button class="sm" data-act="kd-del" data-v="stop">${t('Just stop repeating from now')}</button><button class="link" data-act="kd-delask">${t('Cancel')}</button></div></div>` : `<button class="sm danger" style="margin-top:10px" data-act="kd-delask">${t('Delete')}</button>`}</div>` : '';
+  const sug = S.kdSug.length ? `<div class="card"><b>${t('Rita suggests')}</b><p class="mute">${t('Only you add Key dates. Accepting a suggestion needs no Approval.')}</p>${S.kdSug.map(i => `<div style="padding:8px 0;border-top:1px solid var(--line)"><div class="row sp"><b>${esc(KSUG[i].n)}</b><span class="tag">${t(KLABEL[KSUG[i].k])}</span></div><div class="src">${fdate(KSUG[i].s)}${KSUG[i].e ? ' → ' + fdate(KSUG[i].e) : ''} · ${t(KSUG[i].why)}</div><div class="row" style="margin-top:6px"><button class="pri sm" data-act="kd-acc" data-i="${i}">${t('Add')}</button><button class="sm" data-act="kd-no" data-i="${i}">${t('Not now')}</button></div></div>`).join('')}</div>` : '';
+  return appShell(`${backHome()}<h1>${t('Key dates')}</h1><p class="mute">${t('Sales and holidays Rita plans around. Each kind has a fixed lead time (holiday 28 days, sale 21, launch 28, other 14).')}</p>
+    <div class="row"><button class="chip ${v === 'month' ? 'on' : ''}" data-act="kd-view" data-v="month">${t('Month')}</button><button class="chip ${v === 'list' ? 'on' : ''}" data-act="kd-view" data-v="list">${t('List')}</button><span class="row" style="margin-left:auto;gap:4px">${KINDS.map(k => `<span class="kc ${k}" style="width:auto;padding:2px 6px;cursor:default">${t(KLABEL[k])}</span>`).join('')}</span></div>
+    ${v === 'month' ? grid : list}${panel}${sug}`);
+}
+const BG_SECTIONS = ['Voice', 'Words and rules', 'Messages', 'Look'];
+function bgBadge(k) { return `<span class="badge">${t({ web: 'Website', up: 'Upload', you: 'You' }[k])}</span>`; }
+function bgEmpty(h) { return `<div class="src" style="margin-top:4px;color:var(--warn)">${t(h || 'Empty. Rita never guesses this: write it yourself.')}</div>`; }
+function brandPage() {
+  const b = S.brand, o = S.bgOpen, ex = b.examples = b.examples || [{ txt: 'Para mamá, algo hecho a mano.', kind: 'ad', like: true }], cl = b.claims = b.claims || [];
+  b.person = b.person ?? 'First person plural (we)'; b.sentence = b.sentence ?? 'Short, warm sentences'; b.humour = b.humour ?? ''; b.topics = b.topics ?? ''; b.ctas = b.ctas ?? 'Ver regalos, Comprar ahora'; b.footer = b.footer ?? ''; b.adline = b.adline ?? '';
+  const chips = (arr, k) => arr.map((x, i) => `<span class="chip on" data-act="rm" data-k="${k}" data-i="${i}">${esc(x)} ✕</span>`).join('');
+  const sec = (name, body) => `<div class="card"><button class="link" style="text-decoration:none;width:100%;text-align:left;font-size:17px;font-weight:700" data-act="bg-open" data-k="${name}">${o[name] ? '▾' : '▸'} ${t(name)}</button>${o[name] ? body : ''}</div>`;
+  const tones = `<label>${t('Tone')} ${bgBadge('web')}</label>${TONES.map(x => `<span class="chip ${b.tones.includes(x) ? 'on' : ''}" data-act="tone" data-v="${x}">${t(x)}</span>`).join('')}`;
+  const voice = `${tones}<label>${t('Person')} ${bgBadge('web')}</label><input data-bind="brand.person" value="${esc(t(b.person))}">
+    <label>${t('Form of address')} ${bgBadge('web')}</label>${['Informal (tú)', 'Formal (usted)'].map(x => `<span class="chip ${b.address === x ? 'on' : ''}" data-act="addr" data-v="${x}">${t(x)}</span>`).join('')}
+    <label>${t('Humour')}</label><input data-bind="brand.humour" value="${esc(b.humour)}">${b.humour ? '' : bgEmpty()}
+    <label>${t('Sentence style')} ${bgBadge('web')}</label><input data-bind="brand.sentence" value="${esc(t(b.sentence))}">
+    <label>${t('Emoji')} ${bgBadge('web')}</label>${['None', 'Some', 'Lots'].map(x => `<span class="chip ${b.emoji === x ? 'on' : ''}" data-act="emoji" data-v="${x}">${t(x)}</span>`).join('')}`;
+  const words = `<label>${t('Always use')} ${bgBadge('web')}</label>${chips(b.always, 'always')}<div class="row"><input data-bind="brand.newAlways" value="${esc(b.newAlways)}"><button class="sm" data-act="add" data-k="always">+</button></div>
+    <label>${t('Never say')} ${bgBadge('you')}</label>${chips(b.never, 'never')}<div class="row"><input data-bind="brand.newNever" value="${esc(b.newNever)}"><button class="sm" data-act="add" data-k="never">+</button></div>
+    <label>${t('Topics to avoid')}</label><input data-bind="brand.topics" value="${esc(b.topics)}">${b.topics ? '' : bgEmpty()}
+    <label>${t('Claims rules')}</label>${cl.map((c, i) => `<div class="row sp" style="padding:4px 0"><span>${esc(c.claim)}<div class="src">${esc(c.evidence)}</div></span><button class="link" data-act="bg-rm" data-k="claims" data-i="${i}">✕</button></div>`).join('')}${cl.length ? '' : bgEmpty()}
+    <div class="row"><input data-bind="brand.newClaim" placeholder="${t('Allowed claim')}" value="${esc(b.newClaim || '')}"><input data-bind="brand.newEv" placeholder="${t('Evidence (link or note)')}" value="${esc(b.newEv || '')}"><button class="sm" data-act="bg-add-claim">+</button></div>`;
+  const msgs = `<label>${t('Calls to action')} ${bgBadge('web')}</label><input data-bind="brand.ctas" value="${esc(b.ctas)}">
+    <label>${t('Legal text: email footer')}</label><input data-bind="brand.footer" value="${esc(b.footer)}">${b.footer ? '' : bgEmpty()}
+    <label>${t('Legal text: ad line')}</label><input data-bind="brand.adline" value="${esc(b.adline)}">${b.adline ? '' : bgEmpty()}<div class="src">${t('Inserted verbatim by code; the model never rewrites it.')}</div>
+    <label>${t('Examples')} (${ex.length}/5)</label>${ex.map((e, i) => `<div class="row sp" style="padding:4px 0"><span>${esc(e.txt)}<div class="src">${t(e.kind === 'ad' ? 'Ad' : 'Email')} · ${t(e.like ? 'Like this' : 'Not like this')}</div></span><button class="link" data-act="bg-rm" data-k="examples" data-i="${i}">✕</button></div>`).join('')}
+    ${ex.length < 5 ? `<textarea data-bind="brand.newEx" style="min-height:56px" placeholder="${t('Paste a text sample')}">${esc(b.newEx || '')}</textarea><div class="row"><button class="sm" data-act="bg-add-ex" data-k="ad" data-l="1">+ ${t('Ad, like this')}</button><button class="sm" data-act="bg-add-ex" data-k="email" data-l="1">+ ${t('Email, like this')}</button><button class="sm" data-act="bg-add-ex" data-k="ad" data-l="0">+ ${t('Not like this')}</button></div>` : ''}`;
+  const look = `<label>${t('Palette')} ${bgBadge('web')}</label><div class="row">${b.palette.map(c => `<span style="width:30px;height:30px;border-radius:8px;background:${c};border:1px solid var(--line)"></span>`).join('')}</div>
+    <label>${t('Fonts')} ${bgBadge('web')}</label><p>${esc(b.fonts.title.name)} · ${esc(b.fonts.body.name)}</p>
+    <label>${t('Logo')} ${bgBadge('web')}</label><div class="card row sp" style="margin:4px 0"><span>logo-casatejida.png</span><button class="sm">${t('Replace')}</button></div><div class="src">${t('Used in the email template header.')}</div>`;
+  return appShell(`${backHome()}<h1>${t('Brand guidelines')}</h1><p class="mute">${t('Every field shows where it came from. Edits apply to the next thing Rita writes.')}</p>${sec('Voice', voice)}${sec('Words and rules', words)}${sec('Messages', msgs)}${sec('Look', look)}`);
+}
+const ACTIVITY = [['Today 7:00', 'Proposed', 'Plan for May 1 to May 7', 'Shopify, Klaviyo, Meta Ads'], ['Today 6:58', 'Read', 'Orders, last 12 months', 'Shopify'], ['Today 6:57', 'Read', 'Ad performance', 'Meta Ads'], ['Today 6:57', 'Drafted', 'Email "Día de la Madre"', 'Klaviyo'], ['Today 6:56', 'Read', 'Key dates, next 4 weeks', 'Rita']];
+function activityCard() {
+  const P = S.plans, run = TASKS.flatMap(x => x.acts).filter(a => P.act['x' + a.id] === 'done').map(a => ['Just now', 'Executed', a.kind, a.conn]);
+  return `<div class="card"><b>${t('Activity')}</b><p class="mute">${t('Everything Rita read, drafted, proposed and executed.')}</p>${[...run, ...ACTIVITY].slice(0, 7).map(r => `<div class="it" style="padding:6px 0;font-size:14px"><span class="tag ${r[1] === 'Executed' ? 'ok' : ''}">${t(r[1])}</span><div>${t(r[2])}<div class="src">${r[0] === 'Just now' ? t('Just now') : t(r[0])} · ${t('from')} ${r[3]}</div></div></div>`).join('')}</div>`;
+}
+const CANCEL_WHY = ['Too expensive', 'Not enough results', 'I do not need it now', 'Other / prefer not to say'];
+function billBanner() {
+  if (S.bill === 'failed') return `<div class="note bad"><b>${t('Your last payment failed.')}</b> ${t('Rita keeps working. We retry your card in 1, 3 and 5 days.')} <button class="link" data-act="goto" data-k="billing">${t('Update your card')}</button></div>`;
+  if (S.bill === 'lapsed') return `<div class="note bad"><b>${t('Your subscription lapsed.')}</b> ${t('Everything is read-only for 30 days. Campaigns already live were left untouched.')} <button class="link" data-act="goto" data-k="billing">${t('Subscribe to continue')}</button></div>`;
+  return '';
+}
+function billingPage() {
+  const b = S.bill;
+  return appShell(`${backHome()}<h1>${t('Plan and payment method')}</h1>${billBanner()}
+    <div class="card"><div class="row sp"><b>Rita</b><b>${cop(400000)} / ${t('month')}</b></div>${b === 'lapsed' ? `<p class="mute">${t('Lapsed. Subscribing again charges today and your billing day becomes today.')}</p><button class="pri sm" data-act="bill-resub">${t('Subscribe to continue')}</button>` : `<p class="mute">${b === 'canceled' ? t('Canceled. You keep access until Nov 14; no partial refund. Then the project lapses.') : t('Next charge') + ': ' + t('Nov 14') + ' · ' + t('Your billing day is the 14th of each month.') + ' ' + t('We email you 3 days before and send a receipt after each charge.')}</p><p class="mute">${t('Changes left this period')}: N / N</p>`}</div>
+    <div class="card"><div class="row sp"><div><b>${t('Payment method')}</b><div class="src">Visa •••• 4242</div></div><button class="sm" data-act="bill-card">${t('Change card')}</button></div>${b === 'failed' ? `<div class="note bad">${t('Charge failed on Oct 14. Next retry in 1 day. Changing the card retries immediately.')}</div>` : ''}${S.billNote ? `<div class="note ok">${t(S.billNote)}</div>` : ''}</div>
+    <div class="card"><b>${t('Payment history')}</b><div class="row sp" style="margin-top:8px"><span>${t('Oct 14')}</span><span>${cop(400000)} · <span class="tag ${b === 'failed' ? 'bad' : 'ok'}">${t(b === 'failed' ? 'Failed' : 'Paid')}</span></span></div></div>
+    ${b === 'ok' || b === 'failed' ? (S.cancel ? `<div class="card"><b>${t('Why are you leaving?')}</b><p class="mute">${t('Optional, and it helps us.')}</p>${CANCEL_WHY.map(x => `<span class="chip ${S.cancelWhy === x ? 'on' : ''}" data-act="cancel-why" data-v="${x}">${t(x)}</span>`).join('')}<textarea data-bind="cancelText" style="min-height:56px;margin-top:8px" placeholder="${t('Tell us more (optional)')}">${esc(S.cancelText || '')}</textarea><div class="row" style="margin-top:8px"><button class="sm danger" data-act="cancel-go">${t('Cancel subscription')}</button><button class="sm" data-act="cancel-no">${t('Keep my subscription')}</button></div></div>` : `<p><button class="link danger" data-act="cancel-open">${t('Cancel subscription')}</button></p><p class="mute">${t('Refunds are handled by our team within the refund window; write to us from the chat.')}</p>`) : ''}`);
+}
+const ACTS = () => TASKS.flatMap(x => x.acts);
+const depB = a => !!(a.needs && S.plans.act[a.needs] === 'rejected');
+const exTag = (a, st, ex) => {
+  if (depB(a)) return `<span class="tag">${t('Needs')}: ${t(ACTS().find(x => x.id === a.needs).kind)}</span>`;
+  if (st === 'rejected') return `<span class="tag">${t('Rejected')}</span>`;
+  if (st !== 'approved') return `<span class="tag">${t('Awaiting you')}</span>`;
+  if (ex === 'done') return `<span class="tag ok">${t(a.sched ? 'Scheduled and verified' : 'Done and verified')}</span>`;
+  if (ex === 'needs') return `<span class="tag warn">${t('Needs you')}</span>`;
+  if (ex === 'mismatch') return `<span class="tag bad">${t('Mismatch')}</span>`;
+  if (ex === 'failed') return `<span class="tag bad">${t('Failed')}</span>`;
+  return ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`;
+};
+function exNotes(a, ex) {
+  if (ex === 'needs') return `<div class="note"><b>${t('Needs you')}:</b> ${t('A price changed since you approved: Manta Sol is now $150.000, it was $145.000. Nothing was sent.')} <div class="row"><button class="pri sm" data-act="ex-fix" data-id="${a.id}">${t('Re-approve the updated version')}</button></div></div>`;
+  if (ex === 'mismatch') return `<div class="note bad"><b>${t('Mismatch')}:</b> ${t('Read back from Meta Ads: daily budget $55.000. You approved $60.000.')} <div class="row"><button class="pri sm" data-act="ex-fix" data-id="${a.id}">${t('Ask Rita to fix it')}</button></div></div>`;
+  if (ex === 'failed') return `<div class="note bad"><b>${t('Failed')}</b> ${t('after one automatic retry: Google Ads rejected the request because the account has no payment method. Add one in Google Ads, then try again.')} <div class="row"><button class="sm" data-act="ex-fix" data-id="${a.id}">${t('Try again')}</button></div></div>`;
+  return '';
+}
+function rejWhy(a) {
+  const w = S.plans.rejWhy[a.id];
+  return `<div class="src" style="margin-top:6px">${t('Why? (optional, feeds the next Plan)')}</div>${['Too expensive', 'Not now', 'Wrong audience', 'Other'].map(x => `<span class="chip ${w === x ? 'on' : ''}" data-act="rejwhy" data-id="${a.id}" data-v="${x}">${t(x)}</span>`).join('')}`;
+}
+function keepTask() {
+  return `<section class="task"><h2 style="margin-top:0">${t('Keep things as they are')}</h2><p>${t('Your sales are inside your usual swing and nothing needs fixing this week.')}</p><div class="chg"><div class="r"><span class="l">${t('Checked')}</span><span class="v">${t('Shopify orders, Meta and Google spend, Klaviyo flows, connections')}</span></div></div>
+    <div class="note ok">${t('This Plan approves itself in 24 hours if you do nothing. It changes nothing outside Rita.')}</div></section>`;
+}
+function genFailCard() { return `<div class="card"><b>${t('Taking longer than usual')}</b><p class="mute">${t('Rita keeps retrying for up to an hour. You can leave: we will tell you when it is ready.')}</p><button class="sm" data-act="gen-retry">${t('Try again now')}</button></div>`; }
+function chatSamples() {
+  const o = [];
+  if (S.week === 'second' || S.week === 'keep') o.push({ who: 'r', html: `${t('Your Plan is ready:')}<div class="planimg"><b>Casa Tejida</b><br>${t(planTitle())}<br>${S.week === 'keep' ? t('No changes proposed') : '5 ' + t('actions') + ': Klaviyo 2 · Meta 2 · Google 1'}<br>${t('Budget to approve')}: ${S.week === 'keep' ? '$0' : '$1.7M COP'}<br>${t('Last week')}: ${m(2.3e6)}</div><a href="#">holarita.co/plans</a>` });
+  if (S.paused) o.push({ who: 'r', html: `${t('Nudge')} 5/5 · ${t('Your Plan is still waiting. Plans like this usually add between $1.5M and $3.0M COP in a week (an estimate). I will pause until you come back.')}` });
+  return o;
 }
 function taskSummary(task) {
   const P = S.plans, ok = task.acts.filter(a => P.act[a.id] === 'approved').length, no = task.acts.length - ok;
@@ -642,20 +796,21 @@ function actsHTML(task) {
 function actCard(a) {
   const st = S.plans.act[a.id] || 'open', ex = S.plans.act['x' + a.id];
   const cre = creativeHTML(a, st);
-  const tag = st === 'approved' ? (ex === 'done' ? `<span class="tag ok">${t(a.sched ? 'Scheduled and verified' : 'Done and verified')}</span>` : ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`) : st === 'rejected' ? `<span class="tag">${t('Rejected')}</span>` : `<span class="tag">${t('Awaiting you')}</span>`;
-  return `<div class="card" style="${st === 'rejected' ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="kind">${a.rows.some(r => r[2]) ? t('Change') : t('New')}</div><div class="chg">${a.rows.map(r => `<div class="r ${r[2] ? 'ba' : ''}"><span class="l">${t(r[0])}</span><span class="v">${r[2] ? `<s>${t(r[2])}</s><i class="arr" aria-hidden="true">→</i>` : ''}${t(r[1])}</span></div>`).join('')}</div>${cre}
+  const tag = exTag(a, st, ex), dep = depB(a);
+  return `<div class="card" style="${st === 'rejected' || dep ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="kind">${a.rows.some(r => r[2]) ? t('Change') : t('New')}</div><div class="chg">${a.rows.map(r => `<div class="r ${r[2] ? 'ba' : ''}"><span class="l">${t(r[0])}</span><span class="v">${r[2] ? `<s>${t(r[2])}</s><i class="arr" aria-hidden="true">→</i>` : ''}${t(r[1])}</span></div>`).join('')}</div>${cre}
     <div class="mute">${t('Cost:')} ${t(a.cost)}</div>
     ${ex === 'done' ? `<div class="note ok">${t('Read back from')} ${a.conn}: ${t('matches the approved diff')} ✓ · <button class="link">${t('Open in')} ${a.conn}</button></div>` : ''}
-    ${st === 'open' ? `<div class="row" style="margin-top:8px"><button class="pri sm" data-act="approve" data-id="${a.id}" ${hardFail(a.id) ? 'disabled' : ''}>${t('Approve')}</button><button class="sm danger" data-act="reject" data-id="${a.id}">${t('Reject')}</button></div>` : ''}
-    ${ex === 'done' && a.sched ? schedLine(a) : ''}${ex === 'done' && a.kind === 'Launch ad' ? stopLine(a) : ''}${S.plans.rb[a.id] === 'edited' ? `<div class="note">${t('Rolled back in Klaviyo. Approve the changed version.')}</div>` : ''}
+    ${st === 'open' ? `<div class="row" style="margin-top:8px"><button class="pri sm" data-act="approve" data-id="${a.id}" ${hardFail(a.id) || dep || S.bill === 'lapsed' ? 'disabled' : ''}>${t('Approve')}</button><button class="sm danger" data-act="reject" data-id="${a.id}">${t('Reject')}</button></div>` : ''}
+    ${exNotes(a, ex)}${ex === 'done' && a.sched ? schedLine(a) : ''}${ex === 'done' && a.kind === 'Launch ad' ? stopLine(a) : ''}${S.plans.rb[a.id] === 'edited' ? `<div class="note">${t('Rolled back in Klaviyo. Approve the changed version.')}</div>` : ''}
     ${st === 'approved' && !ex ? `<p class="mute">${t('Approved and frozen.')}</p>` : ''}
+    ${st === 'rejected' ? rejWhy(a) : ''}
     ${st === 'rejected' ? `<button class="link" data-act="undo" data-id="${a.id}">${t('Undo')}</button>` : ''}</div>`;
 }
 
 // Step 11 is the end of the Wizard: the user lands in the actual app (Home, Plans), not on a Wizard page.
 function appShell(body, foot = '') {
   const tab = S.app.tab;
-  return `<header class="top"><div class="brand"><img src="${LOGO}" alt="Rita"><div class="menuwrap"><button class="avatar" data-act="menu" aria-haspopup="menu" aria-expanded="${!!S.menuOpen}" aria-label="${t('Account')}">D</button>${S.menuOpen ? `<div class="umenu" role="menu"><div class="uhead"><b>Daniel</b><div class="src">${esc(S.user.email || 'daniel@casatejida.co')}</div></div><button role="menuitem" data-act="goto" data-k="billing">${ICON.card}<span>${t('Plan and payment method')}</span></button><button role="menuitem" data-act="goto" data-k="connections">${ICON.plug}<span>${t('Manage connections')}</span></button><button role="menuitem" class="out" data-act="logout">${ICON.out}<span>${t('Sign out')}</span></button></div>` : ''}</div></div></header>${body}
+  return `<header class="top"><div class="brand"><img src="${LOGO}" alt="Rita"><div class="menuwrap"><button class="avatar" data-act="menu" aria-haspopup="menu" aria-expanded="${!!S.menuOpen}" aria-label="${t('Account')}">D</button>${S.menuOpen ? `<div class="umenu" role="menu"><div class="uhead"><b>Daniel</b><div class="src">${esc(S.user.email || 'daniel@casatejida.co')}</div></div><button role="menuitem" data-act="goto" data-k="keydates">${ICON.cal}<span>${t('Key dates')}</span></button><button role="menuitem" data-act="goto" data-k="brand">${ICON.pen}<span>${t('Brand guidelines')}</span></button><button role="menuitem" data-act="goto" data-k="settings">${ICON.shield}<span>${t('Settings')}</span></button><button role="menuitem" data-act="goto" data-k="billing">${ICON.card}<span>${t('Plan and payment method')}</span></button><button role="menuitem" data-act="goto" data-k="connections">${ICON.plug}<span>${t('Manage connections')}</span></button><button role="menuitem" class="out" data-act="logout">${ICON.out}<span>${t('Sign out')}</span></button></div>` : ''}</div></div></header>${body}
   ${foot ? `<div class="sticky app"><div>${foot}</div></div>` : ''}
   <nav class="tabs">${[['home', 'Home'], ['plans', 'Plans'], ['chat', 'Chat']].map(([k, l]) => `<button class="tab ${tab === k ? 'on' : ''}" data-act="tab" data-k="${k}"><span>${ICON[k]}</span>${t(l)}</button>`).join('')}</nav>`;
 }
@@ -667,6 +822,7 @@ function buildingCard() {
   return `<div class="card"><b>${t('Rita is building your first Plan')}</b><p class="mute">${t('Nothing runs without your Approval.')}${S.ch === 'later' ? ' ' + t('We\'ll email you when it\'s ready.') : ' ' + t('We\'ll message you on WhatsApp when it\'s ready.')}</p><ul class="prog">${items.map((x, i) => `<li><span class="dot ${P.build > i ? 'done' : P.build === i ? 'run' : ''}"></span>${t(x)}</li>`).join('')}</ul></div>`;
 }
 function planStatus() {
+  if (S.week === 'keep') return { label: 'Auto-approved (keep as is)', cls: 'ok', sub: '' };
   const P = S.plans, all = TASKS.flatMap(x => x.acts), dec = all.filter(a => P.act[a.id]), appr = dec.filter(a => P.act[a.id] === 'approved');
   if (dec.length < all.length) return { label: 'Pending approvals', cls: 'warn', sub: `${dec.length} ${t('of')} ${all.length} ${t('decided')}` };
   if (!appr.length) return { label: 'Rejected', cls: '', sub: '' };
@@ -674,38 +830,43 @@ function planStatus() {
   return { label: 'Approved', cls: 'ok', sub: done ? t('All verified') : t('Running') };
 }
 const statusTag = () => { const st = planStatus(); return `<span class="tag ${st.cls}">${t(st.label)}${st.sub ? ' · ' + st.sub.toLowerCase() : ''}</span>`; };
-const planRow = () => `<div class="card" data-act="open-plan" style="cursor:pointer;border-color:var(--navy)"><div class="row sp"><b>${t(planTitle())}</b>${statusTag()}</div><p class="mute">2 ${t('Tasks')} · 4 ${t('Actions')} · ${t('Cost')} ${t('$1.4M COP')}</p></div>`;
+const planRow = () => `<div class="card" data-act="open-plan" style="cursor:pointer;border-color:var(--navy)"><div class="row sp"><b>${t(planTitle())}</b>${statusTag()}</div><p class="mute">${S.week === 'keep' ? '1 ' + t('Task') + ' · 0 ' + t('Actions') : '2 ' + t('Tasks') + ' · 5 ' + t('Actions') + ' · ' + t('Cost') + ' ' + t('$1.7M COP')}</p></div>`;
+const prevRow = () => `<div class="card"><div class="row sp"><b>${t('Plan for May 1 to May 7')}</b><span class="tag ok">${t('Done')}</span></div><p class="mute">${t('Result final')}: ${t('Uplift')} ${m(2.3e6)} · ${t('1 Action not decided')}</p></div>`;
 V[11] = () => {
   const P = S.plans, tab = S.app.tab;
   if (tab === 'connections') return appShell(`${backHome()}<h1>${t('Manage connections')}</h1>
     ${connRow('Shopify', 'casatejida.co · ' + t('CRM & Conversions'), true)}${connRow('Klaviyo', t('Email Marketing'), hasKlaviyo())}${connRow('Meta Ads', t('Performance Marketing'), S.ad.meta === 'ok')}${connRow('Google Ads', t('Performance Marketing'), S.ad.google === 'ok')}`);
-  if (tab === 'billing') return appShell(`${backHome()}<h1>${t('Plan and payment method')}</h1>
+  if (tab === 'settings') return settingsPage();
+  if (tab === 'keydates') return keyDatesPage();
+  if (tab === 'brand') return brandPage();
+  if (tab === 'billing') return billingPage();
+  if (false) return appShell(`${backHome()}<h1>${t('Plan and payment method')}</h1>
     <div class="card"><div class="row sp"><b>Rita</b><b>${cop(400000)} / ${t('month')}</b></div><p class="mute">${t('Next charge')}: ${t('Nov 14')} · ${t('Your billing day is the 14th of each month.')}</p><p class="mute">${t('Changes left this period')}: N / N</p></div>
     <div class="card"><div class="row sp"><div><b>${t('Payment method')}</b><div class="src">Visa •••• 4242</div></div><button class="sm">${t('Change card')}</button></div></div>
     <div class="card"><b>${t('Payment history')}</b><div class="row sp" style="margin-top:8px"><span>${t('Oct 14')}</span><span>${cop(400000)} · <span class="tag ok">${t('Paid')}</span></span></div></div>
     <p><button class="link danger">${t('Cancel subscription')}</button></p>`);
   if (tab === 'chat') {
     if (!S.chat.length) S.chat.push({ who: 'r', html: t('Hi Daniel! I\'m Rita. I\'m reading Casa Tejida and building your first Plan. Nothing happens without your Approval.') });
-    return appShell(`<div class="thread">${S.chat.map(m => `<div class="msg ${m.who}">${m.html}</div>`).join('')}</div>
+    return appShell(`<div class="thread">${[...S.chat, ...chatSamples()].map(m => `<div class="msg ${m.who}">${m.html}</div>`).join('')}</div>
       <div class="composer"><input data-bind="chatDraft" value="${esc(S.chatDraft || '')}" placeholder="${t('Message')}" autocomplete="off"><button class="pri sm" data-act="chat-send" aria-label="${t('Send')}">➤</button></div>`);
   }
   if (tab === 'home') {
     const sold = 18.4e6, g = +S.goal, pct = Math.min(100, Math.round(sold / g * 100));
     return appShell(`<h1>${t('Hello, Daniel')}</h1><p class="mute">${STORE.name} · ${STORE.url}</p>
-      ${pausedBanner()}${safetyEmail()}${alertCards()}${P.ready ? `<div class="mute" style="margin-top:14px">${t('Needs your Approval')}</div>${planRow()}` : buildingCard()}${P.ready && S.week === 'second' ? lastWeekCard() : ''}
+      ${pausedBanner()}${billBanner()}${safetyEmail()}${alertCards()}${S.genFail ? genFailCard() : ''}${P.ready && !S.genFail ? `<div class="mute" style="margin-top:14px">${t('Needs your Approval')}</div>${planRow()}` : buildingCard()}${P.ready && S.week !== 'first' ? lastWeekCard() : ''}
       <div class="card"><div class="row sp"><b>${t('May Goal')}</b><b>${cop(g)}</b></div><div class="bar" style="height:10px;margin:10px 0 6px"><i style="width:${pct}%"></i></div><p class="mute">${t('So far this month:')} ${cop(sold)} · ${pct}%</p></div>
-      <div class="card"><div class="row sp"><span>${t('Next Weekly plan')}</span><b>${t('Tuesday 7:00 a.m.')}</b></div><div class="row sp" style="margin-top:8px"><span>${t('Changes left this period')}</span><b>N / N</b></div></div>`);
+      <div class="card"><div class="row sp"><span>${t('Next Weekly plan')}</span><b>${t(S.weekday)} 7:00 a.m.</b></div><div class="row sp" style="margin-top:8px"><span>${t('Changes left this period')}</span><b>N / N</b></div></div>${activityCard()}`);
   }
   if (!P.ready) return appShell(`<h1>${t('Plans')}</h1>${buildingCard()}<div class="card"><p class="mute">${t('Your first Plan appears here.')}</p></div>`);
-  if (!P.detail) return appShell(`<h1>${t('Plans')}</h1>${planRow()}<p class="mute">${t('Next Weekly plan: Tuesday 7:00. Change the weekday in Settings.')}</p>`);
+  if (!P.detail) return appShell(`<h1>${t('Plans')}</h1>${S.paused ? pauseReturn() : ''}${billBanner()}${planRow()}${S.week !== 'first' ? prevRow() : ''}<p class="mute">${t('Next Weekly plan')}: ${t(S.weekday)} 7:00. <button class="link" data-act="goto" data-k="settings">${t('Change the weekday in Settings.')}</button></p>`);
   const all = TASKS.flatMap(x => x.acts), decided = all.filter(a => P.act[a.id]).length, remaining = all.length - decided;
   return appShell(`<button class="link" data-act="plans-list">‹ ${t('Plans')}</button><h1 style="margin-bottom:6px">${t(planTitle())}</h1><div style="margin-bottom:6px">${statusTag()}</div>
-    ${pausedBanner()}${S.week === 'second' ? lastWeekCard() : ''}${hypCard()}
-    ${TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<section class="task"><div class="row sp"><h2 style="margin-top:0">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
+    ${billBanner()}${S.paused ? pauseReturn() : ''}${S.week !== 'first' ? lastWeekCard() : ''}${hypCard()}
+    ${S.week === 'keep' ? keepTask() : TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<section class="task"><div class="row sp"><h2 style="margin-top:0">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
       ${actsHTML(task)}</section>`).join('')}
     ${resultBlock()}
     <p class="mute">${t('Rita reads each change back after writing it and shows you whether it matches.')}</p>`,
-    remaining > 0 ? fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all') : '');
+    remaining > 0 && S.week !== 'keep' && S.bill !== 'lapsed' ? fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all') : '');
 };
 
 // ---------- chat panel ----------
@@ -717,8 +878,8 @@ function chatHTML() {
 // ---------- render + events ----------
 function render() {
   document.getElementById('app').innerHTML = (V[S.step === 2 && S.siteWait ? 'wait' : S.step] || (() => ''))() + chatHTML();
-  const demo = { 2: [['no-Shopify site', 'd-wix']], 3: [['Shopify failure', 'shop-fail'], ['admin connects', 'owner-done']], 5: [['read-only', 'em-ro'], ['denied', 'em-fail']], 6: [['Meta read-only', 'meta-ro']], 9: [['number taken', 'd-taken']], 10: [['simulate message', 'hi-sim']], 11: [['Plan 2 (Last week)', 'w2'], ['spend alert', 'al-spend'], ['sales alert', 'al-pace'], ['paused', 'paused'], ['reset demo', 'al-clear']] }[S.step] || [];
-  document.getElementById('dev').innerHTML = demo.map(([l, a]) => `<button data-act="${a}">${l}</button>`).join('') + `<span>PROTOTYPE</span><select data-act="jump">${STEPS.map((s, i) => `<option value="${i + 1}" ${S.step === i + 1 ? 'selected' : ''}>${i + 1}. ${t(s)}</option>`).join('')}</select><button data-act="reset">reset</button>`;
+  const demo = { 2: [['no-Shopify site', 'd-wix']], 3: [['Shopify failure', 'shop-fail'], ['admin connects', 'owner-done']], 5: [['read-only', 'em-ro'], ['denied', 'em-fail']], 6: [['Meta read-only', 'meta-ro']], 9: [['number taken', 'd-taken']], 10: [['simulate message', 'hi-sim']], 11: [['Plan 2 (Last week)', 'w2'], ['keep-as-is Plan', 'w3'], ['spend alert', 'al-spend'], ['sales alert', 'al-pace'], ['connection alert', 'al-conn'], ['paused', 'paused'], ['execution problems', 'exec'], ['payment failed', 'bill-fail'], ['lapsed', 'bill-lapse'], ['generation failed', 'gen-fail'], ['reset demo', 'al-clear']] }[S.step] || [];
+  document.getElementById('dev').innerHTML = (S.step === 11 ? `<select data-act="demo"><option value="">Demo states…</option>${demo.map(([l, a]) => `<option value="${a}">${l}</option>`).join('')}</select>` : demo.map(([l, a]) => `<button data-act="${a}">${l}</button>`).join('')) + `<span>PROTOTYPE</span><select data-act="jump">${STEPS.map((s, i) => `<option value="${i + 1}" ${S.step === i + 1 ? 'selected' : ''}>${i + 1}. ${t(s)}</option>`).join('')}</select><button data-act="reset">reset</button>`;
   kick();
 }
 function kick() {
@@ -730,11 +891,12 @@ const setPath = (p, v) => { const k = p.split('.'); let o = S; while (k.length >
 document.addEventListener('input', e => {
   const b = e.target.dataset.bind; if (!b) return;
   setPath(b, e.target.type === 'checkbox' ? e.target.checked : e.target.value);
+  if (S.step === 11 && b.startsWith('brand.')) S.brandChanged = true;
   if (e.target.type === 'color') return;
   // re-evaluate gating on buttons without losing focus
   const f = document.querySelector('.sticky button.pri'); if ((f && S.step !== 11) || b.startsWith('plans.cre') || b === 'shop.ownerEmail') { const pos = e.target.selectionStart; const id = e.target.dataset.bind; render(); const el = document.querySelector(`[data-bind="${id}"]`); if (el && el.type !== 'checkbox' && el.type !== 'date') { el.focus(); try { el.setSelectionRange(pos, pos); } catch (_) {} } }
 });
-document.addEventListener('change', e => { if (e.target.dataset.act === 'jump') { const n = +e.target.value; S.p = 'findings'; S.dx = n > 7 ? { run: 5, done: true } : S.dx; if (n >= 3) { S.shop.st = 'ok'; S.goal = S.goal || String(Math.round(AVG3 * 1.2)); } if (n >= 6 && !hasLever()) S.em = { st: 'ok', readonly: false }; if (n >= 9) S.sub = true; go(n); } else if (e.target.dataset.bind) { setPath(e.target.dataset.bind, e.target.type === 'checkbox' ? e.target.checked : e.target.value); render(); } });
+document.addEventListener('change', e => { if (e.target.dataset.act === 'demo') { const f = A[e.target.value]; if (f) f({}); return; } if (e.target.dataset.act === 'jump') { const n = +e.target.value; S.p = 'findings'; S.dx = n > 7 ? { run: 5, done: true } : S.dx; if (n >= 3) { S.shop.st = 'ok'; S.goal = S.goal || String(Math.round(AVG3 * 1.2)); } if (n >= 6 && !hasLever()) S.em = { st: 'ok', readonly: false }; if (n >= 9) S.sub = true; go(n); } else if (e.target.dataset.bind) { setPath(e.target.dataset.bind, e.target.type === 'checkbox' ? e.target.checked : e.target.value); render(); } });
 const toggle = (arr, v) => arr.includes(v) ? arr.splice(arr.indexOf(v), 1) : arr.push(v);
 const A = {
   reset() { timers.splice(0).forEach(clearTimeout); S = fresh(); render(); },
@@ -770,7 +932,7 @@ const A = {
   to8() { go(8); }, checkout() { S.checkout = true; render(); }, pay() { S.sub = true; S.checkout = false; go(9); }, notnow() { S.locked = true; render(); }, 'resume-pay'() { S.locked = false; S.checkout = true; render(); },
   to10() { S.ch = 'wa'; go(10); }, 'ch-later'() { S.ch = 'later'; go(11); },
   'wa-open'() {}, 'hi-later'() { go(11); },
-  'hi-sim'() { S.hi = 'done'; S.chat = [{ who: 'u', html: t('Hi Rita, I\'m Daniel') }, { who: 'r', html: `${t('Hi Daniel! I\'m Rita. I\'m reading Casa Tejida and building your first Plan. Nothing happens without your Approval.')}` }]; setTimeout(() => { S.chat.push({ who: 'r', html: `${t('Your Plan is ready:')}<div class="planimg"><b>Casa Tejida</b><br>${t('Plan for May 1 to May 7')}<br>4 ${t('actions')}: Klaviyo 2 · Meta 2<br>${t('Budget to approve')}: $1.4M COP</div><a href="#">holarita.co/plans</a>` }); render(); }, 3500); render(); },
+  'hi-sim'() { S.hi = 'done'; S.chat = [{ who: 'u', html: t('Hi Rita, I\'m Daniel') }, { who: 'r', html: `${t('Hi Daniel! I\'m Rita. I\'m reading Casa Tejida and building your first Plan. Nothing happens without your Approval.')}` }]; setTimeout(() => { S.chat.push({ who: 'r', html: `${t('Your Plan is ready:')}<div class="planimg"><b>Casa Tejida</b><br>${t('Plan for May 1 to May 7')}<br>5 ${t('actions')}: Klaviyo 2 · Meta 2 · Google 1<br>${t('Budget to approve')}: $1.7M COP</div><a href="#">holarita.co/plans</a>` }); render(); }, 3500); render(); },
   to11() { go(11); }, chat() { S.chatOpen = !S.chatOpen; render(); },
   'open-plan'() { S.app.tab = 'plans'; S.plans.detail = true; render(); scrollTo(0, 0); }, 'chat-send'() { const v = (S.chatDraft || '').trim(); if (!v) return; S.chat.push({ who: 'u', html: esc(v) }); S.chatDraft = ''; render(); scrollTo(0, document.body.scrollHeight); setTimeout(() => { S.chat.push({ who: 'r', html: t('Got it. I\'ll look into it and tell you in your next Plan. Nothing changes without your Approval.') }); if (S.step === 11 && S.app.tab === 'chat') { render(); scrollTo(0, document.body.scrollHeight); } }, 900); const i = document.querySelector('.composer input'); if (i) i.focus(); }, tab(d) { S.menuOpen = false; S.app.tab = d.k; if (d.k === 'plans') S.plans.detail = false; S.chatOpen = false; render(); scrollTo(0, d.k === 'chat' ? document.body.scrollHeight : 0); }, 'plans-list'() { S.plans.detail = false; render(); },
   variant(d) { S.plans.variant[d.id] = +d.i; delete S.plans.edit[d.id]; render(); },
@@ -784,7 +946,7 @@ const A = {
   taskopen(d) { S.plans.taskOpen = S.plans.taskOpen || {}; S.plans.taskOpen[d.id] = !S.plans.taskOpen[d.id]; render(); },
   w2() { S.week = 'second'; S.plans.act = {}; S.plans.stop = {}; S.plans.rb = {}; S.plans.ready = true; S.plans.build = 5; S.plans.detail = false; S.app.tab = 'home'; render(); scrollTo(0, 0); },
   'al-spend'() { S.alert = 'spend'; S.alertRes = ''; S.app.tab = 'home'; render(); }, 'al-pace'() { S.alert = 'pace'; S.alertRes = ''; S.app.tab = 'home'; render(); },
-  'al-clear'() { S.alert = null; S.alertRes = ''; S.paused = false; S.week = 'first'; render(); },
+  'al-clear'() { Object.assign(S, { alert: null, alertRes: '', paused: false, week: 'first', bill: 'ok', genFail: false, billNote: '' }); S.plans.act = {}; S.plans.stop = {}; S.plans.rb = {}; S.plans.rejWhy = {}; render(); },
   paused() { S.paused = true; S.alert = 'spend'; S.alertRes = ''; S.app.tab = 'home'; render(); }, unpause() { S.paused = false; render(); },
   'al-stop'() { S.alertRes = 'Stopping the ad: pausing… Your tap was recorded as your Approval. You will see "Paused and verified" once Meta confirms.'; render(); later(1800, () => { S.alertRes = 'Paused and verified ✓. Read back from Meta Ads. Resuming it needs a normal Approval.'; render(); }); },
   'al-restore'() { S.alertRes = 'Restoring the budget: writing and reading back…'; render(); later(1800, () => { S.alertRes = 'Restored and verified ✓. Retargeting daily budget is $40.000 again, as before your change.'; render(); }); },
@@ -793,19 +955,43 @@ const A = {
   'resume-ask'(d) { S.plans.stop[d.id] = 'resume'; render(); },
   'rb-revoke'(d) { S.plans.rb[d.id] = 'revoked'; render(); },
   'rb-edit'(d) { S.plans.rb[d.id] = 'edited'; delete S.plans.act[d.id]; delete S.plans.act['x' + d.id]; render(); },
+  'al-conn'() { S.alert = 'conn'; S.alertRes = ''; S.app.tab = 'home'; render(); },
+  'al-reconnect'() { S.alertRes = 'Reconnected and verified ✓. Rita can read and change your Meta Ads again.'; render(); },
+  w3() { S.week = 'keep'; S.plans.act = {}; S.plans.ready = true; S.plans.build = 5; S.plans.detail = false; S.app.tab = 'home'; render(); scrollTo(0, 0); },
+  'bill-fail'() { S.bill = 'failed'; S.billNote = ''; S.app.tab = 'home'; render(); }, 'bill-lapse'() { S.bill = 'lapsed'; S.app.tab = 'home'; render(); },
+  'bill-card'() { if (S.bill === 'failed') { S.bill = 'ok'; S.billNote = 'Card updated. We retried the charge right away: paid.'; } else S.billNote = 'We will use the new card from the next charge.'; render(); },
+  'bill-resub'() { S.bill = 'ok'; S.billNote = 'Charged today. Your billing day is now today, and everything is restored.'; render(); },
+  'cancel-open'() { S.cancel = true; render(); }, 'cancel-no'() { S.cancel = false; render(); }, 'cancel-why'(d) { S.cancelWhy = d.v; render(); },
+  'cancel-go'() { S.cancel = false; S.bill = 'canceled'; render(); },
+  'gen-fail'() { S.genFail = true; S.app.tab = 'home'; render(); }, 'gen-retry'() { S.genFail = false; render(); },
+  'pause-new'() { S.paused = false; S.alert = null; A.w2(); },
+  exec() { ['a3', 'a4', 'a5'].forEach(id => { S.plans.act[id] = 'approved'; S.plans.act['x' + id] = 'queued'; }); S.plans.detail = true; S.app.tab = 'plans'; S.plans.showDone = { t1: true, t2: true }; render(); later(1200, () => { S.plans.act.xa3 = 'mismatch'; S.plans.act.xa4 = 'needs'; S.plans.act.xa5 = 'failed'; render(); }); },
+  'ex-fix'(d) { S.plans.act['x' + d.id] = 'done'; render(); },
+  rejwhy(d) { S.plans.rejWhy[d.id] = S.plans.rejWhy[d.id] === d.v ? '' : d.v; render(); },
+  'bg-rewrite'(d) { S.plans.bgRw[d.id] = true; const c = getCre(d.id), alt = c.alts || {}; if (c.type === 'email' && alt.subject) { c.subject = alt.subject[1]; c.headline = alt.headline[1]; } else if (c.type === 'meta') { c.v[0].primary = alt.primary[1]; } render(); },
+  unpair() { S.unpaired = true; render(); },
+  'bg-open'(d) { S.bgOpen[d.k] = !S.bgOpen[d.k]; render(); },
+  'bg-rm'(d) { S.brand[d.k].splice(+d.i, 1); render(); },
+  'bg-add-claim'() { const b = S.brand; if (b.newClaim) { b.claims.push({ claim: b.newClaim, evidence: b.newEv || '' }); b.newClaim = b.newEv = ''; } render(); },
+  'bg-add-ex'(d) { const b = S.brand; if (b.newEx && b.examples.length < 5) { b.examples.push({ txt: b.newEx, kind: d.k, like: d.l === '1' }); b.newEx = ''; } render(); },
+  'kd-view'(d) { S.kd.view = d.v; render(); }, 'kd-m'(d) { S.kd.m = Math.max(0, Math.min(11, S.kd.m + +d.d)); render(); },
+  'kd-sel'(d) { S.kd.sel = +d.i; S.kd.del = false; render(); }, 'kd-close'() { S.kd.sel = null; render(); }, 'kd-delask'() { S.kd.del = !S.kd.del; if (S.kdl[S.kd.sel].r === 'none' && S.kd.del) { S.kdl.splice(S.kd.sel, 1); S.kd.sel = null; S.kd.del = false; } render(); },
+  'kd-del'(d) { const x = S.kdl[S.kd.sel]; if (d.v === 'all') S.kdl.splice(S.kd.sel, 1); else x.r = 'none'; S.kd.sel = null; S.kd.del = false; render(); },
+  'kd-acc'(d) { const x = JSON.parse(JSON.stringify(KSUG[+d.i])); delete x.why; S.kdl.push(x); S.kdSug = S.kdSug.filter(i => i !== +d.i); render(); },
+  'kd-no'(d) { S.kdSug = S.kdSug.filter(i => i !== +d.i); render(); },
   menu() { S.menuOpen = !S.menuOpen; render(); },
   goto(d) { S.menuOpen = false; S.app.tab = d.k; render(); scrollTo(0, 0); },
   logout() { timers.splice(0).forEach(clearTimeout); S = fresh(); render(); },
   claim(d) { S.plans.claim = S.plans.claim || {}; S.plans.claim[d.id] = d.v; const c = getCre(d.id); if (d.v === 'removed') c.paras.splice(c.claim, 1); render(); },
   approve(d) { if (!hardFail(d.id)) runAct(d.id); }, reject(d) { S.plans.act[d.id] = 'rejected'; render(); }, undo(d) { delete S.plans.act[d.id]; render(); },
-  'approve-all'() { TASKS.flatMap(x => x.acts).forEach(a => { if (!S.plans.act[a.id] && !hardFail(a.id)) runAct(a.id, true); }); render(); },
+  'approve-all'() { TASKS.flatMap(x => x.acts).forEach(a => { if (!S.plans.act[a.id] && !hardFail(a.id) && !depB(a)) runAct(a.id, true); }); render(); },
 };
 function runAct(id, quiet) {
   S.plans.act[id] = 'approved'; S.plans.act['x' + id] = 'queued';
   later(900, () => { S.plans.act['x' + id] = 'run'; render(); }); later(2200, () => { S.plans.act['x' + id] = 'done'; render(); });
   if (!quiet) render();
 }
-document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (S.fbOpen && !e.target.closest('.fbpop')) { S.fbOpen = null; render(); } if (S.menuOpen && !e.target.closest('.menuwrap')) { S.menuOpen = false; render(); } if (!el || el.tagName === 'SELECT') return; const f = A[el.dataset.act]; if (f) f(el.dataset, el); });
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (S.fbOpen && !e.target.closest('.fbpop')) { S.fbOpen = null; render(); } if (S.menuOpen && !e.target.closest('.menuwrap')) { S.menuOpen = false; render(); } if (!el || el.tagName === 'SELECT') return; const f = A[el.dataset.act]; if (f) f(el.dataset, el); if (S.step === 11 && ['tone', 'addr', 'emoji', 'rm', 'add', 'bg-add-claim', 'bg-add-ex', 'bg-rm'].includes(el.dataset.act)) S.brandChanged = true; });
 document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.dataset.bind === 'chatDraft') { A['chat-send'](); return; } if (e.key === 'Escape' && (S.fbOpen || S.menuOpen)) { S.fbOpen = null; S.menuOpen = false; render(); } if (e.key === 'Enter' && e.target.tagName === 'INPUT') { const b = document.querySelector('.sticky button.pri:not(:disabled)'); if (b) b.click(); } });
 render();
 </script>
