@@ -364,7 +364,7 @@ V[7] = () => {
       <p class="mute">${t('Your store (Shopify) recorded')} ${mshort(612e6)} ${t('in sales in the same 12 months. We treat that as the real number.')}</p>`),
     card(2, 'warn', 'Needs attention', `<div class="stats">${stat('412', t('paid orders in your store'))}${stat('538', t('orders Meta says it brought'), 'bad')}</div>
       <p style="margin:12px 0 0">${t('They don\'t match, and about 4 in 10 of your sales arrive without the information Meta needs to know which ad sold them. That makes it hard to tell which ads really work.')}</p>`),
-    card(3, 'bad', '3 to fix', `${item('bad', t('Two Meta campaigns spent $3.2M COP last month without any sale linked to them.'))}${item('warn', t('Your welcome email series in Klaviyo is turned off.'))}${`<div class="it"><span class="sd bad"></span><div>${payFix()}</div></div>`}`),
+    card(3, 'bad', '3 to fix', `${item('bad', t('Two Meta campaigns spent $3.2M COP last month without any sale linked to them.'))}${item('warn', t('Your welcome email series in Klaviyo is turned off.'))}${`<div class="note bad err" style="margin:10px 0 0"><span class="eic" aria-hidden="true">!</span><div>${payFix()}</div></div>`}`),
     card(4, 'warn', '2 to improve', `${item('ok', t('Buying takes 3 steps: clear.'))}${item('ok', t('Meta and Google tracking are installed.'))}${item('warn', t('Product pages have no customer reviews.'))}${item('warn', t('Shipping cost only shows at the end of checkout.'))}`),
   ];
   const shown = d.done ? 5 : 0; // nothing is shown until every analysis has finished
@@ -387,7 +387,6 @@ V[8] = () => {
       <div class="bar" style="height:10px;margin:12px 0 6px"><i style="width:${pct}%"></i></div><p class="mute" style="margin:0">${t('You are at')} ${pct}% ${t('of your Goal.')}</p></div>
     <h2 style="margin-top:22px">${t('How Rita helps you first')}</h2><p class="mute" style="margin-top:0">${t('Based on your Diagnosis. Nothing happens without your Approval.')}</p>
     <div class="card" style="padding:6px 18px">${todo.map(x => `<div class="it" style="padding:12px 0">${'<span class="sd ' + x[0] + '"></span>'}<div><div class="mute" style="font-size:13px">${t(x[1])}</div><b>${t(x[2])}</b></div></div>`).join('')}</div>
-    <div class="note bad err" style="margin-top:14px"><span class="eic" aria-hidden="true">!</span><div>${payFix()}</div></div>
     <h2>${t('Included')}</h2>
     <div class="card" style="padding:6px 18px">${['A Weekly plan every week', 'The week\'s automatic work (reads and drafts)', 'Execution, only with your Approval', 'Reports against your Goal', 'Rita in WhatsApp'].map(x => `<div class="it" style="padding:10px 0"><span class="sd ok"></span><div>${t(x)}</div></div>`).join('')}</div>
     <div class="card" style="border-color:var(--navy)"><div class="row sp"><b style="font-size:18px">Rita</b><span><span class="big" style="font-size:26px">${cop(400000)}</span> <span class="mute">/ ${t('month')}</span></span></div><p class="mute" style="margin:8px 0 0">${t('Includes N campaigns per week and N changes per campaign each period (placeholder limits), resetting on your billing day.')}</p></div>
