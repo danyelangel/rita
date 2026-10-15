@@ -143,6 +143,7 @@ button.avatar{padding:0;font-size:16px;cursor:pointer}
 .gapfig{display:block;width:fit-content;margin-top:10px;padding:2px 14px 4px;border-radius:14px;background:var(--yellow);border:2px solid var(--navy);white-space:nowrap;font-size:40px}
 .gapfig small{font-size:18px;font-weight:600}
 .note.err{display:flex;gap:10px;align-items:flex-start;border:2px solid var(--bad)}.eic{flex:none;width:22px;height:22px;border-radius:50%;background:var(--bad);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;margin-top:1px}
+.help{margin-top:4px;font-weight:700;color:var(--navy);font-size:14px}.help::before{content:'→ ';font-weight:400}
 .steps{margin:4px 0 0;padding-left:20px}.steps li{margin:2px 0}
 .hide{display:none}
 </style>
@@ -344,6 +345,7 @@ V[6] = () => {
 const DX = ['Your Goal', 'What your channels have delivered', 'Are your sales measured well?', 'What to fix first', 'Your website'];
 const payFix = () => `<b>${t('Your Meta ad account has no payment method.')}</b> ${t('Without one, Meta can\'t charge for your ads.')}<div style="margin-top:8px"><b>${t('How to fix it')}</b><ol class="steps"><li>${t('Open Meta Ads Manager.')}</li><li>${t('Go to Billing.')}</li><li>${t('Add a card or another payment method.')}</li></ol></div>`;
 const mshort = n => '$' + (n / 1e6).toLocaleString('es-CO', { maximumFractionDigits: 1 }) + '\u00a0M';
+const help = k => `<div class="help">${t(k)}</div>`;
 const stat = (v, l, cls = '') => `<div class="stat ${cls}"><div class="sv">${v}</div><div class="sl">${l}</div></div>`;
 const item = (sev, html) => `<div class="it"><span class="sd ${sev}"></span><div>${html}</div></div>`;
 V[7] = () => {
@@ -364,7 +366,7 @@ V[7] = () => {
       <p class="mute">${t('Your store (Shopify) recorded')} ${mshort(612e6)} ${t('in sales in the same 12 months. We treat that as the real number.')}</p>`),
     card(2, 'warn', 'Needs attention', `<div class="stats">${stat('412', t('paid orders in your store'))}${stat('538', t('orders Meta says it brought'), 'bad')}</div>
       <p style="margin:12px 0 0">${t('They don\'t match, and about 4 in 10 of your sales arrive without the information Meta needs to know which ad sold them. That makes it hard to tell which ads really work.')}</p>`),
-    card(3, 'bad', '3 to fix', `${item('bad', t('Two Meta campaigns spent $3.2M COP last month without any sale linked to them.'))}${item('warn', t('Your welcome email series in Klaviyo is turned off.'))}${`<div class="note bad err" style="margin:10px 0 0"><span class="eic" aria-hidden="true">!</span><div>${payFix()}</div></div>`}`),
+    card(3, 'bad', '3 to fix', `${item('bad', t('Two Meta campaigns spent $3.2M COP last month without any sale linked to them.') + help('Rita helps you review them and decide, with your Approval, whether to pause or adjust them.'))}${item('warn', t('Your welcome email series in Klaviyo is turned off.') + help('Rita helps you turn them back on, with a draft in Klaviyo for you to approve.'))}${`<div class="note bad err" style="margin:10px 0 0"><span class="eic" aria-hidden="true">!</span><div>${payFix()}</div></div>`}`),
     card(4, 'warn', '2 to improve', `${item('ok', t('Buying takes 3 steps: clear.'))}${item('ok', t('Meta and Google tracking are installed.'))}${item('warn', t('Product pages have no customer reviews.'))}${item('warn', t('Shipping cost only shows at the end of checkout.'))}`),
   ];
   const shown = d.done ? 5 : 0; // nothing is shown until every analysis has finished
@@ -381,12 +383,9 @@ V[8] = () => {
     <div class="card"><b>${t('Connections')}</b><p class="mute">Shopify ✓ · ${hasKlaviyo() ? 'Klaviyo ✓ · ' : ''}${S.ad.meta === 'ok' ? 'Meta ✓ · ' : ''}${S.ad.google === 'ok' ? 'Google ✓' : ''}</p></div>
     <button class="pri full" data-act="resume-pay">${t('Subscribe to continue')}</button><p><button class="link" data-act="to7">${t('Read my Diagnosis')}</button></p>`);
   const g = +S.goal, gap = Math.max(0, g - BASELINE), pct = Math.min(100, Math.round(BASELINE / g * 100));
-  const todo = [['bad', 'Two Meta campaigns have no sales linked to them', 'Rita helps you review them and decide, with your Approval, whether to pause or adjust them.'], ['warn', 'Your welcome emails in Klaviyo are turned off', 'Rita helps you turn them back on, with a draft in Klaviyo for you to approve.']];
   return shell(`<h1 style="text-wrap:balance">${gap ? t('Let\'s close the gap to your Goal') + `<span class="gapfig">${mshort(gap)} <small>${t('a month')}</small></span>` : t('Let\'s keep growing your sales')}</h1>
     <div class="card"><div class="stats">${stat(mshort(BASELINE), t('You sell today'))}${stat(mshort(g), t('Your Goal'), 'hl')}</div>
       <div class="bar" style="height:10px;margin:12px 0 6px"><i style="width:${pct}%"></i></div><p class="mute" style="margin:0">${t('You are at')} ${pct}% ${t('of your Goal.')}</p></div>
-    <h2 style="margin-top:22px">${t('How Rita helps you first')}</h2><p class="mute" style="margin-top:0">${t('Based on your Diagnosis. Nothing happens without your Approval.')}</p>
-    <div class="card" style="padding:6px 18px">${todo.map(x => `<div class="it" style="padding:12px 0">${'<span class="sd ' + x[0] + '"></span>'}<div><div class="mute" style="font-size:13px">${t(x[1])}</div><b>${t(x[2])}</b></div></div>`).join('')}</div>
     <h2>${t('Included')}</h2>
     <div class="card" style="padding:6px 18px">${['A Weekly plan every week', 'The week\'s automatic work (reads and drafts)', 'Execution, only with your Approval', 'Reports against your Goal', 'Rita in WhatsApp'].map(x => `<div class="it" style="padding:10px 0"><span class="sd ok"></span><div>${t(x)}</div></div>`).join('')}</div>
     <div class="card" style="border-color:var(--navy)"><div class="row sp"><b style="font-size:18px">Rita</b><span><span class="big" style="font-size:26px">${cop(400000)}</span> <span class="mute">/ ${t('month')}</span></span></div><p class="mute" style="margin:8px 0 0">${t('Includes N campaigns per week and N changes per campaign each period (placeholder limits), resetting on your billing day.')}</p></div>
