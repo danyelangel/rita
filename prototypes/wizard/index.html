@@ -85,6 +85,12 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .tile code{font-size:11px;color:var(--mute)}
 .tile .x{position:absolute;top:-8px;right:-8px;width:22px;height:22px;padding:0;border-radius:50%;font-size:11px;background:var(--card);border:2px solid var(--line);color:var(--mute);display:none}
 .tile:hover .x,.tile:focus-within .x{display:block}
+.fbpop{position:relative}
+.fbtn{width:100%;display:flex;justify-content:space-between;align-items:center;font-size:17px;font-weight:400;text-align:left;background:var(--card);border:2px solid var(--line);color:var(--ink);border-radius:12px;padding:11px 14px}
+.fbtn[aria-expanded=true]{border-color:var(--navy)}
+.fblist{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:20;background:var(--card);border:2px solid var(--navy);border-radius:14px;padding:6px;box-shadow:0 8px 24px #22305a33;max-height:280px;overflow:auto}
+.fbopt{width:100%;display:flex;justify-content:space-between;border:0;border-radius:10px;font-size:17px;font-weight:400;text-align:left;padding:10px 12px;background:transparent;color:var(--ink)}
+.fbopt:hover{background:var(--bg)}.fbopt.sel{background:var(--yellow)}
 .hide{display:none}
 </style>
 </head>
@@ -117,6 +123,7 @@ const FINDINGS = [
   ['Where you sell', 'Own online store; Instagram as the main traffic source.', 'Website links and Shopify channels', ''],
   ['Competitors', '', 'No source found', '', 'I found no clear competitors. Write 2 or 3 that you know.'],
 ];
+const FFAM = n => { const g = (FALLBACKS.find(x => x[0] === n) || [0, 'Sans-serif'])[1]; return `'${n}',${g === 'Serif' ? 'serif' : g === 'Monospace' ? 'monospace' : 'sans-serif'}`; };
 const FALLBACKS = [['Georgia', 'Serif'], ['Times New Roman', 'Serif'], ['Arial', 'Sans-serif'], ['Verdana', 'Sans-serif'], ['Trebuchet MS', 'Sans-serif'], ['Tahoma', 'Sans-serif'], ['Courier New', 'Monospace']];
 const TONES = ['Warm', 'Direct', 'Playful', 'Premium', 'Technical', 'Cheeky', 'Calm'];
 const SUGG_DATES = [['Mother\'s Day', 'May 11'], ['Christmas', 'Dec 25'], ['Black Friday', 'Nov 28'], ['Amor y Amistad', 'Sep 20'], ['Father\'s Day', 'Jun 15'], ['Día sin IVA', 'Jun 19']];
@@ -234,7 +241,8 @@ V[4] = () => {
       ${n ? f.files.map((x, i) => `<div class="row sp" style="margin-bottom:6px;background:var(--card);border:2px solid var(--line);border-radius:12px;padding:8px 12px"><div style="min-width:0;flex:1"><div style="font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${x.file ? '📄 ' + esc(x.file) : esc(f.name) + ' · ' + t(x.style)}</div><div class="src">${x.file ? t(x.style) + ' · ' : ''}${t(x.from)}</div></div>${x.file ? `<button class="sm" data-act="fontfile" data-k="${k}" data-i="${i}">${t('Replace')}</button>` : `<button class="sm" data-act="fontfile" data-k="${k}" data-i="${i}">${t('Use my own file')}</button>`}<button class="link" data-act="fontrm" data-k="${k}" data-i="${i}" aria-label="${t('Remove')}" style="text-decoration:none">✕</button></div>`).join('') : `<p class="mute" style="margin:4px 0 8px">${t('No font files yet. Upload the .woff2, .ttf or .otf files.')}</p>`}
       <button class="sm" data-act="fontadd" data-k="${k}">+ ${t('Add variation')}</button>
       <label>${t('Fallback font for emails')} <span class="tag" style="margin-left:4px">${t('Suggested by Rita')}</span></label>
-      <select data-bind="brand.fonts.${k}.fallback" style="font-family:'${f.fallback}',${FALLBACKS.find(x => x[0] === f.fallback)[1] === 'Serif' ? 'serif' : 'sans-serif'};font-size:17px">${FALLBACKS.map(x => `<option ${x[0] === f.fallback ? 'selected' : ''} value="${x[0]}" style="font-family:'${x[0]}',${x[1] === 'Serif' ? 'serif' : x[1] === 'Monospace' ? 'monospace' : 'sans-serif'};font-size:17px">${x[0]}</option>`).join('')}</select>
+      <div class="fbpop"><button type="button" class="fbtn" data-act="fbtoggle" data-k="${k}" aria-haspopup="listbox" aria-expanded="${S.fbOpen === k}" style="font-family:${FFAM(f.fallback)}"><span>${f.fallback}</span><span aria-hidden="true">▾</span></button>
+      ${S.fbOpen === k ? `<div class="fblist" role="listbox">${FALLBACKS.map(x => `<button type="button" role="option" class="fbopt ${x[0] === f.fallback ? 'sel' : ''}" aria-selected="${x[0] === f.fallback}" data-act="fbpick" data-k="${k}" data-v="${x[0]}" style="font-family:${FFAM(x[0])}"><span>${x[0]}</span>${x[0] === f.fallback ? '<span>✓</span>' : ''}</button>`).join('')}</div>` : ''}</div>
       <div class="src" style="margin-top:6px">${t('Gmail and Outlook can\'t load custom fonts in emails; they show this one instead.')}</div></div>`; }).join('')}`, { foot: fbtn('Continue', 'p-dates') });
   }
   // dates
@@ -417,6 +425,8 @@ const A = {
   fontfile(d) { const fo = S.brand.fonts[d.k], x = fo.files[+d.i]; x.file = x.file ? x.file.replace(/\.woff2$/, '') + '-nuevo.woff2' : fo.name.replace(/ /g, '') + '-' + x.style + '.woff2'; x.from = 'Uploaded by you'; render(); },
   fontrm(d) { S.brand.fonts[d.k].files.splice(+d.i, 1); render(); },
   fontadd(d) { const fo = S.brand.fonts[d.k], st = fo.files.length ? 'Light' : 'Regular'; fo.files.push(fo.google ? { file: '', style: st, from: 'Google Fonts' } : { file: fo.name.replace(/ /g, '') + '-' + st + '.woff2', style: st, from: 'Uploaded by you' }); render(); },
+  fbtoggle(d) { S.fbOpen = S.fbOpen === d.k ? null : d.k; render(); },
+  fbpick(d) { S.brand.fonts[d.k].fallback = d.v; S.fbOpen = null; render(); },
   addcolor() { S.brand.palette.push('#cccccc'); render(); }, rmcolor(d) { S.brand.palette.splice(+d.i, 1); render(); },
   rm(d) { S.brand[d.k].splice(+d.i, 1); render(); },
   add(d) { const k = d.k === 'always' ? 'newAlways' : 'newNever', v = S.brand[k].trim(); if (v) S.brand[d.k].push(v); S.brand[k] = ''; render(); },
@@ -443,8 +453,8 @@ function runAct(id, quiet) {
   later(900, () => { S.plans.act['x' + id] = 'run'; render(); }); later(2200, () => { S.plans.act['x' + id] = 'done'; render(); });
   if (!quiet) render();
 }
-document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el || el.tagName === 'SELECT') return; const f = A[el.dataset.act]; if (f) f(el.dataset, el); });
-document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { const b = document.querySelector('.sticky button.pri:not(:disabled)'); if (b) b.click(); } });
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (S.fbOpen && !e.target.closest('.fbpop')) { S.fbOpen = null; render(); } if (!el || el.tagName === 'SELECT') return; const f = A[el.dataset.act]; if (f) f(el.dataset, el); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.fbOpen) { S.fbOpen = null; render(); } if (e.key === 'Enter' && e.target.tagName === 'INPUT') { const b = document.querySelector('.sticky button.pri:not(:disabled)'); if (b) b.click(); } });
 render();
 </script>
 </body>
