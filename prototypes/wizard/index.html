@@ -519,7 +519,7 @@ V[11] = () => {
       ${actsHTML(task)}
       <div class="card" style="background:var(--bg);border-style:dashed"><b>${t('Result')}</b><p class="mute">${t('Results appear here after the work runs. (Reporting is specified separately.)')}</p></div></div>`).join('')}
     <p class="mute">${t('Rita reads each change back after writing it and shows you whether it matches.')}</p>`,
-    fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all', remaining > 0));
+    remaining > 0 ? fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all') : '');
 };
 
 // ---------- chat panel ----------
