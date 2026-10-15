@@ -69,7 +69,7 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .kind{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--mute)}
 .sticky{position:fixed;left:0;right:0;bottom:46px;padding:10px 16px;background:linear-gradient(transparent,var(--bg) 40%);z-index:6}
 .sticky>div{max-width:440px;margin:0 auto}
-#dev{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;background:#111;color:#fff;border-radius:99px;padding:5px 10px;font-size:12px;display:flex;gap:8px;align-items:center;z-index:50;box-shadow:0 2px 12px #0006}
+#dev{max-width:96vw;flex-wrap:wrap;justify-content:center;position:fixed;left:50%;transform:translateX(-50%);bottom:8px;background:#111;color:#fff;border-radius:99px;padding:5px 10px;font-size:12px;display:flex;gap:8px;align-items:center;z-index:50;box-shadow:0 2px 12px #0006}
 #dev select{width:auto;padding:3px 6px;font-size:12px;background:#222;color:#fff;border:1px solid #444}
 #dev button{white-space:nowrap;padding:3px 9px;font-size:12px;background:#222;color:#fff;border-color:#444}
 #chatfab{box-shadow:0 4px 0 0 var(--navy)!important;position:fixed;right:14px;bottom:100px;z-index:40}
@@ -161,6 +161,11 @@ button.avatar{padding:0;font-size:16px;cursor:pointer}
 .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:12px}.fs{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;font-size:12px;font-weight:600;line-height:1.15}.fn{width:30px;height:30px;border-radius:50%;background:var(--yellow);color:var(--ink);display:grid;place-items:center;font-weight:700}
 .fs:nth-child(3) .fn{background:#fff}
 .hide{display:none}
+.hyp{border-color:var(--navy)}.hyp .big{font-size:20px;font-weight:700;color:var(--navy);line-height:1.25;margin:4px 0}
+.rng{display:inline-block;background:var(--yellow);border-radius:8px;padding:2px 8px;font-weight:700}
+.alert{border-color:var(--bad);background:#fdf3f2}.alert .row{margin-top:10px}
+.mail{border:1px solid var(--line);background:#fff;border-radius:10px;padding:12px 14px;font-size:14px;margin:10px 0}.mail .h{color:var(--mute);font-size:12px;margin-bottom:6px}
+.last{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 16px;margin:12px 0}
 </style>
 </head>
 <body>
@@ -184,6 +189,7 @@ const ICON = {
   plug: IC('<path d="M9 3v5M15 3v5"/><path d="M6 8h12v3a6 6 0 0 1-12 0z"/><path d="M12 17v4"/>'),
   out: IC('<path d="M10 4H5v16h5"/><path d="M15 8l4 4-4 4M19 12H9"/>'),
 };
+Object.assign(LOCALE, {"Hypothesis": "Hipótesis", "Expected uplift:": "Aumento esperado:", "to": "a", "over the week": "en la semana", "The Tasks below only carry out this bet. Rita reads the result next week against it.": "Las Tareas de abajo solo ejecutan esta apuesta. Rita lee el resultado la próxima semana contra ella.", "A Mother's Day email plus Meta ads will bring gift buyers you had no campaign for last year.": "Un correo del Día de la Madre más anuncios en Meta traerán compradores de regalo para quienes no tuviste campaña el año pasado.", "Winning back customers who stopped buying will lift sales while the Mother's Day ads keep running.": "Recuperar a los clientes que dejaron de comprar subirá las ventas mientras siguen los anuncios del Día de la Madre.", "Plan for May 8 to May 14": "Plan del 8 al 14 de mayo", "What ran (not sales results)": "Lo que se ejecutó (no son resultados de ventas)", "Spent $1.1M COP of the $1.4M COP cap": "Gastó $1,1 M COP del tope de $1,4 M COP", "1 email sent to 3,420 people": "1 correo enviado a 3.420 personas", "Last week": "La semana pasada", "Final": "Final", "Uplift": "Aumento", "Sales $14.4M COP vs $12.1M COP.": "Ventas $14,4 M COP vs $12,1 M COP.", "This was your first Plan, so it is compared with your baseline from the Diagnosis (median of your last 3 months), not with a previous Plan.": "Fue tu primer Plan, así que se compara con tu línea base del Diagnóstico (mediana de tus últimos 3 meses), no con un Plan anterior.", "Outside your usual swing (±$1.6M COP): a clear increase. Inside what the Hypothesis expected (+$1.5M to +$3.0M COP).": "Fuera de tu variación habitual (±$1,6 M COP): un aumento claro. Dentro de lo que esperaba la Hipótesis (+$1,5 M a +$3,0 M COP).", "Mother's Day week was in this period, a likely driver.": "La semana del Día de la Madre cae en este periodo: probable causa.", "Result": "Resultado", "Day 3 of 7": "Día 3 de 7", "Refreshed daily. Freezes when your next Weekly plan arrives; orders after that count in the next period.": "Se actualiza a diario. Se congela cuando llega tu próximo Plan semanal; los pedidos posteriores cuentan en el siguiente periodo.", "Uplift so far": "Aumento hasta ahora", "Compared with last week's Plan period.": "Comparado con el periodo del Plan de la semana pasada.", "Compared with your baseline from the Diagnosis (median of your last 3 months), because this is your first Plan.": "Comparado con tu línea base del Diagnóstico (mediana de tus últimos 3 meses), porque es tu primer Plan.", "Inside your usual swing (±$1.6M COP): no clear change yet.": "Dentro de tu variación habitual (±$1,6 M COP): aún no hay un cambio claro.", "Outside your usual swing.": "Fuera de tu variación habitual.", "The Hypothesis expects": "La Hipótesis espera", "by the end of the week.": "al terminar la semana.", "Mother's Day is in this period: a likely driver, not separated out.": "El Día de la Madre cae en este periodo: probable causa, no se separa.", "Only your Shopify sales count as a result. Ad platform numbers are never used as sales.": "Solo cuentan como resultado las ventas de tu Shopify. Las cifras de las plataformas de anuncios nunca se usan como ventas.", "Rita is paused.": "Rita está en pausa.", "Only safety alerts reach you, by email. Things already scheduled at Klaviyo or Meta keep running there.": "Solo te llegan alertas de seguridad, por correo. Lo que ya está programado en Klaviyo o Meta sigue corriendo allá.", "Resume Rita": "Reanudar a Rita", "Pausing…": "Pausando…", "Rita is checking Meta.": "Rita está verificando en Meta.", "Paused and verified": "Pausado y verificado", "read back from Meta Ads": "leído de vuelta desde Meta Ads", "Your tap on Stop is recorded as your Approval.": "Tu toque en Detener queda registrado como tu Aprobación.", "Ask to resume": "Pedir reanudar", "resuming needs a normal Approval": "reanudar necesita una Aprobación normal", "Resuming added as an Action in your next Plan. It needs your Approval.": "Reanudar queda como una Acción en tu próximo Plan. Necesita tu Aprobación.", "Stop this ad": "Detener este anuncio", "One tap. It shows as paused once Rita has verified it.": "Un toque. Aparece como pausado cuando Rita lo verifique.", "Revoked": "Revocado", "rolled back in": "revertido en", "and verified. It will not send.": "y verificado. No se enviará.", "Scheduled in": "Programado en", "for": "para", "sends it; Rita runs nothing later.": "lo envía; Rita no ejecuta nada después.", "Edit": "Editar", "Revoke": "Revocar", "until": "hasta que", "starts it": "lo inicie", "Scheduled and verified": "Programado y verificado", "Rolled back in Klaviyo. Approve the changed version.": "Revertido en Klaviyo. Aprueba la versión cambiada.", "Alert · Meta Ads": "Alerta · Meta Ads", "Alert · Sales": "Alerta · Ventas", "Needs you": "Te necesita", "Your Mother's Day ad has spent $1.5M COP, past the $1.4M COP cap you approved.": "Tu anuncio del Día de la Madre ha gastado $1,5 M COP, por encima del tope de $1,4 M COP que aprobaste.", "Rita's proposal: stop the ad. Your tap is the Approval.": "Propuesta de Rita: detener el anuncio. Tu toque es la Aprobación.", "Stop the ad": "Detener el anuncio", "Wait 24 h": "Esperar 24 h", "Wait 48 h": "Esperar 48 h", "Sales so far this week are $3.1M COP, far below your usual range for this day ($5.4M to $8.6M COP).": "Las ventas de esta semana van en $3,1 M COP, muy por debajo de tu rango habitual para este día ($5,4 M a $8,6 M COP).", "Rita's proposal: undo the budget change you approved on May 1 (Retargeting daily budget back to $40.000). Your tap is the Approval.": "Propuesta de Rita: deshacer el cambio de presupuesto que aprobaste el 1 de mayo (presupuesto diario de Retargeting de vuelta a $40.000). Tu toque es la Aprobación.", "Restore $40.000": "Restaurar $40.000", "Email sent to": "Correo enviado a", "while Rita is paused": "mientras Rita está en pausa", "Safety alert: your Meta ad passed its approved cap": "Alerta de seguridad: tu anuncio de Meta superó el tope aprobado", "Your Mother's Day ad has spent $1.5M COP, past the $1.4M COP cap you approved. Rita is paused, so nothing was changed.": "Tu anuncio del Día de la Madre ha gastado $1,5 M COP, por encima del tope de $1,4 M COP que aprobaste. Rita está en pausa, así que no se cambió nada.", "Open Rita to stop it": "Abre Rita para detenerlo", "During a Pause only safety alerts are sent: spend over the cap, a disapproved ad, a payment problem or a broken connection. Sales alerts are off.": "Durante una Pausa solo se envían alertas de seguridad: gasto sobre el tope, anuncio rechazado, problema de pago o conexión rota. Las alertas de ventas están apagadas.", "Stopping the ad: pausing… Your tap was recorded as your Approval. You will see \"Paused and verified\" once Meta confirms.": "Deteniendo el anuncio: pausando… Tu toque quedó registrado como tu Aprobación. Verás \"Pausado y verificado\" cuando Meta lo confirme.", "Paused and verified ✓. Read back from Meta Ads. Resuming it needs a normal Approval.": "Pausado y verificado ✓. Leído de vuelta desde Meta Ads. Reanudarlo necesita una Aprobación normal.", "Restoring the budget: writing and reading back…": "Restaurando el presupuesto: escribiendo y leyendo de vuelta…", "Restored and verified ✓. Retargeting daily budget is $40.000 again, as before your change.": "Restaurado y verificado ✓. El presupuesto diario de Retargeting vuelve a ser $40.000, como antes de tu cambio."});
 Object.assign(ICON, {
   cal: IC('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/>'),
   cal2: IC('<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4M9 15l2 2 4-4"/>'),
@@ -239,7 +245,7 @@ const fresh = () => ({
   em: { st: 'idle', readonly: false }, ad: { meta: 'idle', google: 'idle', metaRO: false, page: false, acct: false },
   dx: { run: 0, done: false, goal: null }, sub: false, checkout: false, locked: false,
   phone: '+57 ', ch: 'later', hi: 'idle', hiLate: false, chatOpen: false, chat: [],
-  app: { tab: 'home' }, plans: { build: 0, ready: false, detail: false, task: {}, act: {}, edit: {}, variant: {} },
+  week: 'first', alert: null, alertRes: '', paused: false, app: { tab: 'home' }, plans: { stop: {}, rb: {}, build: 0, ready: false, detail: false, task: {}, act: {}, edit: {}, variant: {} },
 });
 let S = fresh();
 const STEPS = ['Sign-up', 'Website', 'CRM & Conversions', 'Company profile', 'Email Marketing', 'Performance Marketing', 'Diagnosis', 'Paywall', 'Channel', 'Say Hi', 'App'];
@@ -456,11 +462,11 @@ V[10] = () => {
 const TASKS = [
   { id: 't1', title: 'Mother\'s Day push', why: 'Key date in 24 days; last year it drove 18% of May sales and you had no campaign.', effect: '+$6M to +$11M COP', assume: 'assuming last year\'s email open rate and 1.8x ROAS on Meta', dropped: 'Considered and dropped: a Google Shopping test, too little data.', cost: '$1.4M COP ad budget',
     acts: [
-      { id: 'a1', conn: 'Klaviyo', kind: 'Create email draft + schedule', rows: [['Campaign', 'Día de la Madre'], ['Audience', 'Buyers in the last 12 months (3,420)'], ['Send', 'May 6, 8:00 a.m.']], cost: '$0', cre: 'Asunto: Un tejido hecho a mano para mamá\nVista previa: Envío gratis desde $200.000.\nCuerpo: Cada pieza se teje a mano en Colombia. Escoge la suya antes del 8 de mayo para recibirla a tiempo.\nBotón: Ver regalos' },
+      { id: 'a1', sched: 'May 6, 8:00 a.m.', conn: 'Klaviyo', kind: 'Create email draft + schedule', rows: [['Campaign', 'Día de la Madre'], ['Audience', 'Buyers in the last 12 months (3,420)'], ['Send', 'May 6, 8:00 a.m.']], cost: '$0', cre: 'Asunto: Un tejido hecho a mano para mamá\nVista previa: Envío gratis desde $200.000.\nCuerpo: Cada pieza se teje a mano en Colombia. Escoge la suya antes del 8 de mayo para recibirla a tiempo.\nBotón: Ver regalos' },
       { id: 'a2', conn: 'Meta Ads', kind: 'Launch ad', rows: [['Campaign', 'Día de la Madre 2026'], ['Daily budget', '$100.000'], ['Spending cap', '$1.4M COP'], ['Runs', 'May 1 to May 11']], cost: '$1.4M COP cap', variants: ['Para mamá, algo hecho a mano. Mantas y cojines tejidos en Colombia.', 'Regálale calor de hogar. Piezas únicas, envío a todo el país.', 'Mamá merece lo auténtico. Descubre nuestras mantas tejidas.'], cre: '' },
       { id: 'a3', conn: 'Meta Ads', kind: 'Change budget', rows: [['Retargeting daily budget', '$40.000', '$60.000']], cost: '-$20.000 / day', cre: '' },
     ] },
-  { id: 't2', title: 'Win back customers who stopped buying', why: 'Your welcome flow is paused and 1,180 customers have not bought in 6+ months.', effect: '+$2M to +$4M COP', assume: 'assuming a 2% reactivation rate', dropped: '', cost: '$0',
+  { id: 't2', title: 'Win back customers who stopped buying', why: 'Your welcome flow is paused and 1,180 customers have not bought in 6+ months.', dropped: '', cost: '$0',
     acts: [
       { id: 'a4', conn: 'Klaviyo', kind: 'Create flow (Draft)', rows: [['Flow', 'Te extrañamos (3 emails, draft)'], ['Trigger', 'No purchase in 180 days']], cost: '$0', cre: 'Asunto: Te extrañamos en Casa Tejida\nCuerpo: Han llegado piezas nuevas desde tu última visita. Pásate a verlas.\nBotón: Ver novedades' },
     ] },
@@ -553,6 +559,71 @@ function creativeHTML(a, st) {
 }
 const taskDone = task => task.acts.every(a => S.plans.act[a.id]);
 const taskCollapsed = task => taskDone(task) && !(S.plans.taskOpen || {})[task.id];
+
+// ---------- Hypothesis, Result, alerts (ticket: Weekly report against the Goal and mid-week alerts) ----------
+const HYP = {
+  first: { text: 'A Mother\'s Day email plus Meta ads will bring gift buyers you had no campaign for last year.', lo: 1.5e6, hi: 3e6, assume: 'assuming last year\'s email open rate and 1.8x ROAS on Meta', title: 'Plan for May 1 to May 7' },
+  second: { text: 'Winning back customers who stopped buying will lift sales while the Mother\'s Day ads keep running.', lo: 1e6, hi: 2.5e6, assume: 'assuming a 2% reactivation rate', title: 'Plan for May 8 to May 14' },
+};
+const planTitle = () => HYP[S.week].title;
+const BAND = 1.6e6; // volatility band from the Diagnosis (mock)
+const m = n => (n < 0 ? '-' : '+') + '$' + (Math.abs(n) / 1e6).toFixed(1).replace(LANG === 'en' ? '' : '.', LANG === 'en' ? '' : ',') + (LANG === 'en' ? 'M' : ' M') + ' COP';
+function ranOnly(first) {
+  return `<div class="mute" style="margin-top:10px">${t('What ran (not sales results)')}</div><div class="chg"><div class="r"><span class="l">Meta Ads</span><span class="v">${t('Spent $1.1M COP of the $1.4M COP cap')}</span></div><div class="r"><span class="l">Klaviyo</span><span class="v">${t('1 email sent to 3,420 people')}</span></div></div>`;
+}
+function lastWeekCard() {
+  return `<div class="last"><div class="row sp"><b>${t('Last week')}</b><span class="tag ok">${t('Final')}</span></div>
+    <p class="big" style="margin:6px 0 2px;font-size:20px;font-weight:700;color:var(--navy)">${t('Uplift')} ${m(2.3e6)} (+19%)</p>
+    <p class="mute">${t('Sales $14.4M COP vs $12.1M COP.')} ${t('This was your first Plan, so it is compared with your baseline from the Diagnosis (median of your last 3 months), not with a previous Plan.')}</p>
+    <p>${t('Outside your usual swing (±$1.6M COP): a clear increase. Inside what the Hypothesis expected (+$1.5M to +$3.0M COP).')}</p>
+    <p class="mute">${t('Mother\'s Day week was in this period, a likely driver.')}</p>${ranOnly()}</div>`;
+}
+function resultBlock() {
+  const second = S.week === 'second', h = HYP[S.week];
+  const up = second ? 0.4e6 : 0.6e6, inBand = Math.abs(up) < BAND;
+  return `<div class="card" style="border-style:dashed;background:var(--bg)"><div class="row sp"><b>${t('Result')}</b><span class="tag warn">${t('Day 3 of 7')}</span></div>
+    <p class="mute" style="margin-top:4px">${t('Refreshed daily. Freezes when your next Weekly plan arrives; orders after that count in the next period.')}</p>
+    <p style="margin:8px 0 2px;font-size:20px;font-weight:700;color:var(--navy)">${t('Uplift so far')} ${m(up)}</p>
+    <p class="mute">${second ? t('Compared with last week\'s Plan period.') : t('Compared with your baseline from the Diagnosis (median of your last 3 months), because this is your first Plan.')}</p>
+    <p>${inBand ? t('Inside your usual swing (±$1.6M COP): no clear change yet.') : t('Outside your usual swing.')} ${t('The Hypothesis expects')} <span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('by the end of the week.')}</p>
+    <p class="mute">${t('Mother\'s Day is in this period: a likely driver, not separated out.')}</p>${ranOnly()}
+    <p class="mute" style="margin-top:8px">${t('Only your Shopify sales count as a result. Ad platform numbers are never used as sales.')}</p></div>`;
+}
+function hypCard() {
+  const h = HYP[S.week];
+  return `<div class="card hyp"><div class="mute">${t('Hypothesis')}</div><div class="big">${t(h.text)}</div>
+    <p>${t('Expected uplift:')} <span class="rng">${m(h.lo)} ${t('to')} ${m(h.hi)}</span> ${t('over the week')}, ${t(h.assume)}.</p>
+    <p class="mute">${t('The Tasks below only carry out this bet. Rita reads the result next week against it.')}</p>
+    <div class="mute" style="margin-top:8px">${t('Pace vs Goal')}</div><p style="margin-top:2px"><b>${t('At this pace you end May near')} ${cop(BASELINE)}</b>, ${t('about')} ${Math.round((1 - BASELINE / +S.goal) * 100)}% ${t('under your Goal.')}</p></div>`;
+}
+function pausedBanner() {
+  return S.paused ? `<div class="note"><b>${t('Rita is paused.')}</b> ${t('Only safety alerts reach you, by email. Things already scheduled at Klaviyo or Meta keep running there.')} <button class="link" data-act="unpause">${t('Resume Rita')}</button></div>` : '';
+}
+function stopLine(a) {
+  const st = S.plans.stop[a.id];
+  if (st === 'pausing') return `<div class="note">${t('Pausing…')} ${t('Rita is checking Meta.')}</div>`;
+  if (st === 'paused') return `<div class="note ok">${t('Paused and verified')} ✓ · ${t('read back from Meta Ads')}. ${t('Your tap on Stop is recorded as your Approval.')}<br><button class="link" data-act="resume-ask" data-id="${a.id}">${t('Ask to resume')}</button> <span class="mute">(${t('resuming needs a normal Approval')})</span></div>`;
+  if (st === 'resume') return `<div class="note">${t('Resuming added as an Action in your next Plan. It needs your Approval.')}</div>`;
+  return `<div class="row" style="margin-top:8px"><button class="sm danger" data-act="stop" data-id="${a.id}">${t('Stop this ad')}</button><span class="mute">${t('One tap. It shows as paused once Rita has verified it.')}</span></div>`;
+}
+function schedLine(a) {
+  const r = S.plans.rb[a.id];
+  if (r === 'revoked') return `<div class="note ok">${t('Revoked')} ✓ · ${t('rolled back in')} ${a.conn} ${t('and verified. It will not send.')}</div>`;
+  return `<div class="note ok">${t('Scheduled in')} ${a.conn} ${t('for')} ${a.sched}. ${a.conn} ${t('sends it; Rita runs nothing later.')}<div class="row"><button class="sm" data-act="rb-edit" data-id="${a.id}">${t('Edit')}</button><button class="sm danger" data-act="rb-revoke" data-id="${a.id}">${t('Revoke')}</button><span class="mute">${t('until')} ${a.conn} ${t('starts it')}</span></div></div>`;
+}
+function alertCards() {
+  if (S.alertRes) return `<div class="note ok">${t(S.alertRes)}</div>`;
+  if (S.alert === 'spend') return `<div class="card alert"><div class="row sp"><b>${t('Alert · Meta Ads')}</b><span class="tag bad">${t('Needs you')}</span></div>
+    <p>${t('Your Mother\'s Day ad has spent $1.5M COP, past the $1.4M COP cap you approved.')}</p><p class="mute">${t('Rita\'s proposal: stop the ad. Your tap is the Approval.')}</p>
+    <div class="row"><button class="pri sm" data-act="al-stop">${t('Stop the ad')}</button><button class="sm" data-act="al-wait" data-h="24">${t('Wait 24 h')}</button></div></div>`;
+  if (S.alert === 'pace') return `<div class="card alert"><div class="row sp"><b>${t('Alert · Sales')}</b><span class="tag bad">${t('Needs you')}</span></div>
+    <p>${t('Sales so far this week are $3.1M COP, far below your usual range for this day ($5.4M to $8.6M COP).')}</p><p class="mute">${t('Rita\'s proposal: undo the budget change you approved on May 1 (Retargeting daily budget back to $40.000). Your tap is the Approval.')}</p>
+    <div class="row"><button class="pri sm" data-act="al-restore">${t('Restore $40.000')}</button><button class="sm" data-act="al-wait" data-h="48">${t('Wait 48 h')}</button></div></div>`;
+  return '';
+}
+function safetyEmail() {
+  return S.paused && S.alert === 'spend' ? `<div class="mail"><div class="h">${t('Email sent to')} daniel@casatejida.co · ${t('while Rita is paused')}</div><b>${t('Safety alert: your Meta ad passed its approved cap')}</b><p>${t('Your Mother\'s Day ad has spent $1.5M COP, past the $1.4M COP cap you approved. Rita is paused, so nothing was changed.')}</p><p><u>${t('Open Rita to stop it')}</u></p><p class="mute">${t('During a Pause only safety alerts are sent: spend over the cap, a disapproved ad, a payment problem or a broken connection. Sales alerts are off.')}</p></div>` : '';
+}
 function taskSummary(task) {
   const P = S.plans, ok = task.acts.filter(a => P.act[a.id] === 'approved').length, no = task.acts.length - ok;
   const parts = [ok ? `${ok} ${t(ok === 1 ? 'approved' : 'approved_pl')}` : '', no ? `${no} ${t(no === 1 ? 'rejected' : 'rejected_pl')}` : ''].filter(Boolean).join(' · ');
@@ -569,11 +640,12 @@ function actsHTML(task) {
 function actCard(a) {
   const st = S.plans.act[a.id] || 'open', ex = S.plans.act['x' + a.id];
   const cre = creativeHTML(a, st);
-  const tag = st === 'approved' ? (ex === 'done' ? `<span class="tag ok">${t('Done and verified')}</span>` : ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`) : st === 'rejected' ? `<span class="tag">${t('Rejected')}</span>` : `<span class="tag">${t('Awaiting you')}</span>`;
+  const tag = st === 'approved' ? (ex === 'done' ? `<span class="tag ok">${t(a.sched ? 'Scheduled and verified' : 'Done and verified')}</span>` : ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`) : st === 'rejected' ? `<span class="tag">${t('Rejected')}</span>` : `<span class="tag">${t('Awaiting you')}</span>`;
   return `<div class="card" style="${st === 'rejected' ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="kind">${a.rows.some(r => r[2]) ? t('Change') : t('New')}</div><div class="chg">${a.rows.map(r => `<div class="r ${r[2] ? 'ba' : ''}"><span class="l">${t(r[0])}</span><span class="v">${r[2] ? `<s>${t(r[2])}</s><i class="arr" aria-hidden="true">→</i>` : ''}${t(r[1])}</span></div>`).join('')}</div>${cre}
     <div class="mute">${t('Cost:')} ${t(a.cost)}</div>
     ${ex === 'done' ? `<div class="note ok">${t('Read back from')} ${a.conn}: ${t('matches the approved diff')} ✓ · <button class="link">${t('Open in')} ${a.conn}</button></div>` : ''}
     ${st === 'open' ? `<div class="row" style="margin-top:8px"><button class="pri sm" data-act="approve" data-id="${a.id}" ${hardFail(a.id) ? 'disabled' : ''}>${t('Approve')}</button><button class="sm danger" data-act="reject" data-id="${a.id}">${t('Reject')}</button></div>` : ''}
+    ${ex === 'done' && a.sched ? schedLine(a) : ''}${ex === 'done' && a.kind === 'Launch ad' ? stopLine(a) : ''}${S.plans.rb[a.id] === 'edited' ? `<div class="note">${t('Rolled back in Klaviyo. Approve the changed version.')}</div>` : ''}
     ${st === 'approved' && !ex ? `<p class="mute">${t('Approved and frozen.')}</p>` : ''}
     ${st === 'rejected' ? `<button class="link" data-act="undo" data-id="${a.id}">${t('Undo')}</button>` : ''}</div>`;
 }
@@ -600,7 +672,7 @@ function planStatus() {
   return { label: 'Approved', cls: 'ok', sub: done ? t('All verified') : t('Running') };
 }
 const statusTag = () => { const st = planStatus(); return `<span class="tag ${st.cls}">${t(st.label)}${st.sub ? ' · ' + st.sub.toLowerCase() : ''}</span>`; };
-const planRow = () => `<div class="card" data-act="open-plan" style="cursor:pointer;border-color:var(--navy)"><div class="row sp"><b>${t('Plan for May 1 to May 7')}</b>${statusTag()}</div><p class="mute">2 ${t('Tasks')} · 4 ${t('Actions')} · ${t('Cost')} ${t('$1.4M COP')}</p></div>`;
+const planRow = () => `<div class="card" data-act="open-plan" style="cursor:pointer;border-color:var(--navy)"><div class="row sp"><b>${t(planTitle())}</b>${statusTag()}</div><p class="mute">2 ${t('Tasks')} · 4 ${t('Actions')} · ${t('Cost')} ${t('$1.4M COP')}</p></div>`;
 V[11] = () => {
   const P = S.plans, tab = S.app.tab;
   if (tab === 'connections') return appShell(`${backHome()}<h1>${t('Manage connections')}</h1>
@@ -618,18 +690,18 @@ V[11] = () => {
   if (tab === 'home') {
     const sold = 18.4e6, g = +S.goal, pct = Math.min(100, Math.round(sold / g * 100));
     return appShell(`<h1>${t('Hello, Daniel')}</h1><p class="mute">${STORE.name} · ${STORE.url}</p>
-      ${P.ready ? `<div class="mute" style="margin-top:14px">${t('Needs your Approval')}</div>${planRow()}` : buildingCard()}
+      ${pausedBanner()}${safetyEmail()}${alertCards()}${P.ready ? `<div class="mute" style="margin-top:14px">${t('Needs your Approval')}</div>${planRow()}` : buildingCard()}${P.ready && S.week === 'second' ? lastWeekCard() : ''}
       <div class="card"><div class="row sp"><b>${t('May Goal')}</b><b>${cop(g)}</b></div><div class="bar" style="height:10px;margin:10px 0 6px"><i style="width:${pct}%"></i></div><p class="mute">${t('So far this month:')} ${cop(sold)} · ${pct}%</p></div>
       <div class="card"><div class="row sp"><span>${t('Next Weekly plan')}</span><b>${t('Tuesday 7:00 a.m.')}</b></div><div class="row sp" style="margin-top:8px"><span>${t('Changes left this period')}</span><b>N / N</b></div></div>`);
   }
   if (!P.ready) return appShell(`<h1>${t('Plans')}</h1>${buildingCard()}<div class="card"><p class="mute">${t('Your first Plan appears here.')}</p></div>`);
   if (!P.detail) return appShell(`<h1>${t('Plans')}</h1>${planRow()}<p class="mute">${t('Next Weekly plan: Tuesday 7:00. Change the weekday in Settings.')}</p>`);
   const all = TASKS.flatMap(x => x.acts), decided = all.filter(a => P.act[a.id]).length, remaining = all.length - decided;
-  return appShell(`<button class="link" data-act="plans-list">‹ ${t('Plans')}</button><h1 style="margin-bottom:6px">${t('Plan for May 1 to May 7')}</h1><div style="margin-bottom:6px">${statusTag()}</div>
-    <div class="card"><div class="mute">${t('Pace vs Goal')}</div><p><b>${t('At this pace you end May near')} ${cop(BASELINE)}</b>, ${t('about')} ${Math.round((1 - BASELINE / +S.goal) * 100)}% ${t('under your Goal.')}</p></div>
-    ${TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<section class="task"><div class="row sp"><h2 style="margin-top:0">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p><p class="mute">${t('Effect on Goal:')} <b>${t(task.effect)}</b>, ${t(task.assume)}.</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
-      ${actsHTML(task)}
-      <div class="card" style="background:var(--bg);border-style:dashed"><b>${t('Result')}</b><p class="mute">${t('Results appear here after the work runs. (Reporting is specified separately.)')}</p></div></section>`).join('')}
+  return appShell(`<button class="link" data-act="plans-list">‹ ${t('Plans')}</button><h1 style="margin-bottom:6px">${t(planTitle())}</h1><div style="margin-bottom:6px">${statusTag()}</div>
+    ${pausedBanner()}${S.week === 'second' ? lastWeekCard() : ''}${hypCard()}
+    ${TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<section class="task"><div class="row sp"><h2 style="margin-top:0">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
+      ${actsHTML(task)}</section>`).join('')}
+    ${resultBlock()}
     <p class="mute">${t('Rita reads each change back after writing it and shows you whether it matches.')}</p>`,
     remaining > 0 ? fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all') : '');
 };
@@ -643,7 +715,7 @@ function chatHTML() {
 // ---------- render + events ----------
 function render() {
   document.getElementById('app').innerHTML = (V[S.step === 2 && S.siteWait ? 'wait' : S.step] || (() => ''))() + chatHTML();
-  const demo = { 2: [['no-Shopify site', 'd-wix']], 3: [['Shopify failure', 'shop-fail'], ['admin connects', 'owner-done']], 5: [['read-only', 'em-ro'], ['denied', 'em-fail']], 6: [['Meta read-only', 'meta-ro']], 9: [['number taken', 'd-taken']], 10: [['simulate message', 'hi-sim']] }[S.step] || [];
+  const demo = { 2: [['no-Shopify site', 'd-wix']], 3: [['Shopify failure', 'shop-fail'], ['admin connects', 'owner-done']], 5: [['read-only', 'em-ro'], ['denied', 'em-fail']], 6: [['Meta read-only', 'meta-ro']], 9: [['number taken', 'd-taken']], 10: [['simulate message', 'hi-sim']], 11: [['Plan 2 (Last week)', 'w2'], ['spend alert', 'al-spend'], ['sales alert', 'al-pace'], ['paused', 'paused'], ['reset demo', 'al-clear']] }[S.step] || [];
   document.getElementById('dev').innerHTML = demo.map(([l, a]) => `<button data-act="${a}">${l}</button>`).join('') + `<span>PROTOTYPE</span><select data-act="jump">${STEPS.map((s, i) => `<option value="${i + 1}" ${S.step === i + 1 ? 'selected' : ''}>${i + 1}. ${t(s)}</option>`).join('')}</select><button data-act="reset">reset</button>`;
   kick();
 }
@@ -708,6 +780,17 @@ const A = {
   'prod-add'(d) { getCre(d.id).products.push(+d.i); render(); },
   showdone(d) { S.plans.showDone = S.plans.showDone || {}; S.plans.showDone[d.id] = !S.plans.showDone[d.id]; render(); },
   taskopen(d) { S.plans.taskOpen = S.plans.taskOpen || {}; S.plans.taskOpen[d.id] = !S.plans.taskOpen[d.id]; render(); },
+  w2() { S.week = 'second'; S.plans.act = {}; S.plans.stop = {}; S.plans.rb = {}; S.plans.ready = true; S.plans.build = 5; S.plans.detail = false; S.app.tab = 'home'; render(); scrollTo(0, 0); },
+  'al-spend'() { S.alert = 'spend'; S.alertRes = ''; S.app.tab = 'home'; render(); }, 'al-pace'() { S.alert = 'pace'; S.alertRes = ''; S.app.tab = 'home'; render(); },
+  'al-clear'() { S.alert = null; S.alertRes = ''; S.paused = false; S.week = 'first'; render(); },
+  paused() { S.paused = true; S.alert = 'spend'; S.alertRes = ''; S.app.tab = 'home'; render(); }, unpause() { S.paused = false; render(); },
+  'al-stop'() { S.alertRes = 'Stopping the ad: pausing… Your tap was recorded as your Approval. You will see "Paused and verified" once Meta confirms.'; render(); later(1800, () => { S.alertRes = 'Paused and verified ✓. Read back from Meta Ads. Resuming it needs a normal Approval.'; render(); }); },
+  'al-restore'() { S.alertRes = 'Restoring the budget: writing and reading back…'; render(); later(1800, () => { S.alertRes = 'Restored and verified ✓. Retargeting daily budget is $40.000 again, as before your change.'; render(); }); },
+  'al-wait'(d) { S.alertRes = LANG === 'en' ? `Okay. Rita will check again in ${d.h} h and alert you only if it is still wrong.` : `Listo. Rita volverá a revisar en ${d.h} h y te avisará solo si sigue mal.`; render(); },
+  stop(d) { S.plans.stop[d.id] = 'pausing'; render(); later(1800, () => { S.plans.stop[d.id] = 'paused'; render(); }); },
+  'resume-ask'(d) { S.plans.stop[d.id] = 'resume'; render(); },
+  'rb-revoke'(d) { S.plans.rb[d.id] = 'revoked'; render(); },
+  'rb-edit'(d) { S.plans.rb[d.id] = 'edited'; delete S.plans.act[d.id]; delete S.plans.act['x' + d.id]; render(); },
   menu() { S.menuOpen = !S.menuOpen; render(); },
   goto(d) { S.menuOpen = false; S.app.tab = d.k; render(); scrollTo(0, 0); },
   logout() { timers.splice(0).forEach(clearTimeout); S = fresh(); render(); },
