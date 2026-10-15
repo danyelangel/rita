@@ -102,7 +102,7 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .thread .msg.u{background:#dcf8c6;border-color:#cfe9b8;margin-left:auto}
 .composer{position:fixed;left:0;right:0;bottom:112px;max-width:440px;margin:0 auto;padding:10px 16px;background:var(--bg);display:flex;gap:8px;align-items:center;z-index:8}
 .composer input{border-radius:99px}
-.cre{background:var(--card);border:2px solid var(--line);border-radius:14px;padding:12px;margin:10px 0}
+.cre{border-top:1px solid var(--line);padding:12px 0 0;margin:12px 0 0}
 .cf{margin:8px 0}.cf input,.cf textarea{padding:8px 10px;font-size:15px}
 .mail{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:8px}
 .mail .mh{padding:10px 12px;border-bottom:1px solid var(--line);background:var(--card)}
@@ -123,6 +123,10 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .ptt{font-weight:700;font-size:16px;margin-bottom:8px}
 .mad .mimg{position:relative;height:150px}
 .tsum{width:100%;display:flex;justify-content:space-between;align-items:center;text-align:left;border-radius:16px;padding:14px 18px;font-weight:400;color:var(--ink);border:2px solid var(--line);background:var(--card);margin:12px 0}
+.task{margin:26px 0 30px;padding-top:6px}
+.task>.row h2{font-size:21px}
+.task>p{margin:8px 0}
+.task .card{margin:14px 0}
 .hide{display:none}
 </style>
 </head>
@@ -532,9 +536,9 @@ V[11] = () => {
   const all = TASKS.flatMap(x => x.acts), decided = all.filter(a => P.act[a.id]).length, remaining = all.length - decided;
   return appShell(`<button class="link" data-act="plans-list">‹ ${t('Plans')}</button><h1 style="margin-bottom:6px">${t('Plan for May 1 to May 7')}</h1><div style="margin-bottom:6px">${statusTag()}</div>
     <div class="card"><div class="mute">${t('Pace vs Goal')}</div><p><b>${t('At this pace you end May near')} ${cop(BASELINE)}</b>, ${t('about')} ${Math.round((1 - BASELINE / +S.goal) * 100)}% ${t('under your Goal.')}</p></div>
-    ${TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<div class="card" style="padding:0 14px 6px"><div class="row sp"><h2 style="margin-top:14px">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p><p class="mute">${t('Effect on Goal:')} <b>${t(task.effect)}</b>, ${t(task.assume)}.</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
+    ${TASKS.map(task => taskCollapsed(task) ? taskSummary(task) : `<section class="task"><div class="row sp"><h2 style="margin-top:0">${t(task.title)}</h2>${taskDone(task) ? `<button class="link" data-act="taskopen" data-id="${task.id}">${t('Collapse')} ▴</button>` : ''}</div><p>${t(task.why)}</p><p class="mute">${t('Effect on Goal:')} <b>${t(task.effect)}</b>, ${t(task.assume)}.</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
       ${actsHTML(task)}
-      <div class="card" style="background:var(--bg);border-style:dashed"><b>${t('Result')}</b><p class="mute">${t('Results appear here after the work runs. (Reporting is specified separately.)')}</p></div></div>`).join('')}
+      <div class="card" style="background:var(--bg);border-style:dashed"><b>${t('Result')}</b><p class="mute">${t('Results appear here after the work runs. (Reporting is specified separately.)')}</p></div></section>`).join('')}
     <p class="mute">${t('Rita reads each change back after writing it and shows you whether it matches.')}</p>`,
     remaining > 0 ? fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all') : '');
 };
