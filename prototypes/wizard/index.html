@@ -63,8 +63,9 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .big{font-size:28px;font-weight:700}
 .chg{background:var(--bg);border-radius:12px;padding:4px 14px;margin:10px 0}
 .chg .r{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line);font-size:15px}
-.chg .r:last-child{border-bottom:0}.chg .l{color:var(--mute);flex:none}.chg .v{text-align:right;font-weight:600;color:var(--navy)}
-.chg s{color:var(--mute);font-weight:400;margin-right:6px}
+.chg .r:last-child{border-bottom:0}.chg .l{color:var(--mute);flex:none}.chg .v{text-align:right;font-weight:600;color:var(--navy);min-width:0;overflow-wrap:anywhere}
+.chg .r.ba{flex-direction:column;gap:2px}.chg .r.ba .v{text-align:left;font-size:18px}.chg .arr{font-style:normal;color:var(--mute);margin:0 8px}
+.chg s{color:var(--mute);font-weight:400}
 .kind{font-size:12px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;color:var(--mute)}
 .sticky{position:fixed;left:0;right:0;bottom:46px;padding:10px 16px;background:linear-gradient(transparent,var(--bg) 40%);z-index:6}
 .sticky>div{max-width:440px;margin:0 auto}
@@ -92,7 +93,7 @@ label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
 .fbopt{width:100%;display:flex;justify-content:space-between;border:0;border-radius:10px;font-size:17px;font-weight:400;text-align:left;padding:10px 12px;background:transparent;color:var(--ink)}
 .fbopt:hover{background:var(--bg)}.fbopt.sel{background:var(--yellow)}
 .avatar{width:34px;height:34px;border-radius:50%;background:var(--yellow);border:2px solid var(--navy);display:grid;place-items:center;font-weight:700;color:var(--navy)}
-.tabs{position:fixed;left:0;right:0;bottom:46px;background:var(--card);border-top:2px solid var(--line);display:flex;justify-content:center;gap:4px;padding:6px 8px;z-index:7}
+.tabs{position:fixed;left:0;right:0;bottom:0;padding-bottom:52px!important;background:var(--card);border-top:2px solid var(--line);display:flex;justify-content:center;gap:4px;padding:6px 8px;z-index:7}
 .tab{display:flex;flex-direction:column;align-items:center;gap:0;flex:1;max-width:120px;border:0;border-radius:12px;padding:6px 4px;font-size:12px;font-weight:600;color:var(--mute)}
 .tab span{font-size:18px;line-height:1.2}.tab.on{color:var(--navy);background:var(--bg)}
 .sticky.app{bottom:112px}
@@ -426,7 +427,7 @@ function actCard(a) {
   const st = S.plans.act[a.id] || 'open', ex = S.plans.act['x' + a.id];
   const cre = creativeHTML(a, st);
   const tag = st === 'approved' ? (ex === 'done' ? `<span class="tag ok">${t('Done and verified')}</span>` : ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`) : st === 'rejected' ? `<span class="tag">${t('Rejected')}</span>` : `<span class="tag">${t('Awaiting you')}</span>`;
-  return `<div class="card" style="${st === 'rejected' ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="kind">${a.rows.some(r => r[2]) ? t('Change') : t('New')}</div><div class="chg">${a.rows.map(r => `<div class="r"><span class="l">${t(r[0])}</span><span class="v">${r[2] ? `<s>${t(r[2])}</s>` : ''}${t(r[1])}</span></div>`).join('')}</div>${cre}
+  return `<div class="card" style="${st === 'rejected' ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="kind">${a.rows.some(r => r[2]) ? t('Change') : t('New')}</div><div class="chg">${a.rows.map(r => `<div class="r ${r[2] ? 'ba' : ''}"><span class="l">${t(r[0])}</span><span class="v">${r[2] ? `<s>${t(r[2])}</s><i class="arr" aria-hidden="true">→</i>` : ''}${t(r[1])}</span></div>`).join('')}</div>${cre}
     <div class="mute">${t('Cost:')} ${t(a.cost)}</div>
     ${ex === 'done' ? `<div class="note ok">${t('Read back from')} ${a.conn}: ${t('matches the approved diff')} ✓ · <button class="link">${t('Open in')} ${a.conn}</button></div>` : ''}
     ${st === 'open' ? `<div class="row" style="margin-top:8px"><button class="pri sm" data-act="approve" data-id="${a.id}" ${hardFail(a.id) ? 'disabled' : ''}>${t('Approve')}</button><button class="sm danger" data-act="reject" data-id="${a.id}">${t('Reject')}</button></div>` : ''}
