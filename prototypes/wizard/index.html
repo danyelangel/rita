@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rita Wizard (PROTOTYPE, throwaway)</title>
+<!--
+  PROTOTYPE: finalized clickable Wizard, steps 1-11, mock data only. Throwaway; not production code.
+  Question it answers: does the whole settled Wizard hang together as a mobile-first flow, ending on Plans + Plan detail?
+  Variants: none. This is the single "finalized" design the ticket asks for, so no ?variant= switcher; a bottom dev bar jumps between steps.
+  Run: double-click this file. No build, no network, no persistence (state lives in memory; reload resets).
+  Copy goes through t() (gettext style, English text as key) so a Spanish locale can be dropped into LOCALE later.
+  Mock store: "Casa Tejida" (home textiles, Colombia, COP). Every number is invented.
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f7f4ee;--card:#fff;--ink:#1d1b17;--mute:#6b6759;--line:#e4ddd0;--navy:#22305a;--yellow:#f5d97e;--green:#3fb36b;--accent:#22305a;--accent-ink:#fff;--warn:#8a6512;--warn-bg:#fbf1cf;--bad:#a1302b;--ok:#216b3f;--ok-bg:#e3f4e9}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.45 'Instrument Sans',system-ui,-apple-system,Segoe UI,sans-serif}
+#wrap{max-width:440px;margin:0 auto;min-height:100vh;padding:0 16px 120px}
+header.top{position:sticky;top:0;background:var(--bg);padding:12px 0 10px;z-index:5;border-bottom:1px solid var(--line);margin:0 -16px;padding-left:16px;padding-right:16px}
+.brand{display:flex;justify-content:space-between;align-items:center}
+.brand img{height:34px;width:auto;display:block}
+.bar{height:4px;background:var(--line);border-radius:4px;margin-top:10px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--navy);transition:width .3s}
+.stepno{font-size:12px;color:var(--mute);margin-top:6px}
+h1{font-size:30px;line-height:1.1;margin:20px 0 8px;color:var(--navy);font-weight:700;letter-spacing:-.5px}
+h2{font-size:19px;margin:22px 0 8px;color:var(--navy)}
+p{margin:6px 0}
+.mute{color:var(--mute);font-size:14px}
+.card{background:var(--card);border:2px solid var(--line);border-radius:16px;padding:16px 18px;margin:12px 0}
+.row{display:flex;gap:8px;align-items:center}
+.sp{justify-content:space-between}
+.wrapf{flex-wrap:wrap}
+button,.btn{font:inherit;font-weight:600;border-radius:999px;border:2px solid var(--navy);background:transparent;color:var(--navy);padding:11px 20px;cursor:pointer}
+button.pri{background:var(--yellow);color:var(--ink);border-color:var(--navy);font-weight:700;box-shadow:0 4px 0 0 var(--navy);margin-bottom:4px}
+button.pri:active{transform:translateY(3px);box-shadow:0 1px 0 0 var(--navy)}
+button.pri:disabled{opacity:.4;cursor:not-allowed}
+button.link{border:0;background:none;color:var(--navy);padding:6px 2px;text-decoration:underline;font-weight:500}
+button.full{width:100%}
+button.sm{padding:6px 14px;font-size:14px}
+button.pri.sm{box-shadow:0 3px 0 0 var(--navy)}
+button.danger{color:var(--bad)}
+input,textarea,select{font:inherit;width:100%;padding:11px 12px;border:2px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink)}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--navy)}
+textarea{min-height:70px;resize:vertical}
+label{display:block;font-size:13px;color:var(--mute);margin:12px 0 4px}
+.chip{display:inline-block;padding:6px 13px;border:2px solid var(--line);border-radius:99px;font-weight:500;margin:3px 3px 3px 0;background:var(--card);font-size:14px;cursor:pointer;user-select:none}
+.chip.on{background:var(--yellow);color:var(--ink);border-color:var(--navy)}
+.tag{display:inline-block;font-size:12px;padding:2px 8px;border-radius:99px;background:var(--line);color:var(--mute)}
+.tag.ok{background:var(--ok-bg);color:var(--ok)}.tag.warn{background:var(--warn-bg);color:var(--warn)}
+.note{border-radius:10px;padding:10px 12px;font-size:14px;margin:10px 0;background:var(--warn-bg);color:var(--warn)}
+.note.ok{background:var(--ok-bg);color:var(--ok)}
+.note.bad{background:#fbe9e8;color:var(--bad)}
+.prog{list-style:none;padding:0;margin:10px 0}
+.prog li{padding:9px 0;border-bottom:1px solid var(--line);display:flex;gap:10px;align-items:center;font-size:15px}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--line);flex:none}
+.dot.run{background:var(--warn);animation:p 1s infinite}.dot.done{background:var(--green)}
+@keyframes p{50%{opacity:.3}}
+.sw{width:34px;height:34px;border-radius:8px;border:1px solid var(--line);display:inline-block}
+.src{font-size:12px;color:var(--mute)}
+.big{font-size:28px;font-weight:700}
+.diff{font:13px/1.5 ui-monospace,Menlo,monospace;background:var(--bg);border-radius:8px;padding:8px 10px;margin:8px 0;white-space:pre-wrap}
+.diff .a{color:var(--ok)}.diff .d{color:var(--bad)}
+.sticky{position:fixed;left:0;right:0;bottom:46px;padding:10px 16px;background:linear-gradient(transparent,var(--bg) 40%);z-index:6}
+.sticky>div{max-width:440px;margin:0 auto}
+#dev{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;background:#111;color:#fff;border-radius:99px;padding:5px 10px;font-size:12px;display:flex;gap:8px;align-items:center;z-index:50;box-shadow:0 2px 12px #0006}
+#dev select{width:auto;padding:3px 6px;font-size:12px;background:#222;color:#fff;border:1px solid #444}
+#dev button{padding:3px 9px;font-size:12px;background:#222;color:#fff;border-color:#444}
+#chatfab{box-shadow:0 4px 0 0 var(--navy)!important;position:fixed;right:14px;bottom:100px;z-index:40}
+#chat{background:#ebe5d8!important;position:fixed;right:14px;bottom:150px;width:min(330px,calc(100vw - 28px));max-height:55vh;overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;z-index:40;box-shadow:0 6px 24px #0003}
+.msg{padding:8px 11px;border-radius:12px;margin:6px 0;max-width:88%;font-size:14px;background:#fff}
+.msg.u{background:#dcf8c6;margin-left:auto}
+.planimg{border-radius:10px;background:var(--navy);color:#fff;padding:14px;margin-top:6px;font-size:13px}
+.qr{width:120px;height:120px;background:repeating-conic-gradient(var(--ink) 0 25%,var(--card) 0 50%) 0 0/20px 20px;border:8px solid var(--card);outline:1px solid var(--line);border-radius:6px}
+.hide{display:none}
+</style>
+</head>
+<body>
+<div id="wrap"><div id="app"></div></div>
+<div id="dev"></div>
+<script>
+// ---------- i18n layer (gettext style): English text is the key; add Spanish to LOCALE later ----------
+const LOGO = 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1MzMuOSIgaGVpZ2h0PSIyMDAiIHZpZXdCb3g9IjEwMy4wIC0xOTA4LjAgNTIwMC4yIDE5NDguMCIgcm9sZT0iaW1nIiBhcmlhLWxhYmVsPSJSaXRhIj48cGF0aCBkPSJNMTIzIDBWLTE1OTdRMTIzIC0xNTk3IDE4NS41IC0xNjAxLjVRMjQ4IC0xNjA2IDM0OS41IC0xNjEzLjBRNDUxIC0xNjIwIDU3MS41IC0xNjI2LjVRNjkyIC0xNjMzIDgxMC41IC0xNjM3LjVROTI5IC0xNjQyIDEwMjIgLTE2NDJRMTIxNiAtMTY0MiAxMzUxLjAgLTE1OTEuNVExNDg2IC0xNTQxIDE1NjkuMCAtMTQ1OC4wUTE2NTIgLTEzNzUgMTY5MC41IC0xMjc1LjBRMTcyOSAtMTE3NSAxNzI5IC0xMDc1UTE3MjkgLTkwMCAxNjQwLjAgLTc3NC41UTE1NTEgLTY0OSAxNDEzIC01NjdMMTg0NyAwSDEwNTdMNzc2IC00NjNWMFpNNzcyIC03NTRROTY2IC04MjYgMTA1MC41IC05MTAuNVExMTM1IC05OTUgMTEzNSAtMTA5MlExMTM1IC0xMTczIDExMDUuMCAtMTIwMy4wUTEwNzUgLTEyMzMgMTAzMCAtMTIzM1ExMDAxIC0xMjMzIDk3MC4wIC0xMjIzLjVROTM5IC0xMjE0IDkwNSAtMTIwMEw3NzIgLTExNDVaIE0yNTE1LjA0IDBIMTkzNy4wNFYtMTI0M0gyNTE1LjA0WiBNMjYwMS4wOCAtMTI0M0gyNzE1LjA4Vi0xNTc5TDMzMTMuMDggLTE2NDBWLTEyNDNIMzU5Ni4wOFYtOTI2SDMzMTMuMDhWLTYxMlEzMzEzLjA4IC00NzYgMzM3NC4wOCAtNDEwLjBRMzQzNS4wOCAtMzQ0IDM1OTYuMDggLTM0NFYtOTBRMzUxMC4wOCAtMzIgMzQwMC4wOCAzLjVRMzI5MC4wOCAzOSAzMTc2LjA4IDM5UTMwNTAuMDggMzkgMjk0NS41OCAtMTQuMFEyODQxLjA4IC02NyAyNzc4LjA4IC0xNjcuMFEyNzE1LjA4IC0yNjcgMjcxNS4wOCAtNDA2Vi05MjZIMjYwMS4wOFogTTM3MDIuMTIgLTU2NVEzNzAyLjEyIC03MjkgMzc1Ny42MiAtODYyLjBRMzgxMy4xMiAtOTk1IDM5MDkuMTIgLTEwOTEuMFE0MDA1LjEyIC0xMTg3IDQxMjcuMTIgLTEyMzguNVE0MjQ5LjEyIC0xMjkwIDQzODIuMTIgLTEyOTBRNDQ4OS4xMiAtMTI5MCA0NTkxLjYyIC0xMjM3LjVRNDY5NC4xMiAtMTE4NSA0NzU1LjEyIC0xMDkwTDQ4OTguMTIgLTEyNDNINTIyNi4xMlYwSDQ4OTguMTJMNDc1NS4xMiAtMjA3UTQ2NzguMTIgLTkzIDQ1NDguMTIgLTI4LjBRNDQxOC4xMiAzNyA0MjgwLjEyIDM3UTQxMjguMTIgMzcgMzk5Ni4xMiAtMjguNVEzODY0LjEyIC05NCAzNzgzLjEyIC0yMjcuNVEzNzAyLjEyIC0zNjEgMzcwMi4xMiAtNTY1Wk00Mjk4LjEyIC01MTZRNDI5OC4xMiAtNDY3IDQzMjEuMTIgLTQyMy4wUTQzNDQuMTIgLTM3OSA0Mzk2LjEyIC0zNzlRNDQ0Ni4xMiAtMzc5IDQ1MjQuMTIgLTQwOS41UTQ2MDIuMTIgLTQ0MCA0Njg3LjEyIC01MTJWLTg2NlE0NjUyLjEyIC04ODcgNDYwOC4xMiAtODg3UTQ1NTEuMTIgLTg4NyA0NDk2LjEyIC04NTIuNVE0NDQxLjEyIC04MTggNDM5Ni42MiAtNzYyLjVRNDM1Mi4xMiAtNzA3IDQzMjUuMTIgLTY0Mi4wUTQyOTguMTIgLTU3NyA0Mjk4LjEyIC01MTZaIiBmaWxsPSIjMjIzMDVhIi8+PGNpcmNsZSBjeD0iMjI4Ny41IiBjeT0iLTE1ODIuNSIgcj0iMjgwLjkiIGZpbGw9IiNmNWQ5N2UiIHN0cm9rZT0iIzIyMzA1YSIgc3Ryb2tlLXdpZHRoPSI0OS4yIi8+PC9zdmc+Cg==';
+const LOCALE = {};
+const t = s => (LOCALE[s] ?? s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const cop = n => '$' + Math.round(n).toLocaleString('es-CO') + ' COP';
+
+// ---------- mock data ----------
+const STORE = { name: 'Casa Tejida', url: 'casatejida.co', months: [['Jul', 48e6], ['Aug', 52e6], ['Sep', 55e6]] };
+const HIST = [41,44,39,46,50,47,45,49,48,52,55].map(x => x * 1e6); // 12-month-ish net sales, for volatility
+const median = a => { const s = [...a].sort((x, y) => x - y); return s[Math.floor(s.length / 2)]; };
+const BASELINE = median(STORE.months.map(m => m[1]));
+const AVG3 = STORE.months.reduce((a, m) => a + m[1], 0) / 3;
+const VOL = (() => { const m = HIST.reduce((a, b) => a + b) / HIST.length; return Math.sqrt(HIST.reduce((a, b) => a + (b - m) ** 2, 0) / HIST.length) / m; })();
+const FINDINGS = [
+  ['What you sell', 'Handwoven cotton throws, cushion covers and table linens.', 'Website: home and 12 product pages', 'Shopify: 214 products, 3 collections'],
+  ['Who it\'s for', 'Women 28-50 in Bogotá, Medellín and Cali who furnish their homes.', 'Shopify: 71% of orders', 'Website copy agrees'],
+  ['Price range', '$45.000 to $380.000 COP, median order $142.000.', 'Shopify: last 12 months', ''],
+  ['Tone', 'Warm, close, a little artisanal.', 'Website: about page and product copy', ''],
+  ['Where you sell', 'Own online store; Instagram as the main traffic source.', 'Website links and Shopify channels', ''],
+  ['Competitors', 'Mola Home, Tejidos del Valle, Ilva Textil.', 'Web search', ''],
+];
+const TONES = ['Warm', 'Direct', 'Playful', 'Premium', 'Technical', 'Cheeky', 'Calm'];
+const SUGG_DATES = [['Mother\'s Day', 'May 11'], ['Christmas', 'Dec 25'], ['Black Friday', 'Nov 28'], ['Amor y Amistad', 'Sep 20'], ['Father\'s Day', 'Jun 15'], ['Día sin IVA', 'Jun 19']];
+
+// ---------- state (memory only) ----------
+const fresh = () => ({
+  step: 1, user: { email: '', mode: 'start' }, site: '', siteErr: '',
+  shop: { st: 'idle', owner: false, ownerEmail: '', failed: false }, goal: '',
+  p: 'reading', pr: 0, find: {}, buyers: { who: 'Women 28-50, mostly online buyers from Bogotá, Medellín and Cali', where: 'Bogotá, Medellín, Cali' },
+  brand: { show: false, tones: ['Warm', 'Calm'], address: 'Informal (tú)', emoji: 'Some', always: ['hecho a mano', 'tejido en Colombia'], never: ['barato', 'oferta imperdible'], newAlways: '', newNever: '' },
+  dates: [], dateDraft: { name: '', date: '', yearly: true },
+  em: { st: 'idle', readonly: false }, ad: { meta: 'idle', google: 'idle', metaRO: false, page: false, acct: false },
+  dx: { run: 0, done: false, goal: null }, sub: false, checkout: false, locked: false,
+  phone: '+57 ', ch: 'later', hi: 'idle', hiLate: false, chatOpen: false, chat: [],
+  plans: { build: 0, ready: false, detail: false, task: {}, act: {}, edit: {}, variant: {} },
+});
+let S = fresh();
+const STEPS = ['Sign-up', 'Website', 'CRM & Conversions', 'Company profile', 'Email Marketing', 'Performance Marketing', 'Diagnosis', 'Paywall', 'Channel', 'Say Hi', 'Plans'];
+const timers = [];
+const later = (ms, fn) => timers.push(setTimeout(fn, ms));
+const go = n => { timers.splice(0).forEach(clearTimeout); S.step = n; render(); scrollTo(0, 0); };
+const hasLever = () => (S.em.st === 'ok' && !S.em.readonly) || (S.ad.meta === 'ok' && !S.ad.metaRO) || (S.ad.google === 'ok');
+const hasKlaviyo = () => S.em.st === 'ok';
+
+// ---------- shell ----------
+function shell(body, { back = true, foot = '' } = {}) {
+  const n = S.step;
+  return `<header class="top"><div class="brand"><img src="${LOGO}" alt="Rita">${back && n > 1 ? `<button class="link" data-act="back">${t('Back')}</button>` : ''}</div>
+  <div class="bar"><i style="width:${n / 11 * 100}%"></i></div><div class="stepno">${t('Step')} ${n} ${t('of')} 11 · ${t(STEPS[n - 1])}</div></header>
+  ${body}${foot ? `<div class="sticky"><div>${foot}</div></div>` : ''}`;
+}
+const fbtn = (label, act, ok = true, extra = '') => `<button class="pri full" data-act="${act}" ${ok ? '' : 'disabled'} ${extra}>${t(label)}</button>`;
+
+// ---------- steps ----------
+const V = {};
+
+V[1] = () => {
+  const u = S.user;
+  if (u.mode === 'code') return shell(`<h1>${t('Check your email')}</h1><p class="mute">${t('We sent a 6-digit code to')} ${esc(u.email)}.</p>
+    <label>${t('Code')}</label><input data-bind="user.code" inputmode="numeric" maxlength="6" placeholder="123456" value="${esc(u.code || '')}">
+    <p class="mute">${t('Prototype: any 6 digits work.')}</p>`, { foot: fbtn('Continue', 'signup-code', /^\d{6}$/.test(u.code || '')) });
+  return shell(`<h1>${t('Let\'s get Rita working for your store')}</h1>
+    <p class="mute">${t('Sign in to start. Rita reads your store first and acts only after you approve.')}</p>
+    <button class="full" data-act="signup-google" style="margin-top:18px">${t('Continue with Google')}</button>
+    <p class="mute" style="text-align:center">${t('or')}</p>
+    <label>${t('Email')}</label><input data-bind="user.email" type="email" placeholder="you@store.co" value="${esc(u.email)}">`,
+    { back: false, foot: fbtn('Email me a code', 'signup-email', /.+@.+\..+/.test(u.email)) });
+};
+
+V[2] = () => shell(`<h1>${t('What\'s your website?')}</h1><p class="mute">${t('Rita starts reading it right away.')}</p>
+  <label>${t('Website')}</label><input data-bind="site" placeholder="casatejida.co" value="${esc(S.site)}">
+  ${S.siteErr ? `<div class="note bad">${t(S.siteErr)}</div>` : ''}
+  <p class="mute">${t('Prototype: try "wix" in the address to see the not-Shopify waitlist.')}</p>`, { foot: fbtn('Continue', 'website', S.site.trim().length > 3) });
+
+V['wait'] = () => shell(`<h1>${t('Rita works with Shopify stores for now')}</h1><p>${t('We\'ll email you when other platforms arrive.')}</p>
+  <label>${t('Email')}</label><input value="${esc(S.user.email)}"><div style="margin-top:12px">${fbtn('Join the waitlist', 'waitlisted')}</div>
+  <p><button class="link" data-act="back">${t('My store is on Shopify')}</button></p>`, {});
+
+V[3] = () => {
+  const sh = S.shop;
+  if (sh.st === 'ok') {
+    const g = +S.goal || 0, bad = g && (g < AVG3 * .5 || g > AVG3 * 3);
+    return shell(`<h1>${t('Set your Goal')}</h1><div class="note ok">${t('Shopify connected: ')}${STORE.url}</div>
+    <p class="mute">${t('The monthly sales figure Rita works toward. Every plan and report is measured against it.')}</p>
+    <div class="card"><div class="mute">${t('Your last 3 months')}</div>${STORE.months.map(m => `<div class="row sp"><span>${m[0]}</span><b>${cop(m[1])}</b></div>`).join('')}</div>
+    <label>${t('Monthly sales Goal (COP)')}</label><input data-bind="goal" inputmode="numeric" value="${esc(S.goal)}">
+    <p class="mute"><button class="link" data-act="goal-suggest">${t('Suggested: ')}${cop(AVG3 * 1.2)}</button> ${t('(your 3-month average + 20%)')}</p>
+    ${bad ? `<div class="note">${t('That is')} ${g < AVG3 ? t('under half of') : t('over triple')} ${t('your recent average. Are you sure?')}</div>` : ''}`,
+      { foot: fbtn('Save Goal and continue', 'goal-save', g > 0) });
+  }
+  if (sh.st === 'waiting') return shell(`<h1>${t('Waiting for the owner')}</h1><p>${t('We sent a single-use link to')} <b>${esc(sh.ownerEmail)}</b>. ${t('It expires in 7 days and only connects Shopify; the owner needs no Rita account.')}</p>
+    <div class="row"><button data-act="resend">${t('Resend')}</button><button class="danger" data-act="revoke">${t('Revoke')}</button></div>
+    <p class="mute" style="margin-top:20px">${t('Prototype:')} <button class="link" data-act="owner-done">${t('simulate the owner connecting')}</button></p>`);
+  return shell(`<h1>${t('Connect your Shopify store')}</h1><p class="mute">${t('Rita reads your orders and customers. It only writes content, and only with your Approval.')}</p>
+    ${sh.failed ? `<div class="note bad"><b>${t('Shopify said no:')}</b> ${t('the account you used can\'t install apps on casatejida.co.')} ${t('Switch account and retry, or ask the owner to connect it.')}</div>` : ''}
+    ${sh.owner ? `<div class="card"><b>${t('Ask the owner to connect')}</b><label>${t('Owner\'s email')}</label><input data-bind="shop.ownerEmail" value="${esc(sh.ownerEmail)}" placeholder="owner@store.co">
+      <div class="row" style="margin-top:10px"><button class="pri" data-act="owner-send" ${/.+@.+\..+/.test(sh.ownerEmail) ? '' : 'disabled'}>${t('Email the link')}</button><button data-act="owner-copy">${t('Copy link')}</button></div></div>`
+      : `<button class="pri full" data-act="shop-connect" style="margin-top:14px">${t('Connect Shopify')}</button>
+    <p><button class="link" data-act="not-owner">${t('I\'m not the store owner')}</button></p>`}
+    <p class="mute">${t('Prototype:')} <button class="link" data-act="shop-fail">${t('show a failure')}</button></p>`);
+};
+
+V[4] = () => {
+  const P = S.p;
+  if (P === 'reading') {
+    const items = ['Reading your website', 'Searching the web for your brand', 'Cross-checking with Shopify data', 'Drafting what Rita understood'];
+    return shell(`<h1>${t('Rita is getting to know your business')}</h1><p class="mute">${t('Real progress, no fake waiting.')}</p><ul class="prog">${items.map((x, i) => `<li><span class="dot ${S.pr > i ? 'done' : S.pr === i ? 'run' : ''}"></span>${t(x)}</li>`).join('')}</ul>`, {});
+  }
+  if (P === 'findings') {
+    const all = FINDINGS.every((f, i) => S.find[i]);
+    return shell(`<h1>${t('Is this right?')}</h1><p class="mute">${t('Answer each. Shopify data wins when it disagrees with the site.')}</p>
+    ${FINDINGS.map((f, i) => `<div class="card"><div class="row sp"><b>${t(f[0])}</b>${S.find[i] ? `<span class="tag ${S.find[i] === 'yes' ? 'ok' : 'warn'}">${S.find[i] === 'yes' ? t('Yes') : S.find[i] === 'fix' ? t('Fixed') : t('Couldn\'t tell')}</span>` : ''}</div>
+      ${S.find[i] === 'fix' ? `<textarea data-bind="fx.${i}">${esc(S.fx?.[i] ?? f[1])}</textarea>` : `<p>${esc(f[1])}</p>`}
+      <div class="src">${t('Source: ')}${t(f[2])}${f[3] ? ' · ' + t(f[3]) : ''}</div>
+      <div class="row" style="margin-top:8px"><button class="sm" data-act="find" data-i="${i}" data-v="yes">${t('Yes')}</button><button class="sm" data-act="find" data-i="${i}" data-v="fix">${t('Fix')}</button><button class="sm" data-act="find" data-i="${i}" data-v="tell">${t('Couldn\'t tell')}</button></div></div>`).join('')}`,
+      { foot: fbtn('Continue', 'p-buyers', all) });
+  }
+  if (P === 'buyers') return shell(`<h1>${t('Who buys, and where?')}</h1><p class="mute">${t('Pre-filled from your Shopify orders. Edit anything.')}</p>
+    <label>${t('Who buys from you')}</label><textarea data-bind="buyers.who">${esc(S.buyers.who)}</textarea>
+    <label>${t('Where your buyers are')}</label><input data-bind="buyers.where" value="${esc(S.buyers.where)}">`, { foot: fbtn('Continue', 'p-brand', S.buyers.who && S.buyers.where) });
+  if (P === 'brand') {
+    const b = S.brand, chips = (arr, k) => arr.map((x, i) => `<span class="chip on" data-act="rm" data-k="${k}" data-i="${i}">${esc(x)} ✕</span>`).join('');
+    return shell(`<h1>${t('Brand guidelines')}</h1><p class="mute">${t('Optional. Upload your brand file and Rita fills this in, or it uses what it read on your website. The full list of fields lives on the Brand guidelines page later.')}</p>
+    <div class="card row sp"><div><b>${t('Upload brand guidelines')}</b><div class="mute">PDF ${t('or image, up to 20 MB')}</div></div><button class="sm" data-act="upload">${b.up ? t('Uploaded ✓') : t('Upload')}</button></div>
+    <label>${t('Tone')}</label>${TONES.map(x => `<span class="chip ${b.tones.includes(x) ? 'on' : ''}" data-act="tone" data-v="${x}">${t(x)}</span>`).join('')}
+    <label>${t('Form of address')}</label>${['Informal (tú)', 'Formal (usted)'].map(x => `<span class="chip ${b.address === x ? 'on' : ''}" data-act="addr" data-v="${x}">${t(x)}</span>`).join('')}
+    <label>${t('Emoji')}</label>${['None', 'Some', 'Lots'].map(x => `<span class="chip ${b.emoji === x ? 'on' : ''}" data-act="emoji" data-v="${x}">${t(x)}</span>`).join('')}
+    <label>${t('Always use')}</label>${chips(b.always, 'always')}<div class="row"><input data-bind="brand.newAlways" value="${esc(b.newAlways)}" placeholder="${t('add a word')}"><button data-act="add" data-k="always">+</button></div>
+    <label>${t('Never say')}</label>${chips(b.never, 'never')}<div class="row"><input data-bind="brand.newNever" value="${esc(b.newNever)}" placeholder="${t('add a word')}"><button data-act="add" data-k="never">+</button></div>
+    <label>${t('Palette (from your website)')}</label><div class="row"><span class="sw" style="background:#2f5d50"></span><span class="sw" style="background:#e9dcc3"></span><span class="sw" style="background:#b4570b"></span><span class="sw" style="background:#1d1b19"></span></div>
+    <label>${t('Fonts')}</label><p>Fraunces · Inter</p>`, { foot: fbtn('Continue', 'p-dates') });
+  }
+  // dates
+  const d = S.dateDraft;
+  return shell(`<h1>${t('Key dates')}</h1><p class="mute">${t('Sales and holidays Rita should plan around. Optional; add more later in the calendar.')}</p>
+    <label>${t('Popular for stores like yours')}</label>${SUGG_DATES.map(x => `<span class="chip ${S.dates.some(y => y.name === x[0]) ? 'on' : ''}" data-act="sdate" data-n="${x[0]}" data-d="${x[1]}">${t(x[0])} · ${x[1]}</span>`).join('')}
+    <div class="card"><label style="margin-top:0">${t('Add your own')}</label><input data-bind="dateDraft.name" value="${esc(d.name)}" placeholder="${t('Name, e.g. Anniversary sale')}">
+    <div class="row" style="margin-top:8px"><input data-bind="dateDraft.date" type="date" value="${esc(d.date)}"><label class="row" style="margin:0;white-space:nowrap"><input type="checkbox" style="width:auto" data-bind="dateDraft.yearly" ${d.yearly ? 'checked' : ''}> ${t('Every year')}</label></div>
+    <button class="sm" style="margin-top:8px" data-act="adate" ${d.name && d.date ? '' : 'disabled'}>${t('Add')}</button></div>
+    ${S.dates.length ? `<div class="card"><b>${t('Added')}</b>${S.dates.map((x, i) => `<div class="row sp"><span>${esc(t(x.name))} · ${esc(x.date)}${x.yearly ? ' ↻' : ''}</span><button class="link" data-act="rmdate" data-i="${i}">✕</button></div>`).join('')}</div>` : ''}`,
+    { foot: fbtn('Continue', 'p-done') + `<p style="text-align:center;margin:4px 0 0"><button class="link" data-act="p-done">${t('Skip')}</button></p>` });
+};
+
+V[5] = () => {
+  const e = S.em;
+  if (e.st === 'ok') return shell(`<h1>${t('Klaviyo connected')}</h1><div class="card"><div class="mute">${t('Account found')}</div><b>Casa Tejida S.A.S.</b>
+    <div class="mute" style="margin-top:8px">${t('Permissions granted')}</div><div>${t('Read lists, flows, campaigns, metrics')} ✓</div><div>${e.readonly ? `<span style="color:var(--warn)">${t('Create drafts and flows')} ✗</span>` : t('Create drafts and flows') + ' ✓'}</div></div>
+    ${e.readonly ? `<div class="note">${t('Rita could analyze but not act.')} <button class="link" data-act="em-more">${t('Reconnect with more permissions')}</button></div>` : `<div class="note ok">${t('Klaviyo is a Lever: Rita can draft emails and flows for your Approval.')}</div>`}
+    <p class="mute">${t('Rita can\'t edit your existing flows, only create drafts and new flows.')}</p>`, { foot: fbtn('Continue', 'to6') });
+  return shell(`<h1>${t('Connect Email Marketing')}</h1><p class="mute">${t('Klaviyo lets Rita draft emails and flows. Optional.')}</p>
+    ${e.st === 'fail' ? `<div class="note bad">${t('Klaviyo permission was denied. Nothing changed; try again.')}</div>` : ''}
+    <button class="pri full" data-act="em-connect">${t('Connect Klaviyo')}</button>
+    <p><button class="link" data-act="em-skip">${t('Skip for now')}</button></p>
+    <p class="mute">${t('Prototype:')} <button class="link" data-act="em-ro">${t('connect read-only')}</button> · <button class="link" data-act="em-fail">${t('show a failure')}</button></p>`);
+};
+
+V[6] = () => {
+  const a = S.ad, canSkip = S.em.st === 'ok' && !S.em.readonly;
+  if (a.stop) return shell(`<h1>${t('Rita needs somewhere to act')}</h1><p>${t('With no Klaviyo and no ad account, Rita would have nothing to change. Your progress is saved.')}</p>
+    <div class="card"><b>${t('Create a Klaviyo account')}</b><p class="mute">${t('Free to start; about 10 minutes.')}</p><button class="sm">${t('Open guide')}</button></div>
+    <div class="card"><b>${t('Create an ad account')}</b><p class="mute">${t('Meta Ads or Google Ads.')}</p><button class="sm">${t('Open guide')}</button></div>
+    <button class="full" data-act="stop-close">${t('I connected one, go back')}</button>`);
+  const conn = (k, name, extra) => `<div class="card"><div class="row sp"><b>${name}</b>${a[k] === 'ok' ? `<span class="tag ok">${t('Connected')}</span>` : ''}</div>
+    ${a[k] === 'ok' ? `<div class="mute">${k === 'meta' ? 'Ad account: Casa Tejida COP · Page: Casa Tejida' : 'Ad account: 482-119-3302'}</div>${extra || ''}` : `<button class="pri sm" data-act="ad-connect" data-k="${k}" style="margin-top:8px">${t('Connect')} ${name}</button>`}</div>`;
+  return shell(`<h1>${t('Connect Performance Marketing')}</h1><p class="mute">${t('Meta Ads and Google Ads, connected through Zernio.')} ${canSkip ? t('You can skip this step because Klaviyo is connected.') : t('Rita needs at least one place to act: Klaviyo or an ad account.')}</p>
+    ${conn('meta', 'Meta Ads', a.metaRO ? `<div class="note">${t('Read-only: Rita could analyze but not act.')}</div>` : `<div class="mute">${t('Meta also needs a Facebook Page, picked from your list.')}</div>`)}${conn('google', 'Google Ads')}
+    <p class="mute">${t('Prototype:')} <button class="link" data-act="meta-ro">${t('connect Meta read-only')}</button></p>`,
+    { foot: fbtn('Continue to your Diagnosis', 'to7', hasLever()) + (canSkip ? `<p style="text-align:center;margin:4px 0 0"><button class="link" data-act="to7">${t('Skip')}</button></p>` : `<p style="text-align:center;margin:4px 0 0"><button class="link" data-act="ad-stop">${t('I have neither Klaviyo nor an ad account')}</button></p>`) });
+};
+
+const DX = ['Goal in perspective', 'Performance by channel', 'Measurement check', 'Immediate risks', 'Website audit'];
+V[7] = () => {
+  const d = S.dx, g = +S.goal, lift = g / BASELINE - 1, ratio = lift / VOL;
+  const tier = lift <= 0 ? 'under' : ratio <= 1 ? 'reach' : ratio <= 2 ? 'stretch' : 'beyond';
+  const verdict = { under: 'Your Goal is under what you already do. Consider raising it.', reach: 'Within your normal month-to-month variation.', stretch: 'A stretch: bigger than your usual swings, but not far outside them.', beyond: 'Well beyond your history: more than double your usual swings.' }[tier];
+  const sec = [
+    `<p class="big">${tier === 'under' ? '↓' : Math.round(lift * 100) + '%'}</p><p>${t(verdict)}</p><p class="mute">${t('Baseline (median of last 3 full months):')} ${cop(BASELINE)} · ${t('Goal:')} ${cop(g)} · ${t('Your store\'s usual monthly variation:')} ±${Math.round(VOL * 100)}%</p>
+     <label>${t('Edit Goal here, the Diagnosis updates')}</label><input data-bind="goal" inputmode="numeric" value="${esc(S.goal)}">
+     <p class="mute">${t('What it would take: an order of magnitude only, e.g. marketing-driven sales up roughly 25%. Platforms over-claim and Klaviyo ignores refunds.')}</p>`,
+    `<p><b>Meta</b> · ${t('12 months')}: ${cop(41e6)} ${t('spend')}, ${cop(118e6)} ${t('platform-reported revenue')}</p><p><b>Klaviyo</b>: ${t('flows drive about 14% of revenue')}</p><p><b>Google</b> <span class="tag warn">${t('still loading history')}</span> <span class="mute">${t('partial, fills in later')}</span></p><p class="mute">${t('Shopify is the source of truth for revenue: ')}${cop(612e6)}.</p>`,
+    `<p>${t('Shopify paid orders vs what Meta reports: 412 vs 538.')}</p><p><span class="tag warn">${t('Gap')}</span> ${t('Click IDs (fbc/fbp) are present on only 61% of paid orders, and dedupe IDs are missing server-side.')}</p>`,
+    `<ul><li>${t('Meta spent $3.2M COP last month with no attributed purchases on 2 campaigns.')}</li><li>${t('Your welcome flow in Klaviyo is paused.')}</li><li>${t('Meta ad account has no payment method on file.')}</li></ul>`,
+    `<p>${t('Checkout path: clear (3 steps). Trust signals: reviews missing on product pages. Shipping cost shown only at checkout. Tags found: Meta pixel, Google tag.')}</p>`,
+  ];
+  const shown = d.done ? 5 : d.run;
+  const prog = `<ul class="prog">${DX.map((x, i) => `<li><span class="dot ${i < d.run ? 'done' : i === d.run && !d.done ? 'run' : ''}"></span>${t(x)}</li>`).join('')}</ul>`;
+  return shell(`<h1>${t('Your free Diagnosis')}</h1>${d.done ? '' : prog}
+    ${DX.slice(0, shown).map((x, i) => `<div class="card"><b>${t(x)}</b>${sec[i]}</div>`).join('')}
+    ${d.done ? `<div class="card" style="border-color:var(--accent)"><b>${t('Summary')}</b><p>${t(verdict)}</p><p>${t('Top risks: Meta spend with no attributed purchases, paused welcome flow, missing payment method.')}</p></div>` : ''}`,
+    d.done ? { foot: fbtn('See how Rita can help', 'to8') } : {});
+};
+
+V[8] = () => {
+  if (S.checkout) return shell(`<h1>dLocal Go</h1><p class="mute">${t('Hosted checkout (mock)')}</p><div class="card"><div class="row sp"><span>Rita · ${t('monthly')}</span><b>${cop(149000)}</b></div><label>${t('Card number')}</label><input value="4111 1111 1111 1111"><div class="row"><div><label>MM/YY</label><input value="12/29"></div><div><label>CVC</label><input value="123"></div></div></div>
+    <p class="mute">${t('Prototype only. No real payment.')}</p>`, { foot: fbtn('Pay and subscribe', 'pay') });
+  if (S.locked) return shell(`<h1>${t('Your Diagnosis is saved')}</h1><p>${t('You can read it any time. Rita stays locked until you subscribe: no Channel, no Plans, no changes.')}</p>
+    <div class="card"><b>${t('Connections')}</b><p class="mute">Shopify ✓ · ${hasKlaviyo() ? 'Klaviyo ✓ · ' : ''}${S.ad.meta === 'ok' ? 'Meta ✓ · ' : ''}${S.ad.google === 'ok' ? 'Google ✓' : ''}</p></div>
+    <button class="pri full" data-act="resume-pay">${t('Subscribe to continue')}</button><p><button class="link" data-act="to7">${t('Read my Diagnosis')}</button></p>`);
+  return shell(`<h1>${t('Close the gap to your Goal with Rita')}</h1>
+    <div class="card"><div class="mute">${t('Biggest finding')}</div><p><b>${t('Meta spends with no attributed purchases and conversions are only partly measured.')}</b></p><p class="mute">${t('Goal gap:')} ${cop(+S.goal - BASELINE)} ${t('per month above your baseline.')}</p></div>
+    <div class="card"><b>${t('What you unlock')}</b><ul><li>${t('A Weekly plan every week')}</li><li>${t('The week\'s automatic work (reads and drafts)')}</li><li>${t('Execution, only with your Approval')}</li><li>${t('Reports against your Goal')}</li><li>${t('Rita in WhatsApp')}</li></ul></div>
+    <div class="card"><div class="row sp"><b>${t('Rita')}</b><span><span class="big" style="font-size:22px">${cop(149000)}</span> / ${t('month')}</span></div><p class="mute">${t('Placeholder price. Includes N campaigns per week and N changes per campaign each period (placeholder limits), resetting on your billing day.')}</p></div>
+    <p class="mute">${t('Results are not immediate and not everything works the first time. Rita learns your store as it goes.')}</p>`,
+    { foot: fbtn('Subscribe with dLocal Go', 'checkout') + `<p style="text-align:center;margin:4px 0 0"><button class="link" data-act="notnow">${t('Not now')}</button> <span class="mute">· ${t('Cancel anytime; refunds within the window.')}</span></p>` });
+};
+
+V[9] = () => shell(`<h1>${t('Talk to Rita on WhatsApp')}</h1><p class="mute">${t('Rita sends your Weekly plan here and answers questions. Approvals still happen on the web.')}</p>
+  <label>${t('Your WhatsApp number')}</label><input data-bind="phone" inputmode="tel" value="${esc(S.phone)}">
+  ${/0000$/.test(S.phone.replace(/\s/g, '')) ? `<div class="note bad">${t('That number is already paired to another Project. Use a different number.')}<br><span class="mute">${t('The holder can message Rita from it to ask which email it is paired to.')}</span></div>` : ''}
+  <p class="mute">${t('Prototype: a number ending 0000 shows the "taken" state.')}</p>`,
+  { foot: fbtn('Continue', 'to10', S.phone.replace(/\D/g, '').length >= 12 && !/0000$/.test(S.phone.replace(/\s/g, ''))) + `<p style="text-align:center;margin:4px 0 0"><button class="link" data-act="ch-later">${t('Later (web chat always works)')}</button></p>` });
+
+V[10] = () => {
+  if (S.hi === 'done') return shell(`<h1>${t('You\'re paired')} ✓</h1><p>${t('Rita messaged you on WhatsApp. The same conversation is on the web, in the chat button.')}</p><div class="note ok">${esc(S.phone)}</div>`, { foot: fbtn('Continue', 'to11') });
+  return shell(`<h1>${t('Say hi to Rita')}</h1><p class="mute">${t('Send the first message from')} <b>${esc(S.phone)}</b>. ${t('That pairs this number with your store.')}</p>
+    <div class="card row" style="gap:16px"><div class="qr"></div><div><b>${t('On your computer')}</b><p class="mute">${t('Scan with your phone')}</p></div></div>
+    <button class="pri full" data-act="wa-open">${t('Open WhatsApp')} · "Hi Rita, I'm Daniel"</button>
+    <div class="note" style="display:flex;gap:8px;align-items:center"><span class="dot run"></span>${t('Waiting for your message… (expires in 30 minutes)')}</div>
+    ${S.hiLate ? `<button class="link" data-act="hi-later">${t('I\'ll do it later')}</button><p class="mute">${t('You can edit the number:')} <button class="link" data-act="back">${t('change')}</button></p>` : ''}
+    <p class="mute">${t('Prototype:')} <button class="link" data-act="hi-sim">${t('simulate the inbound message')}</button></p>`);
+};
+
+const TASKS = [
+  { id: 't1', title: 'Mother\'s Day push', why: 'Key date in 24 days; last year it drove 18% of May sales and you had no campaign.', effect: '+$6M to +$11M COP', assume: 'assuming last year\'s email open rate and 1.8x ROAS on Meta', dropped: 'Considered and dropped: a Google Shopping test, too little data.', cost: '$1.4M COP ad budget',
+    acts: [
+      { id: 'a1', conn: 'Klaviyo', kind: 'Create email draft + schedule', diff: `<span class="a">+ Campaign "Día de la Madre"</span>\n<span class="a">+ Audience: buyers last 12 months (3,420)</span>\n<span class="a">+ Send: May 6, 8:00</span>`, cost: '$0', cre: 'Subject: Un tejido hecho a mano para mamá\nPreview: Envío gratis desde $200.000.\nBody: Cada pieza se teje a mano en Colombia. Escoge la suya antes del 8 de mayo para recibirla a tiempo.\nCTA: Ver regalos' },
+      { id: 'a2', conn: 'Meta Ads', kind: 'Launch ad', diff: `<span class="a">+ Campaign "Día de la Madre 2026"</span>\n<span class="a">+ Daily budget $100.000, cap $1.4M COP</span>\n<span class="a">+ Runs May 1 to May 11</span>`, cost: '$1.4M COP cap', variants: ['Para mamá, algo hecho a mano. Mantas y cojines tejidos en Colombia.', 'Regálale calor de hogar. Piezas únicas, envío a todo el país.', 'Mamá merece lo auténtico. Descubre nuestras mantas tejidas.'], cre: '' },
+      { id: 'a3', conn: 'Meta Ads', kind: 'Change budget', diff: `<span class="d">- Retargeting daily budget $60.000</span>\n<span class="a">+ Retargeting daily budget $40.000</span>`, cost: '-$20.000 / day', cre: '' },
+    ] },
+  { id: 't2', title: 'Win back customers who stopped buying', why: 'Your welcome flow is paused and 1,180 customers have not bought in 6+ months.', effect: '+$2M to +$4M COP', assume: 'assuming a 2% reactivation rate', dropped: '', cost: '$0',
+    acts: [
+      { id: 'a4', conn: 'Klaviyo', kind: 'Create flow (Draft)', diff: `<span class="a">+ Flow "Te extrañamos" (3 emails, Draft)</span>\n<span class="a">+ Trigger: no purchase in 180 days</span>`, cost: '$0', cre: 'Subject: Te extrañamos en Casa Tejida\nBody: Han llegado piezas nuevas desde tu última visita. Pásate a verlas.\nCTA: Ver novedades' },
+    ] },
+];
+
+function actCard(a) {
+  const st = S.plans.act[a.id] || 'open', ex = S.plans.act['x' + a.id];
+  const V0 = S.plans.variant[a.id] || 0;
+  const cre = a.variants ? `<div class="row wrapf">${a.variants.map((_, i) => `<span class="chip ${V0 === i ? 'on' : ''}" data-act="variant" data-id="${a.id}" data-i="${i}">${t('Variant')} ${i + 1}</span>`).join('')}</div><textarea ${st === 'approved' ? 'disabled' : ''} data-bind="plans.edit.${a.id}">${esc(S.plans.edit[a.id] ?? a.variants[V0])}</textarea>`
+    : a.cre ? `<textarea ${st === 'approved' ? 'disabled' : ''} data-bind="plans.edit.${a.id}">${esc(S.plans.edit[a.id] ?? a.cre)}</textarea>` : '';
+  const tag = st === 'approved' ? (ex === 'done' ? `<span class="tag ok">${t('Done and verified')}</span>` : ex === 'run' ? `<span class="tag warn">${t('Running')}</span>` : `<span class="tag warn">${t('Queued')}</span>`) : st === 'rejected' ? `<span class="tag">${t('Rejected')}</span>` : `<span class="tag">${t('Awaiting you')}</span>`;
+  return `<div class="card" style="${st === 'rejected' ? 'opacity:.55' : ''}"><div class="row sp"><b>${a.conn}</b>${tag}</div><div class="mute">${t(a.kind)}</div><div class="diff">${a.diff}</div>${cre}
+    <div class="mute">${t('Cost:')} ${t(a.cost)}</div>
+    ${ex === 'done' ? `<div class="note ok">${t('Read back from')} ${a.conn}: ${t('matches the approved diff')} ✓ · <button class="link">${t('Open in')} ${a.conn}</button></div>` : ''}
+    ${st === 'open' ? `<div class="row" style="margin-top:8px"><button class="pri sm" data-act="approve" data-id="${a.id}">${t('Approve')}</button><button class="sm" data-act="adjust" data-id="${a.id}">${t('Ask Rita to change')}</button><button class="sm danger" data-act="reject" data-id="${a.id}">${t('Reject')}</button></div>` : ''}
+    ${st === 'approved' && !ex ? `<p class="mute">${t('Approved and frozen.')}</p>` : ''}
+    ${st === 'rejected' ? `<button class="link" data-act="undo" data-id="${a.id}">${t('Undo')}</button>` : ''}</div>`;
+}
+
+V[11] = () => {
+  const P = S.plans;
+  if (!P.ready) {
+    const items = ['Reading your latest orders', 'Reading ad performance', 'Checking Key dates', 'Choosing what to do first', 'Writing the Plan'];
+    return shell(`<h1>${t('Rita is building your first Plan')}</h1><p class="mute">${t('Nothing runs without your Approval.')}${S.ch === 'later' ? ' ' + t('We\'ll email you when it\'s ready.') : ' ' + t('We\'ll message you on WhatsApp when it\'s ready.')}</p><ul class="prog">${items.map((x, i) => `<li><span class="dot ${P.build > i ? 'done' : P.build === i ? 'run' : ''}"></span>${t(x)}</li>`).join('')}</ul>
+      <div class="card"><b>${t('Plans')}</b><p class="mute">${t('Your first Plan appears here.')}</p></div>`, { back: false });
+  }
+  if (!P.detail) return shell(`<h1>${t('Plans')}</h1><div class="card" data-act="open-plan" style="cursor:pointer;border-color:var(--accent)"><div class="row sp"><b>${t('Plan for May 1 to May 7')}</b><span class="tag warn">${t('Awaiting approval')}</span></div><p class="mute">2 ${t('Tasks')} · 4 ${t('Actions')} · ${t('Cost')} $1.4M COP</p></div>
+    <p class="mute">${t('Next Weekly plan: Tuesday 7:00. Change the weekday in Settings.')}</p>`, { back: false });
+  const all = TASKS.flatMap(x => x.acts), decided = all.filter(a => P.act[a.id]).length, remaining = all.length - decided;
+  return shell(`<button class="link" data-act="plans-list">‹ ${t('Plans')}</button><h1>${t('Plan for May 1 to May 7')}</h1>
+    <div class="card"><div class="mute">${t('Pace vs Goal')}</div><p><b>${t('At this pace you end May near')} ${cop(BASELINE)}</b>, ${t('about')} ${Math.round((1 - BASELINE / +S.goal) * 100)}% ${t('under your Goal.')}</p></div>
+    ${TASKS.map(task => `<div class="card" style="padding:0 14px 6px"><h2 style="margin-top:14px">${t(task.title)}</h2><p>${t(task.why)}</p><p class="mute">${t('Effect on Goal:')} <b>${task.effect}</b>, ${t(task.assume)}.</p>${task.dropped ? `<p class="mute">${t(task.dropped)}</p>` : ''}<p class="mute">${t('Total cost:')} ${t(task.cost)}</p>
+      ${task.acts.map(actCard).join('')}
+      <div class="card" style="background:var(--bg);border-style:dashed"><b>${t('Result')}</b><p class="mute">${t('Results appear here after the work runs. (Reporting is specified separately.)')}</p></div></div>`).join('')}
+    <p class="mute">${t('Rita reads each change back after writing it and shows you whether it matches.')}</p>`,
+    { back: false, foot: fbtn(decided ? 'Approve remaining' : 'Approve all', 'approve-all', remaining > 0) });
+};
+
+// ---------- chat panel ----------
+function chatHTML() {
+  if (S.step < 10 || S.hi !== 'done' && S.step < 11 && !S.chatOpen && S.chat.length === 0) return '';
+  return `<button id="chatfab" class="pri" data-act="chat">💬 ${t('Rita')}</button>${S.chatOpen ? `<div id="chat"><b>${t('Rita')}</b> <span class="mute">${t('same thread on WhatsApp and web')}</span>${S.chat.map(m => `<div class="msg ${m.who}">${m.html}</div>`).join('') || `<p class="mute">${t('No messages yet.')}</p>`}</div>` : ''}`;
+}
+
+// ---------- render + events ----------
+function render() {
+  document.getElementById('app').innerHTML = (V[S.step === 2 && S.siteWait ? 'wait' : S.step] || (() => ''))() + chatHTML();
+  document.getElementById('dev').innerHTML = `<span>PROTOTYPE</span><select data-act="jump">${STEPS.map((s, i) => `<option value="${i + 1}" ${S.step === i + 1 ? 'selected' : ''}>${i + 1}. ${s}</option>`).join('')}</select><button data-act="reset">reset</button>`;
+  kick();
+}
+function kick() {
+  if (S.step === 4 && S.p === 'reading' && !timers.length) for (let i = 1; i <= 4; i++) later(i * 900, () => { S.pr = i; if (i === 4) S.p = 'findings'; render(); });
+  if (S.step === 7 && !S.dx.done && !timers.length) for (let i = 1; i <= 5; i++) later(i * 1100, () => { S.dx.run = i; if (i === 5) S.dx.done = true; render(); });
+  if (S.step === 11 && !S.plans.ready && !timers.length) for (let i = 1; i <= 5; i++) later(i * 900, () => { S.plans.build = i; if (i === 5) S.plans.ready = true; render(); });
+}
+const setPath = (p, v) => { const k = p.split('.'); let o = S; while (k.length > 1) { const x = k.shift(); o = o[x] = o[x] ?? {}; } o[k[0]] = v; };
+document.addEventListener('input', e => {
+  const b = e.target.dataset.bind; if (!b) return;
+  setPath(b, e.target.type === 'checkbox' ? e.target.checked : e.target.value);
+  // re-evaluate gating on buttons without losing focus
+  const f = document.querySelector('.sticky button.pri'); if (f && S.step !== 11) { const pos = e.target.selectionStart; const id = e.target.dataset.bind; render(); const el = document.querySelector(`[data-bind="${id}"]`); if (el && el.type !== 'checkbox' && el.type !== 'date') { el.focus(); try { el.setSelectionRange(pos, pos); } catch (_) {} } }
+});
+document.addEventListener('change', e => { if (e.target.dataset.act === 'jump') { const n = +e.target.value; S.p = 'findings'; S.dx = n > 7 ? { run: 5, done: true } : S.dx; if (n >= 3) { S.shop.st = 'ok'; S.goal = S.goal || String(Math.round(AVG3 * 1.2)); } if (n >= 6 && !hasLever()) S.em = { st: 'ok', readonly: false }; if (n >= 9) S.sub = true; go(n); } else if (e.target.dataset.bind) { setPath(e.target.dataset.bind, e.target.type === 'checkbox' ? e.target.checked : e.target.value); render(); } });
+const toggle = (arr, v) => arr.includes(v) ? arr.splice(arr.indexOf(v), 1) : arr.push(v);
+const A = {
+  reset() { timers.splice(0).forEach(clearTimeout); S = fresh(); render(); },
+  back() { if (S.siteWait) { S.siteWait = false; return render(); } if (S.step === 4 && S.p !== 'findings' && S.p !== 'reading') { S.p = { buyers: 'findings', brand: 'buyers', dates: 'brand' }[S.p]; return render(); } if (S.step === 3 && S.shop.st === 'waiting') { S.shop.st = 'idle'; return render(); } if (S.step === 10 && S.hi !== 'done') return go(9); if (S.step === 8 && (S.checkout || S.locked)) { S.checkout = S.locked = false; return render(); } go(S.step - 1); },
+  'signup-google'() { S.user.email = 'daniel@casatejida.co'; go(2); },
+  'signup-email'() { S.user.mode = 'code'; render(); }, 'signup-code'() { go(2); },
+  website() { if (/wix|squarespace|woocommerce/i.test(S.site)) { S.siteWait = true; return render(); } if (!/\./.test(S.site)) { S.siteErr = 'That address doesn\'t look reachable. Check it and try again.'; return render(); } S.siteErr = ''; go(3); },
+  waitlisted() { alert(t('Prototype: waitlist joined.')); },
+  'shop-connect'() { S.shop.st = 'ok'; S.shop.failed = false; S.goal = S.goal || String(Math.round(AVG3 * 1.2)); render(); }, 'shop-fail'() { S.shop.failed = true; render(); },
+  'not-owner'() { S.shop.owner = true; render(); }, 'owner-send'() { S.shop.st = 'waiting'; render(); }, 'owner-copy'() { A['owner-send'](); },
+  resend() { alert(t('Link resent.')); }, revoke() { S.shop.st = 'idle'; S.shop.owner = false; render(); }, 'owner-done'() { S.shop.st = 'ok'; S.goal = S.goal || String(Math.round(AVG3 * 1.2)); render(); },
+  'goal-suggest'() { S.goal = String(Math.round(AVG3 * 1.2)); render(); }, 'goal-save'() { go(4); },
+  find(d, el) { S.find[d.i] = d.v; render(); }, 'p-buyers'() { S.p = 'buyers'; render(); }, 'p-brand'() { S.p = 'brand'; render(); }, 'p-dates'() { S.p = 'dates'; render(); }, 'p-done'() { go(5); },
+  upload() { S.brand.up = true; S.brand.tones = ['Premium', 'Calm']; S.brand.emoji = 'None'; render(); },
+  tone(d) { toggle(S.brand.tones, d.v); render(); }, addr(d) { S.brand.address = d.v; render(); }, emoji(d) { S.brand.emoji = d.v; render(); },
+  rm(d) { S.brand[d.k].splice(+d.i, 1); render(); },
+  add(d) { const k = d.k === 'always' ? 'newAlways' : 'newNever', v = S.brand[k].trim(); if (v) S.brand[d.k].push(v); S.brand[k] = ''; render(); },
+  sdate(d) { const i = S.dates.findIndex(x => x.name === d.n); i >= 0 ? S.dates.splice(i, 1) : S.dates.push({ name: d.n, date: d.d, yearly: true }); render(); },
+  adate() { const x = S.dateDraft; S.dates.push({ name: x.name, date: x.date, yearly: x.yearly }); S.dateDraft = { name: '', date: '', yearly: true }; render(); },
+  rmdate(d) { S.dates.splice(+d.i, 1); render(); },
+  'em-connect'() { S.em = { st: 'ok', readonly: false }; render(); }, 'em-ro'() { S.em = { st: 'ok', readonly: true }; render(); }, 'em-fail'() { S.em.st = 'fail'; render(); },
+  'em-more'() { S.em.readonly = false; render(); }, 'em-skip'() { go(6); }, to6() { go(6); },
+  'ad-connect'(d) { S.ad[d.k] = 'ok'; if (d.k === 'meta') S.ad.metaRO = false; render(); }, 'meta-ro'() { S.ad.meta = 'ok'; S.ad.metaRO = true; render(); },
+  'ad-stop'() { S.ad.stop = true; render(); }, 'stop-close'() { S.ad.stop = false; render(); }, to7() { S.locked = false; go(7); },
+  to8() { go(8); }, checkout() { S.checkout = true; render(); }, pay() { S.sub = true; S.checkout = false; go(9); }, notnow() { S.locked = true; render(); }, 'resume-pay'() { S.locked = false; S.checkout = true; render(); },
+  to10() { S.ch = 'wa'; go(10); }, 'ch-later'() { S.ch = 'later'; go(11); },
+  'wa-open'() { alert(t('Prototype: this would open WhatsApp with the prefilled message.')); }, 'hi-later'() { go(11); },
+  'hi-sim'() { S.hi = 'done'; S.chat = [{ who: 'u', html: 'Hi Rita, I\'m Daniel' }, { who: 'r', html: `${t('Hi Daniel! I\'m Rita. I\'m reading Casa Tejida and building your first Plan. Nothing happens without your Approval.')}` }]; setTimeout(() => { S.chat.push({ who: 'r', html: `${t('Your Plan is ready:')}<div class="planimg"><b>Casa Tejida</b><br>${t('Plan for May 1 to May 7')}<br>4 ${t('actions')}: Klaviyo 2 · Meta 2<br>${t('Budget to approve')}: $1.4M COP</div><a href="#">holarita.co/plans</a>` }); render(); }, 3500); render(); },
+  to11() { go(11); }, chat() { S.chatOpen = !S.chatOpen; render(); },
+  'open-plan'() { S.plans.detail = true; render(); scrollTo(0, 0); }, 'plans-list'() { S.plans.detail = false; render(); },
+  variant(d) { S.plans.variant[d.id] = +d.i; delete S.plans.edit[d.id]; render(); },
+  adjust(d) { alert(t('Prototype: Rita would regenerate this card; any adjustment returns it to un-approved.')); },
+  approve(d) { runAct(d.id); }, reject(d) { S.plans.act[d.id] = 'rejected'; render(); }, undo(d) { delete S.plans.act[d.id]; render(); },
+  'approve-all'() { TASKS.flatMap(x => x.acts).forEach(a => { if (!S.plans.act[a.id]) runAct(a.id, true); }); render(); },
+};
+function runAct(id, quiet) {
+  S.plans.act[id] = 'approved'; S.plans.act['x' + id] = 'queued';
+  later(900, () => { S.plans.act['x' + id] = 'run'; render(); }); later(2200, () => { S.plans.act['x' + id] = 'done'; render(); });
+  if (!quiet) render();
+}
+document.addEventListener('click', e => { const el = e.target.closest('[data-act]'); if (!el || el.tagName === 'SELECT') return; const f = A[el.dataset.act]; if (f) f(el.dataset, el); });
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.target.tagName === 'INPUT') { const b = document.querySelector('.sticky button.pri:not(:disabled)'); if (b) b.click(); } });
+render();
+</script>
+</body>
+</html>
